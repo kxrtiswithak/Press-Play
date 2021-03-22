@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "address", schema = "sakila", catalog = "")
+@Table(name = "address", schema = "sakila")
 public class AddressEntity {
     private int addressId;
     private String address;
@@ -15,6 +15,7 @@ public class AddressEntity {
     private String phone;
     private Object location;
     private Timestamp lastUpdate;
+    private int cityId;
 
     @Id
     @Column(name = "address_id")
@@ -107,5 +108,15 @@ public class AddressEntity {
     @Override
     public int hashCode() {
         return Objects.hash(addressId, address, address2, district, postalCode, phone, location, lastUpdate);
+    }
+
+    @Basic
+    @Column(name = "city_id")
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 }

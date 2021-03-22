@@ -1,4 +1,6 @@
 package com.sparta.eng80.pressplay.services;
 
-public interface RentalInterface {
+import com.sparta.eng80.pressplay.entities.RentalEntity;
+
+public interface RentalInterface extends ServiceInterface<RentalEntity>{
 }

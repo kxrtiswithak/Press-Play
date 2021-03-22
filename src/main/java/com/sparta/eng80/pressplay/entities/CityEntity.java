@@ -5,11 +5,12 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "city", schema = "sakila", catalog = "")
+@Table(name = "city", schema = "sakila")
 public class CityEntity {
     private int cityId;
     private String city;
     private Timestamp lastUpdate;
+    private int countryId;
 
     @Id
     @Column(name = "city_id")
@@ -52,5 +53,15 @@ public class CityEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cityId, city, lastUpdate);
+    }
+
+    @Basic
+    @Column(name = "country_id")
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 }

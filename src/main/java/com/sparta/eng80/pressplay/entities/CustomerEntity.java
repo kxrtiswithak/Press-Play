@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customer", schema = "sakila", catalog = "")
+@Table(name = "customer", schema = "sakila")
 public class CustomerEntity {
     private int customerId;
     private String firstName;
@@ -14,6 +14,8 @@ public class CustomerEntity {
     private byte active;
     private Timestamp createDate;
     private Timestamp lastUpdate;
+    private int storeId;
+    private int addressId;
 
     @Id
     @Column(name = "customer_id")
@@ -96,5 +98,25 @@ public class CustomerEntity {
     @Override
     public int hashCode() {
         return Objects.hash(customerId, firstName, lastName, email, active, createDate, lastUpdate);
+    }
+
+    @Basic
+    @Column(name = "store_id")
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    @Basic
+    @Column(name = "address_id")
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 }

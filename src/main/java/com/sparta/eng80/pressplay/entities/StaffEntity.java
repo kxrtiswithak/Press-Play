@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "staff", schema = "sakila", catalog = "")
+@Table(name = "staff", schema = "sakila")
 public class StaffEntity {
     private int staffId;
     private String firstName;
@@ -17,6 +17,8 @@ public class StaffEntity {
     private String username;
     private String password;
     private Timestamp lastUpdate;
+    private int addressId;
+    private int storeId;
 
     @Id
     @Column(name = "staff_id")
@@ -121,5 +123,25 @@ public class StaffEntity {
         int result = Objects.hash(staffId, firstName, lastName, email, active, username, password, lastUpdate);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
+    }
+
+    @Basic
+    @Column(name = "address_id")
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+
+    @Basic
+    @Column(name = "store_id")
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 }

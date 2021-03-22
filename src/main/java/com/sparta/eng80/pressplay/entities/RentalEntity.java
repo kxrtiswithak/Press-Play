@@ -5,12 +5,15 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "rental", schema = "sakila", catalog = "")
+@Table(name = "rental", schema = "sakila")
 public class RentalEntity {
     private int rentalId;
     private Timestamp rentalDate;
     private Timestamp returnDate;
     private Timestamp lastUpdate;
+    private int inventoryId;
+    private int customerId;
+    private int staffId;
 
     @Id
     @Column(name = "rental_id")
@@ -63,5 +66,35 @@ public class RentalEntity {
     @Override
     public int hashCode() {
         return Objects.hash(rentalId, rentalDate, returnDate, lastUpdate);
+    }
+
+    @Basic
+    @Column(name = "inventory_id")
+    public int getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    @Basic
+    @Column(name = "customer_id")
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    @Basic
+    @Column(name = "staff_id")
+    public int getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 }

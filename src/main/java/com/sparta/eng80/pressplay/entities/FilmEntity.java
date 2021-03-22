@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "film", schema = "sakila", catalog = "")
+@Table(name = "film", schema = "sakila")
 public class FilmEntity {
     private int filmId;
     private String title;
@@ -19,6 +19,8 @@ public class FilmEntity {
     private Object rating;
     private Object specialFeatures;
     private Timestamp lastUpdate;
+    private int languageId;
+    private int originalLanguageId;
 
     @Id
     @Column(name = "film_id")
@@ -141,5 +143,25 @@ public class FilmEntity {
     @Override
     public int hashCode() {
         return Objects.hash(filmId, title, description, releaseYear, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
+    }
+
+    @Basic
+    @Column(name = "language_id")
+    public int getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
+    }
+
+    @Basic
+    @Column(name = "original_language_id")
+    public int getOriginalLanguageId() {
+        return originalLanguageId;
+    }
+
+    public void setOriginalLanguageId(int originalLanguageId) {
+        this.originalLanguageId = originalLanguageId;
     }
 }
