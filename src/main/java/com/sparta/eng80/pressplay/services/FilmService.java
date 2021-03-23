@@ -126,7 +126,7 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
-    public void save(FilmEntity filmEntity) {
-
+    public int save(FilmEntity film) {
+        return filmRepository.save(film).getFilmId();
     }
 }
