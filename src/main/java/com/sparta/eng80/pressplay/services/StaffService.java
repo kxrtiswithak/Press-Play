@@ -23,7 +23,7 @@ public class StaffService implements AccountInterface<StaffEntity> {
 
     @Override
     public boolean isAdmin(Integer id) {
-        return false;
+        return findById(id).isPresent();
     }
 
     @Override

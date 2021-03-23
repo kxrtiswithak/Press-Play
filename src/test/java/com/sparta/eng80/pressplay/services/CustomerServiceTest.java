@@ -1,13 +1,7 @@
 package com.sparta.eng80.pressplay.services;
 
-import com.sparta.eng80.pressplay.entities.AddressEntity;
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
-import com.sparta.eng80.pressplay.entities.FilmEntity;
-import com.sparta.eng80.pressplay.repositories.AddressRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +12,14 @@ import java.util.Optional;
 @SpringBootTest
 public class CustomerServiceTest {
 
-    //email, admin, id, save
-
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private AddressRepository addressRepo;
+    @Test
+    @Order(Integer.MIN_VALUE)
+    public void contextLoads(){
+        Assertions.assertNotNull(customerService);
+    }
 
     @ParameterizedTest(name = "check {0}")
     @DisplayName("check email exists")

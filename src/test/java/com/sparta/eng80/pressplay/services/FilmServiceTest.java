@@ -3,6 +3,7 @@ package com.sparta.eng80.pressplay.services;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.entities.LanguageEntity;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,6 +15,12 @@ public class FilmServiceTest {
 
     @Autowired
     private FilmService filmService;
+
+    @Test
+    @Order(Integer.MIN_VALUE)
+    public void contextLoads(){
+        Assertions.assertNotNull(filmService);
+    }
 
     @ParameterizedTest(name = "check {0}")
     @CsvSource({
