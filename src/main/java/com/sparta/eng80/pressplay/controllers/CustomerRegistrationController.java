@@ -2,7 +2,7 @@ package com.sparta.eng80.pressplay.controllers;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.security.CustomerRegistrationValidator;
-import com.sparta.eng80.pressplay.services.AccountInterface;
+import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import com.sparta.eng80.pressplay.services.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

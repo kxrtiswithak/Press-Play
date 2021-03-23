@@ -2,7 +2,7 @@ package com.sparta.eng80.pressplay.security;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
-import com.sparta.eng80.pressplay.services.AccountInterface;
+import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -32,8 +32,8 @@ public class CustomerRegistrationValidator implements Validator {
         if (customer.getEmail().length() < 6 || customer.getEmail().length() > 64) {
             errors.rejectValue("email", "Size.customerFrom.email");
         }
-        if (customerService.findByUsername(customer.getEmail()) != null &&
-            staffService.findByUsername(customer.getEmail()) != null) {
+        if (customerService.findByEmail(customer.getEmail()) != null &&
+            staffService.findByEmail(customer.getEmail()) != null) {
             errors.rejectValue("email", "Duplicate.customerFrom.email");
         }
 

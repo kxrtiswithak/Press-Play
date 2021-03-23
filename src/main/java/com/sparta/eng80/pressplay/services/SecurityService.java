@@ -2,6 +2,7 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
+import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +43,7 @@ public class SecurityService {
     }
 
     public void autoLogin(String email, String password) {
-        Optional<CustomerEntity> customerOptional = customerService.findByUsername(email);
+        Optional<CustomerEntity> customerOptional = customerService.findByEmail(email);
 
         if (!customerOptional.isPresent()) {
             throw new UsernameNotFoundException(email);
