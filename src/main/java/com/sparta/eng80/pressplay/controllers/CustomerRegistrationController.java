@@ -42,11 +42,11 @@ public class CustomerRegistrationController {
         customerRegistrationValidator.validate(customer, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registrtaion";
+            return "registration";
         }
 
         customerService.save(customer);
-        securityService.autoLogin(customer.getEmail(), customer.getPassword());
+        securityService.autoLogin(customer.getEmail(), customer.getPasswordConfirmation());
         return "redirect:/welcome";
     }
 }
