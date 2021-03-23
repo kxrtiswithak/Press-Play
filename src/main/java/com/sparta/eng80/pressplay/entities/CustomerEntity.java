@@ -16,6 +16,8 @@ public class CustomerEntity {
     private Timestamp lastUpdate;
     private int storeId;
     private int addressId;
+    private String password;
+    private transient String passwordConfirmation;
 
     @Id
     @Column(name = "customer_id")
@@ -118,5 +120,24 @@ public class CustomerEntity {
 
     public void setAddressId(int addressId) {
         this.addressId = addressId;
+    }
+
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Transient
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }
