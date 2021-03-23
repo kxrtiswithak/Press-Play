@@ -10,9 +10,11 @@ public class CityEntity {
     private int cityId;
     private String city;
     private Timestamp lastUpdate;
-    private int countryId;
+
+    private CountryEntity country;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
     public int getCityId() {
         return cityId;
@@ -42,6 +44,16 @@ public class CityEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,15 +65,5 @@ public class CityEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cityId, city, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "country_id")
-    public int getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
     }
 }

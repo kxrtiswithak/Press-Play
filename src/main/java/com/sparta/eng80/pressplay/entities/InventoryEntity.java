@@ -9,10 +9,12 @@ import java.util.Objects;
 public class InventoryEntity {
     private int inventoryId;
     private Timestamp lastUpdate;
-    private int filmId;
-    private int storeId;
+
+    private FilmEntity film;
+    private StoreEntity store;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inventory_id")
     public int getInventoryId() {
         return inventoryId;
@@ -32,6 +34,26 @@ public class InventoryEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "film_id")
+    public FilmEntity getFilm() {
+        return film;
+    }
+
+    public void setFilm(FilmEntity film) {
+        this.film = film;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,25 +65,5 @@ public class InventoryEntity {
     @Override
     public int hashCode() {
         return Objects.hash(inventoryId, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "film_id")
-    public int getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(int filmId) {
-        this.filmId = filmId;
-    }
-
-    @Basic
-    @Column(name = "store_id")
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
     }
 }
