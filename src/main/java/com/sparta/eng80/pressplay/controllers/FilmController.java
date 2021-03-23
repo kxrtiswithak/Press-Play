@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Optional;
+
 public class FilmController {
 
     private final FilmService filmService;
@@ -24,15 +26,29 @@ public class FilmController {
 
     @GetMapping
     public String findActor(String name, ModelMap modelMap){
-        Iterable<FilmEntity> actorEntities = filmService.findActorByName(name);
-        modelMap.addAttribute("actors", actorEntities);
+        Iterable<FilmEntity> filmEntities = filmService.findActorByName(name);
+        modelMap.addAttribute("films", filmEntities);
         return null; //TODO
     }
 
     @GetMapping
     public String findActor(String firstName, String lastName, ModelMap modelMap){
-        Iterable<FilmEntity> actorEntities = filmService.findActorByName(firstName, lastName);
-        modelMap.addAttribute("actors", actorEntities);
+        Iterable<FilmEntity> filmEntities = filmService.findActorByName(firstName, lastName);
+        modelMap.addAttribute("films", filmEntities);
+        return null; //TODO
+    }
+
+    @GetMapping
+    public String findByActorId(int id, ModelMap modelMap){
+        Iterable<FilmEntity> filmEntities = (Iterable<FilmEntity>) filmService.findActorById(id).stream().iterator();
+        modelMap.addAttribute("films", filmEntities);
+        return null; //TODO
+    }
+
+    @GetMapping
+    public String findByLanguage(String language, ModelMap modelMap){
+        Iterable<FilmEntity> filmEntities = filmService.findByLanguage(language);
+        modelMap.addAttribute("films", filmEntities);
         return null; //TODO
     }
 }

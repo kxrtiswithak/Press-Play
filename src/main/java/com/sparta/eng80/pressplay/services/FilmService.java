@@ -112,7 +112,7 @@ public class FilmService implements FilmInterface {
 
     @Override
     public Iterable<FilmEntity> findByLanguage(String language) {
-        return null;
+        return filmRepository.findByLanguage(language);
     }
 
     @Override
