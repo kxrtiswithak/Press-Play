@@ -1,7 +1,5 @@
 package com.sparta.eng80.pressplay.entities;
 
-import com.sparta.eng80.pressplay.security.PasswordEncryptor;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -16,11 +14,11 @@ public class CustomerEntity {
     private byte active;
     private Timestamp createDate;
     private Timestamp lastUpdate;
-    private String role;
     private String Password;
-    private transient String passwordConfirmation;
     private StoreEntity store;
     private AddressEntity address;
+    private transient String passwordConfirmation;
+    private transient String role = "ROLE_USER";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,7 +91,7 @@ public class CustomerEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     public StoreEntity getStore() {
         return store;
@@ -103,7 +101,7 @@ public class CustomerEntity {
         this.store = store;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     public AddressEntity getAddress() {
         return address;
@@ -113,23 +111,12 @@ public class CustomerEntity {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "role")
-    @Transient
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) { ;
-        this.role = role;
-    }
-
     public String getPassword() {
         return Password;
     }
 
     public void setPassword(String password) {
-        Password = PasswordEncryptor.encode(password);
+        Password = password;
     }
 
     @Transient
@@ -139,6 +126,15 @@ public class CustomerEntity {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    @Transient
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) { ;
+        this.role = role;
     }
 
     @Override

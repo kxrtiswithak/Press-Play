@@ -18,6 +18,8 @@ public class StaffEntity {
     private String password;
     private Timestamp lastUpdate;
 
+    private transient String role = "ROLE_ADMIN";
+
     private AddressEntity address;
     private StoreEntity store;
 
@@ -130,6 +132,15 @@ public class StaffEntity {
 
     public void setStore(StoreEntity store) {
         this.store = store;
+    }
+
+    @Transient
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) { ;
+        this.role = role;
     }
 
     @Override
