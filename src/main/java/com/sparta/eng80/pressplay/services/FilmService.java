@@ -111,12 +111,8 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
-    public Optional<FilmEntity> findByLanguage(String language) {
-        Optional<FilmEntity> films = filmRepository.findByLanguage(language);
-        if(films.isEmpty()){
-            return null;
-        }
-        return films;
+    public Iterable<FilmEntity> findByLanguage(String language) {
+        return filmRepository.findByLanguage(language);
     }
 
     @Override

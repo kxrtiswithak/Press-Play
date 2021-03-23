@@ -32,5 +32,5 @@ public interface FilmRepository extends CrudRepository<FilmEntity, Integer> {
     @Query(nativeQuery = true, value = "select * from film f " +
             "inner join language l on l.language_id = f.language_id " +
             "where l.name = ?")
-    Optional<FilmEntity> findByLanguage(String language);
+    Iterable<FilmEntity> findByLanguage(String language);
 }
