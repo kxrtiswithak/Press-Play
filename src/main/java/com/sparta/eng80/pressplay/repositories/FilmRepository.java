@@ -30,4 +30,8 @@ public interface FilmRepository extends CrudRepository<FilmEntity, Integer> {
             "where a.first_name like ?1 and a.last_name like ?2")
     Iterable<FilmEntity> findByName(String firstName, String lastName);
 
+    @Query(nativeQuery = true, value = "select * from film f " +
+            "inner join language l on l.language_id = f.language_id " +
+            "where l.name = ?")
+    Optional<FilmEntity> findByLanguage(String language);
 }
