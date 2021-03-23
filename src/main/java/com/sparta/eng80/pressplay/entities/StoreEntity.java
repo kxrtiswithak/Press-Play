@@ -9,10 +9,12 @@ import java.util.Objects;
 public class StoreEntity {
     private int storeId;
     private Timestamp lastUpdate;
-    private int managerStaffId;
-    private int addressId;
+
+    private StaffEntity manager;
+    private AddressEntity address;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
     public int getStoreId() {
         return storeId;
@@ -32,6 +34,26 @@ public class StoreEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "manager_staff_id")
+    public StaffEntity getManagerStaff() {
+        return manager;
+    }
+
+    public void setManagerStaff(StaffEntity manager) {
+        this.manager = manager;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,25 +65,5 @@ public class StoreEntity {
     @Override
     public int hashCode() {
         return Objects.hash(storeId, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "manager_staff_id")
-    public int getManagerStaffId() {
-        return managerStaffId;
-    }
-
-    public void setManagerStaffId(int managerStaffId) {
-        this.managerStaffId = managerStaffId;
-    }
-
-    @Basic
-    @Column(name = "address_id")
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
     }
 }

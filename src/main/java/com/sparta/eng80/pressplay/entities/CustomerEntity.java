@@ -16,13 +16,14 @@ public class CustomerEntity {
     private byte active;
     private Timestamp createDate;
     private Timestamp lastUpdate;
-    private int storeId;
-    private int addressId;
     private String role;
     private String Password;
     private transient String passwordConfirmation;
+    private StoreEntity store;
+    private AddressEntity address;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     public int getCustomerId() {
         return customerId;
@@ -92,37 +93,24 @@ public class CustomerEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomerEntity that = (CustomerEntity) o;
-        return active == that.active && Objects.equals(customerId, that.customerId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(email, that.email) && Objects.equals(createDate, that.createDate) && Objects.equals(lastUpdate, that.lastUpdate);
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    public StoreEntity getStore() {
+        return store;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(customerId, firstName, lastName, email, active, createDate, lastUpdate);
+    public void setStore(StoreEntity store) {
+        this.store = store;
     }
 
-    @Basic
-    @Column(name = "store_id")
-    public int getStoreId() {
-        return storeId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    public AddressEntity getAddress() {
+        return address;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    @Basic
-    @Column(name = "address_id")
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 
     @Basic
@@ -151,5 +139,18 @@ public class CustomerEntity {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerEntity that = (CustomerEntity) o;
+        return active == that.active && Objects.equals(customerId, that.customerId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(email, that.email) && Objects.equals(createDate, that.createDate) && Objects.equals(lastUpdate, that.lastUpdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId, firstName, lastName, email, active, createDate, lastUpdate);
     }
 }
