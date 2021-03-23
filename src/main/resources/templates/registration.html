@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+</head>
+
+<body>
+    <div>
+        <form method="POST" th:object="${customerForm}" th:action="@{/registration}">
+            <h2>Create your account</h2>
+            <div>
+                <input type="text" th:field="*{email}" placeholder="Email" autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+            <div>
+                <input type="text" th:field="*{firstName}" placeholder="First Name" autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </div>
+            <div>
+                <input type="text" th:field="*{lastName}" placeholder="Last Name"
+                       autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{password}" placeholder="Password">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{passwordConfirmation}" placeholder="Confirm your password">
+                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></span>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -2,18 +2,23 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.repositories.CustomerRepository;
+import com.sparta.eng80.pressplay.security.PasswordEncryptor;
 import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class CustomerService implements AccountInterface<CustomerEntity> {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final PasswordEncryptor passwordEncryptor;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncryptor passwordEncryptor) {
         this.customerRepository = customerRepository;
+        this.passwordEncryptor = passwordEncryptor;
     }
 
     @Override
@@ -37,7 +42,9 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
     }
 
     @Override
-    public int save(CustomerEntity customer) {
-        return customerRepository.save(customer).getCustomerId();
+    public int save(CustomerEntity customerEntity) {
+        customerEntity.setPassword(passwordEncryptor.encode(customerEntity.getPassword()));
+        customerEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
+        return customerRepository.save(customerEntity).getCustomerId();
     }
 }

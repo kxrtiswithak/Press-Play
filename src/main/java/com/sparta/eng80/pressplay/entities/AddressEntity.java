@@ -82,7 +82,7 @@ public class AddressEntity {
 
     @Basic
     @Column(name = "location")
-    public Object getLocation() {
+    public Point getLocation() {
         return location;
     }
 

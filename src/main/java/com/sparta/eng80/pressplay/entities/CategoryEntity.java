@@ -45,7 +45,7 @@ public class CategoryEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "category")
+    @ManyToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "categories")
     public Set<FilmEntity> getFilms() {
         return films;
     }
