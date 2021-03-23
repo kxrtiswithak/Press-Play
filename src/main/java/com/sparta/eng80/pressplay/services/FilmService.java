@@ -127,6 +127,16 @@ public class FilmService implements FilmInterface {
 
     @Override
     public void save(FilmEntity filmEntity) {
-
+        boolean found = false;
+        Iterable<FilmEntity> AllFilms = findAll();
+        for (FilmEntity existingFilms : AllFilms) {
+            if (existingFilms.equals(filmEntity)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            filmRepository.save(filmEntity);
+        }
     }
 }
