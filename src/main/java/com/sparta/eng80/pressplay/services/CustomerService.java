@@ -12,6 +12,10 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
 
     private CustomerRepository customerRepository;
 
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
     @Override
     public Optional<CustomerEntity> findByEmail(String username) {
         return customerRepository.findByEmail(username);
