@@ -32,10 +32,13 @@ public class CustomerRegistrationValidator implements Validator {
         if (customer.getEmail().length() < 6 || customer.getEmail().length() > 64) {
             errors.rejectValue("email", "Size.customerFrom.email");
         }
-        if (customerService.findByEmail(customer.getEmail()) != null &&
-            staffService.findByEmail(customer.getEmail()) != null) {
+        if (customerService.findByEmail(customer.getEmail()).isPresent()||
+            staffService.findByEmail(customer.getEmail()).isPresent()) {
             errors.rejectValue("email", "Duplicate.customerFrom.email");
         }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (customer.getPassword().length() < 8 || customer.getPassword().length() > 64) {
