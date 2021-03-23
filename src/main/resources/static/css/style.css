@@ -2,3 +2,60 @@
     background-color: #ffde59;
     color: #191919;
 }
+
+.navbar {
+    background-color: #191919;
+    top: 0;
+}
+
+.nav-item {
+    margin-left: 50px !important;
+    /*padding-left: 50px !important;*/
+}
+
+#searchDropDown {
+    margin-top: 80px;
+}
+
+#searchDropDownContent {
+    padding: 10px 0;
+}
+
+input#searchField {
+    width: 50vw;
+    margin-left: 60px;
+}
+
+a#searchBtn {
+    margin: 0 15px;
+    color: #ffffff;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 5px 15px;
+    text-decoration: none;
+    /*font-family: ;*/
+}
+
+button#filterBtn {
+    background-color: inherit;
+    margin-right: 15px;
+    color: #ffffff;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 4px 15px;
+    text-decoration: none;
+}
+
+button#closeBtn, button#searchListItem {
+    background-color: #212529;
+    border: none;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+button#searchListItem {
+    background-color: #212529;
+    border: none;
+    text-decoration: none;
+}
+

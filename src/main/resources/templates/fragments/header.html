@@ -2,40 +2,84 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
-        <nav th:fragment="header" class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <span class="navbar-brand">
-                <img src="/static/images/PressPlay_logo.png" alt="Press-Play"/>
-            </span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Account</a>
-                    </li>
-                    <span sec:authorize="hasAnyAuthority('MEMBER','STAFF')">
-                        <form th:action="@{/logout}" method="post" class="d-flex">
-                            <input class="btn" id="logoutBtn" type="submit" value="Logout"/>
-                        </form>
-                    </span>
-                </ul>
+        <nav th:fragment="header" class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            <div class="container">
+                <span class="navbar-brand">
+                    <img src="/static/images/PressPlay_logo.png" height="70" alt="Press-Play"/>
+                </span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <!-- href to main/index page - controller mapping -->
+                            <a class="nav-link" aria-current="page" href="/">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- href to categories page - controller mapping -->
+                            <a class="nav-link" aria-current="page" href="/">CATEGORIES</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="searchListItem" class="nav-link" type="button" aria-current="page" data-bs-toggle="search-collapse" data-bs-target="#searchDropDown" aria-controls="searchDropDown" aria-expanded="false" aria-label="Toggle navigation">SEARCH</button>
+                        </li>
+                        <li class="nav-item">
+                            <!-- href to contact page - controller mapping -->
+                            <a class="nav-link" aria-current="page" href="/">CONTACT</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- href to account page - controller mapping -->
+                            <a class="nav-link" aria-current="page" href="/">ACCOUNT</a>
+                        </li>
+                        <!-- Logout button here? or have the account <a> tag (above) as a dropdown with the <options> profile and logout? -->
+                            <!-- Is the person logged in...show this if they are -->
+                            <!-- Change the roles respectively -->
+<!--                        <span sec:authorize="hasAnyAuthority('MEMBER','STAFF')">-->
+<!--                            <form th:action="@{/logout}" method="post">-->
+<!--                                <input class="btn" id="logoutBtn" type="submit" value="Logout"/>-->
+<!--                            </form>-->
+<!--                        </span>-->
+                    </ul>
+                </div>
             </div>
-
         </nav>
+
+
+
+        <!-- ================================================================== BUG ZONE! ================================================================= -->
+
+
+<!--        <div class="search-collapse" id="searchDropDown">-->
+<!--            <div class="bg-dark">-->
+<!--                <div class="container justify-content-end" id="searchDropDownContent">-->
+<!--                    <label>-->
+<!--                        <input type="text" id="searchField" placeholder="Search Film by Title, Category, Actors..." />-->
+<!--                    </label>-->
+<!--                    <a id="searchBtn" href="/">SEARCH</a>-->
+<!--                    <div class="filter-dropdown">-->
+<!--                        <button type="button" id="filterBtn" data-bs-toggle="filter-dropdown" aria-expanded="false">-->
+<!--                            FILTER-->
+<!--                        </button>-->
+<!--                        &lt;!&ndash; name param needs to be the name of the field in the category entity &ndash;&gt;-->
+<!--                        <ul class="dropdown-menu" aria-labelledby="filterBtn">-->
+<!--                            <li><span class="dropdown-item-text">Categories</span></li>-->
+<!--                            &lt;!&ndash; each needs to be the list variable mapped to this page &ndash;&gt;-->
+<!--                            &lt;!&ndash; text will be the name of the category i.e category.name &ndash;&gt;-->
+<!--                            &lt;!&ndash; value will either be the category.id or category.name depending how you are searching categories &ndash;&gt;-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <button id="closeBtn">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">-->
+<!--                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>-->
+<!--                        </svg>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </body>
 </html>
