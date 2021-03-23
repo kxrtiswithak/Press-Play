@@ -2,6 +2,7 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,12 @@ public class FilmServiceTest {
 
     @Autowired
     private FilmService filmService;
+
+    @Test
+    @Order(Integer.MIN_VALUE)
+    public void contextLoads(){
+        Assertions.assertNotNull(filmService);
+    }
 
     @Test
     public void testFindByName(){
