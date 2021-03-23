@@ -25,14 +25,14 @@ public class FilmController {
 
     @GetMapping
     public String findActor(String name, ModelMap modelMap){
-        Iterable<ActorEntity> actorEntities = filmService.findActorByName(name);
+        Iterable<FilmEntity> actorEntities = filmService.findActorByName(name);
         modelMap.addAttribute("actors", actorEntities);
         return null; //TODO
     }
 
     @GetMapping
     public String findActor(String firstName, String lastName, ModelMap modelMap){
-        Iterable<ActorEntity> actorEntities = filmService.findActorByName(firstName, lastName);
+        Iterable<FilmEntity> actorEntities = filmService.findActorByName(firstName, lastName);
         modelMap.addAttribute("actors", actorEntities);
         return null; //TODO
     }

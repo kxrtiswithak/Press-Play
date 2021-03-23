@@ -16,7 +16,7 @@ public class FilmServiceTest {
 
     @Test
     public void testFindByName(){
-        Iterable<FilmEntity> test = filmService.findByName("MARRIED GO");
+        Iterable<FilmEntity> test = filmService.findByTitle("MARRIED GO");
         Assertions.assertEquals(test.iterator().next().getFilmId(), 559);
     }
 
@@ -28,7 +28,7 @@ public class FilmServiceTest {
 
     @Test
     public void testFindByActor(){
-        Iterable<FilmEntity> test = filmService.findByActor("SILVERADO GOLDFINGER");
+        Iterable<FilmEntity> test = filmService.findActorByName("SILVERADO GOLDFINGER");
         Assertions.assertEquals(test.iterator().next().getFilmId(), 21);
     }
 

@@ -8,11 +8,12 @@ import java.util.Optional;
 public interface FilmInterface extends ServiceInterface<FilmEntity>{
 
     //find by name, category, actor, language, inventory
-    Iterable<FilmEntity> findByName(String filmName);
+    Iterable<FilmEntity> findByTitle(String filmName);
+    Iterable<FilmEntity> findByCategory(int categoryId);
     Iterable<FilmEntity> findByCategory(String category);
-    Optional<FilmEntity> findByActorId(int actorID);
-    Iterable<ActorEntity> findByActorName(String actor);
-    Iterable<ActorEntity> findByActorName(String firstName, String lastName);
-    Iterable<FilmEntity> findByLanguage(String language));
+    Optional<FilmEntity> findActorById(int actorID);
+    Iterable<FilmEntity> findActorByName(String actor);
+    Iterable<FilmEntity> findActorByName(String firstName, String lastName);
+    Iterable<FilmEntity> findByLanguage(String language);
 
 }
