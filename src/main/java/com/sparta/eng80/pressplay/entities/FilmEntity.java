@@ -14,7 +14,7 @@ public class FilmEntity {
     private Object releaseYear;
     private Object rentalDuration;
     private BigDecimal rentalRate;
-    private Object length;
+    private int length;
     private BigDecimal replacementCost;
     private Object rating;
     private Object specialFeatures;
@@ -84,11 +84,11 @@ public class FilmEntity {
 
     @Basic
     @Column(name = "length")
-    public Object getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(Object length) {
+    public void setLength(int length) {
         this.length = length;
     }
 

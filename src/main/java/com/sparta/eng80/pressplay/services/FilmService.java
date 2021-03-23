@@ -6,12 +6,15 @@ import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.repositories.CategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmCategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FilmService implements FilmInterface {
 
     private final FilmRepository filmRepository;
@@ -25,7 +28,7 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
-    public Iterable<FilmEntity> findByName() {
+    public Iterable<FilmEntity> findByName(String filmName) {
         return null;
     }
 
@@ -88,12 +91,12 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
-    public Iterable<FilmEntity> findByActor() {
+    public Iterable<FilmEntity> findByActor(String actorName) {
         return null;
     }
 
     @Override
-    public Iterable<FilmEntity> findByLanguage() {
+    public Iterable<FilmEntity> findByLanguage(String language) {
         return null;
     }
 

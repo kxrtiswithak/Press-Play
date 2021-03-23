@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface AccountInterface<T> extends ServiceInterface<T>{
 
-    Optional<T> findByUsername(String username);
+    Optional<T> findByEmail(String email);
     boolean isAdmin(Integer id);
 
 }
