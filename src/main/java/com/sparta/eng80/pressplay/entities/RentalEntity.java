@@ -1,6 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -8,14 +9,16 @@ import java.util.Objects;
 @Table(name = "rental", schema = "sakila")
 public class RentalEntity {
     private int rentalId;
-    private Timestamp rentalDate;
-    private Timestamp returnDate;
+    private Date rentalDate;
+    private Date returnDate;
     private Timestamp lastUpdate;
-    private int inventoryId;
-    private int customerId;
-    private int staffId;
+
+    private InventoryEntity inventory;
+    private CustomerEntity customer;
+    private StaffEntity staff;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rental_id")
     public int getRentalId() {
         return rentalId;
@@ -27,21 +30,21 @@ public class RentalEntity {
 
     @Basic
     @Column(name = "rental_date")
-    public Timestamp getRentalDate() {
+    public Date getRentalDate() {
         return rentalDate;
     }
 
-    public void setRentalDate(Timestamp rentalDate) {
+    public void setRentalDate(Date rentalDate) {
         this.rentalDate = rentalDate;
     }
 
     @Basic
     @Column(name = "return_date")
-    public Timestamp getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Timestamp returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -55,6 +58,36 @@ public class RentalEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id")
+    public InventoryEntity getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(InventoryEntity inventory) {
+        this.inventory = inventory;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "staff_id")
+    public StaffEntity getStaff() {
+        return staff;
+    }
+
+    public void setStaff(StaffEntity staff) {
+        this.staff = staff;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,35 +99,5 @@ public class RentalEntity {
     @Override
     public int hashCode() {
         return Objects.hash(rentalId, rentalDate, returnDate, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "inventory_id")
-    public int getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(int inventoryId) {
-        this.inventoryId = inventoryId;
-    }
-
-    @Basic
-    @Column(name = "customer_id")
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    @Basic
-    @Column(name = "staff_id")
-    public int getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(int staffId) {
-        this.staffId = staffId;
     }
 }

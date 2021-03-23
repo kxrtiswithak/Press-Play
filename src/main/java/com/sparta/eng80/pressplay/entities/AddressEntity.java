@@ -1,5 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
+import org.springframework.data.geo.Point;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -13,11 +15,12 @@ public class AddressEntity {
     private String district;
     private String postalCode;
     private String phone;
-    private Object location;
+    private Point location;
     private Timestamp lastUpdate;
-    private int cityId;
+    private CityEntity city;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     public int getAddressId() {
         return addressId;
@@ -83,7 +86,7 @@ public class AddressEntity {
         return location;
     }
 
-    public void setLocation(Object location) {
+    public void setLocation(Point location) {
         this.location = location;
     }
 
@@ -97,6 +100,16 @@ public class AddressEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    public CityEntity getCity() {
+        return city;
+    }
+
+    public void setCity(CityEntity city) {
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,15 +121,5 @@ public class AddressEntity {
     @Override
     public int hashCode() {
         return Objects.hash(addressId, address, address2, district, postalCode, phone, location, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "city_id")
-    public int getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
     }
 }

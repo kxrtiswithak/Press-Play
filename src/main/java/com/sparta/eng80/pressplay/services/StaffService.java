@@ -12,6 +12,11 @@ public class StaffService implements AccountInterface<StaffEntity> {
 
     private StaffRepository staffRepository;
 
+    public StaffService(StaffRepository staffRepository) {
+        this.staffRepository = staffRepository;
+    }
+
+
     @Override
     public Optional<StaffEntity> findByEmail(String email) {
         return staffRepository.findByEmail(email);

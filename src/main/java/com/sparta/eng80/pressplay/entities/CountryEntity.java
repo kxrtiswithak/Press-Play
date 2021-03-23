@@ -11,7 +11,8 @@ public class CountryEntity {
     private String country;
     private Timestamp lastUpdate;
 
-    @Id
+    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "country_id")
     public int getCountryId() {
         return countryId;

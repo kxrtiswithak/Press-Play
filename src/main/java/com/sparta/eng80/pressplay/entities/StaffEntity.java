@@ -17,10 +17,12 @@ public class StaffEntity {
     private String username;
     private String password;
     private Timestamp lastUpdate;
-    private int addressId;
-    private int storeId;
+
+    private AddressEntity address;
+    private StoreEntity store;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id")
     public int getStaffId() {
         return staffId;
@@ -110,6 +112,26 @@ public class StaffEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,25 +145,5 @@ public class StaffEntity {
         int result = Objects.hash(staffId, firstName, lastName, email, active, username, password, lastUpdate);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
-    }
-
-    @Basic
-    @Column(name = "address_id")
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
-    @Basic
-    @Column(name = "store_id")
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
     }
 }

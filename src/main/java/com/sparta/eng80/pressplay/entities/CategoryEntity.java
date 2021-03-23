@@ -3,6 +3,7 @@ package com.sparta.eng80.pressplay.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "category", schema = "sakila")
@@ -11,7 +12,10 @@ public class CategoryEntity {
     private String name;
     private Timestamp lastUpdate;
 
+    private Set<FilmEntity> films;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     public int getCategoryId() {
         return categoryId;
@@ -39,6 +43,15 @@ public class CategoryEntity {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "category")
+    public Set<FilmEntity> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<FilmEntity> films) {
+        this.films = films;
     }
 
     @Override
