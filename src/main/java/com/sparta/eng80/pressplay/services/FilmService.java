@@ -117,7 +117,7 @@ public class FilmService implements FilmInterface {
 
     @Override
     public Optional<FilmEntity> findById(Integer id) {
-        return Optional.empty();
+        return filmRepository.findById(id);
     }
 
     @Override
