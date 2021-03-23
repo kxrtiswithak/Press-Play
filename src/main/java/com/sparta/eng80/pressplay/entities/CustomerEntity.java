@@ -133,7 +133,7 @@ public class CustomerEntity {
         return role;
     }
 
-    public void setRole(String role) { ;
+    public void setRole(String role) {
         this.role = role;
     }
 

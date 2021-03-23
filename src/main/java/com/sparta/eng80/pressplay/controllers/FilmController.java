@@ -2,12 +2,12 @@ package com.sparta.eng80.pressplay.controllers;
 
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.services.FilmService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Optional;
-
+@Controller
 public class FilmController {
 
     private final FilmService filmService;

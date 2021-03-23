@@ -34,9 +34,9 @@ public class LoginCredentialService implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
 
         Optional<CustomerEntity> customerOptional = customerRepository.findByEmail(email);
-        if (!customerOptional.isPresent()) {
+        if (customerOptional.isEmpty()) {
             Optional<StaffEntity> staffOptional = staffRepository.findByEmail(email);
-            if (!staffOptional.isPresent()) {
+            if (staffOptional.isEmpty()) {
                 throw new UsernameNotFoundException(email);
             }
             StaffEntity staff = staffOptional.get();

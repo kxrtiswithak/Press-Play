@@ -1,7 +1,6 @@
 package com.sparta.eng80.pressplay.entities;
 
 import com.sparta.eng80.pressplay.entities.datatypes.Rating;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
