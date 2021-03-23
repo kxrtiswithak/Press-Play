@@ -14,10 +14,12 @@ public class CustomerEntity {
     private byte active;
     private Timestamp createDate;
     private Timestamp lastUpdate;
-    private int storeId;
-    private int addressId;
+
+    private StoreEntity store;
+    private AddressEntity address;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     public int getCustomerId() {
         return customerId;
@@ -87,6 +89,26 @@ public class CustomerEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id")
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,25 +120,5 @@ public class CustomerEntity {
     @Override
     public int hashCode() {
         return Objects.hash(customerId, firstName, lastName, email, active, createDate, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "store_id")
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    @Basic
-    @Column(name = "address_id")
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
     }
 }
