@@ -1,0 +1,40 @@
+package com.sparta.eng80.pressplay.services;
+
+import com.sparta.eng80.pressplay.entities.FilmEntity;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+
+@SpringBootTest
+public class FilmServiceTest {
+
+    @Autowired
+    private FilmService filmService;
+
+    @Test
+    public void testFindByName(){
+        Iterable<FilmEntity> test = filmService.findByName("MARRIED GO");
+        Assertions.assertEquals(test.iterator().next().getFilmId(), 559);
+    }
+
+    @Test
+    public void testFindByCategory(){
+        Iterable<FilmEntity> test = filmService.findByCategory("BILL OTHERS");
+        Assertions.assertEquals(test.iterator().next().getFilmId(), 6);
+    }
+
+    @Test
+    public void testFindByActor(){
+        Iterable<FilmEntity> test = filmService.findByActor("SILVERADO GOLDFINGER");
+        Assertions.assertEquals(test.iterator().next().getFilmId(), 21);
+    }
+
+    @Test
+    public void testFindByLanguage(){
+        Iterable<FilmEntity> test = filmService.findByLanguage("English");
+        Assertions.assertEquals(test.iterator().next().getFilmId(), 1);
+    }
+}
