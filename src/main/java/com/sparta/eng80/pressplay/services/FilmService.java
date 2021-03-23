@@ -6,6 +6,7 @@ import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.repositories.CategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmCategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmRepository;
+import com.sparta.eng80.pressplay.services.interfaces.FilmInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

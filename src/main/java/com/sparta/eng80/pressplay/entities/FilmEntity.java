@@ -1,9 +1,13 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.entities.datatypes.Rating;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "film", schema = "sakila")
@@ -11,18 +15,23 @@ public class FilmEntity {
     private int filmId;
     private String title;
     private String description;
-    private Object releaseYear;
-    private Object rentalDuration;
+    private int releaseYear;
+    private int rentalDuration;
     private BigDecimal rentalRate;
     private int length;
     private BigDecimal replacementCost;
-    private Object rating;
-    private Object specialFeatures;
+    private Rating rating;
+    private org.hibernate.mapping.Set specialFeatures;
     private Timestamp lastUpdate;
-    private int languageId;
-    private int originalLanguageId;
+
+    private LanguageEntity language;
+    private LanguageEntity originalLanguage;
+
+    private Set<ActorEntity> actors;
+    private Set<CategoryEntity> categories;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id")
     public int getFilmId() {
         return filmId;
@@ -54,21 +63,21 @@ public class FilmEntity {
 
     @Basic
     @Column(name = "release_year")
-    public Object getReleaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Object releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
     @Basic
     @Column(name = "rental_duration")
-    public Object getRentalDuration() {
+    public int getRentalDuration() {
         return rentalDuration;
     }
 
-    public void setRentalDuration(Object rentalDuration) {
+    public void setRentalDuration(int rentalDuration) {
         this.rentalDuration = rentalDuration;
     }
 
@@ -102,23 +111,23 @@ public class FilmEntity {
         this.replacementCost = replacementCost;
     }
 
-    @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "rating")
-    public Object getRating() {
+    public Rating getRating() {
         return rating;
     }
 
-    public void setRating(Object rating) {
+    public void setRating(Rating rating) {
         this.rating = rating;
     }
 
     @Basic
     @Column(name = "special_features")
-    public Object getSpecialFeatures() {
+    public org.hibernate.mapping.Set getSpecialFeatures() {
         return specialFeatures;
     }
 
-    public void setSpecialFeatures(Object specialFeatures) {
+    public void setSpecialFeatures(org.hibernate.mapping.Set specialFeatures) {
         this.specialFeatures = specialFeatures;
     }
 
@@ -132,6 +141,58 @@ public class FilmEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "language_id")
+    public LanguageEntity getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(LanguageEntity language) {
+        this.language = language;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "original_language_id")
+    public LanguageEntity getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public void setOriginalLanguage(LanguageEntity originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "film_actor",
+        joinColumns = {
+            @JoinColumn(name = "film_id")
+        },
+        inverseJoinColumns = {
+                @JoinColumn(name = "actor_id")
+        })
+    public Set<ActorEntity> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<ActorEntity> actors) {
+        this.actors = actors;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "film_categories",
+            joinColumns = {
+                    @JoinColumn(name = "film_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "category_id")
+            })
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,25 +204,5 @@ public class FilmEntity {
     @Override
     public int hashCode() {
         return Objects.hash(filmId, title, description, releaseYear, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
-    }
-
-    @Basic
-    @Column(name = "language_id")
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(int languageId) {
-        this.languageId = languageId;
-    }
-
-    @Basic
-    @Column(name = "original_language_id")
-    public int getOriginalLanguageId() {
-        return originalLanguageId;
-    }
-
-    public void setOriginalLanguageId(int originalLanguageId) {
-        this.originalLanguageId = originalLanguageId;
     }
 }

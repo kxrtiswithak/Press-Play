@@ -12,6 +12,7 @@ public class LanguageEntity {
     private Timestamp lastUpdate;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id")
     public int getLanguageId() {
         return languageId;
