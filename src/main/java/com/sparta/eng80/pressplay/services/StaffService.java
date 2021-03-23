@@ -38,8 +38,8 @@ public class StaffService implements AccountInterface<StaffEntity> {
     }
 
     @Override
-    public void save(StaffEntity staffEntity) {
-        staffRepository.save(staffEntity);
+    public int save(StaffEntity staff) {
+        return staffRepository.save(staff).getStaffId();
     }
 
 }

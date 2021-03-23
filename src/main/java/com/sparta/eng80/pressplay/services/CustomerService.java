@@ -37,7 +37,7 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
     }
 
     @Override
-    public void save(CustomerEntity customerEntity) {
-        customerRepository.save(customerEntity);
+    public int save(CustomerEntity customer) {
+        return customerRepository.save(customer).getCustomerId();
     }
 }
