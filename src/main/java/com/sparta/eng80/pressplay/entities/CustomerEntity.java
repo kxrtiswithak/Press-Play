@@ -20,6 +20,7 @@ public class CustomerEntity {
     private int addressId;
     private String role;
     private String Password;
+    private transient String passwordConfirmation;
 
     @Id
     @Column(name = "customer_id")
@@ -141,5 +142,14 @@ public class CustomerEntity {
 
     public void setPassword(String password) {
         Password = PasswordEncryptor.encode(password);
+    }
+
+    @Transient
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }
