@@ -1,5 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.security.PasswordEncryptor;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -17,6 +19,7 @@ public class CustomerEntity {
     private int storeId;
     private int addressId;
     private String role;
+    private String Password;
 
     @Id
     @Column(name = "customer_id")
@@ -130,5 +133,13 @@ public class CustomerEntity {
 
     public void setRole(String role) { ;
         this.role = role;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = PasswordEncryptor.encode(password);
     }
 }
