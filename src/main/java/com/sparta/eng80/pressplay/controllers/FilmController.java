@@ -1,6 +1,5 @@
 package com.sparta.eng80.pressplay.controllers;
 
-import com.sparta.eng80.pressplay.entities.ActorEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.services.FilmService;
 import org.springframework.ui.ModelMap;

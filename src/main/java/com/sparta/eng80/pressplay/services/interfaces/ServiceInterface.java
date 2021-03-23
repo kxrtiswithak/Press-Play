@@ -1,4 +1,4 @@
-package com.sparta.eng80.pressplay.services;
+package com.sparta.eng80.pressplay.services.interfaces;
 
 import java.util.Optional;
 

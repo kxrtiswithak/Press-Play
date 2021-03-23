@@ -2,15 +2,18 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.repositories.CustomerRepository;
+import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class CustomerService implements CustomerInterface {
+@Service
+public class CustomerService implements AccountInterface<CustomerEntity> {
 
     private CustomerRepository customerRepository;
 
     @Override
-    public Optional<CustomerEntity> findByUsername(String username) {
+    public Optional<CustomerEntity> findByEmail(String username) {
         return customerRepository.findByEmail(username);
     }
 
