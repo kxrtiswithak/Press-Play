@@ -16,6 +16,7 @@ public class CustomerEntity {
     private Timestamp lastUpdate;
     private int storeId;
     private int addressId;
+    private String role;
 
     @Id
     @Column(name = "customer_id")
@@ -118,5 +119,16 @@ public class CustomerEntity {
 
     public void setAddressId(int addressId) {
         this.addressId = addressId;
+    }
+
+    @Basic
+    @Column(name = "role")
+    @Transient
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) { ;
+        this.role = role;
     }
 }
