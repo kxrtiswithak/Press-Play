@@ -6,13 +6,13 @@ import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.repositories.CategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmCategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.sparta.eng80.pressplay.entities.ActorEntity;
+import com.sparta.eng80.pressplay.repositories.ActorRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FilmService implements FilmInterface {
@@ -20,16 +20,13 @@ public class FilmService implements FilmInterface {
     private final FilmRepository filmRepository;
     private final FilmCategoryRepository filmCategoryRepository;
     private final CategoryRepository categoryRepository;
+    private ActorRepository actorRepository;
 
-    public FilmService(FilmRepository filmRepository, FilmCategoryRepository filmCategoryRepository, CategoryRepository categoryRepository) {
+    public FilmService(FilmRepository filmRepository, FilmCategoryRepository filmCategoryRepository, CategoryRepository categoryRepository, ActorRepository actorRepository) {
         this.filmRepository = filmRepository;
         this.filmCategoryRepository = filmCategoryRepository;
         this.categoryRepository = categoryRepository;
-    }
-
-    @Override
-    public Iterable<FilmEntity> findByName(String filmName) {
-        return null;
+        this.actorRepository = actorRepository;
     }
 
     public Iterable<FilmEntity> findByCategory(int categoryID) {
@@ -96,7 +93,38 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
-    public Iterable<FilmEntity> findByLanguage(String language) {
+    public Iterable<FilmEntity> findByTitle(String title) {
+        return filmRepository.findByTitle(title);
+    }
+
+    @Override
+    public Iterable<FilmEntity> findByCategory() {
+        return null;
+    }
+
+    @Override
+    public Optional<FilmEntity> findActorById(int actorID) {
+        if(actorID < 0){
+            return null;
+        }
+        return filmRepository.findByActor(actorID);
+    }
+
+    @Override
+    public Iterable<ActorEntity> findActorByName(String actor) {
+        actor = "%" + actor + "%";
+        return actorRepository.findByName(actor);
+    }
+
+    @Override
+    public Iterable<ActorEntity> findActorByName(String firstName, String lastName) {
+        firstName = "%" + firstName + "%";
+        lastName = "%" + lastName + "%";
+        return actorRepository.findByName(firstName, lastName);
+    }
+
+    @Override
+    public Iterable<FilmEntity> findByLanguage() {
         return null;
     }
 
