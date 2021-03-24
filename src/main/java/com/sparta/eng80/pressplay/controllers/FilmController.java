@@ -19,7 +19,6 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-
     @GetMapping("/title")
     public String findByTitle(String title, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findByTitle(title);

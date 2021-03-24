@@ -23,17 +23,9 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
+    public String login() {
         if (securityService.isAuthenticated()) {
             return "redirect:/";
-        }
-
-        if (error != null) {
-            model.addAttribute("error", "Your username or password are invalid.");
-        }
-
-        if (logout != null) {
-            model.addAttribute("message", "You have been logged out successfully.");
         }
         return "login";
     }
