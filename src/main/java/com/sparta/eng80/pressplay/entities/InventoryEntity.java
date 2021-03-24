@@ -10,6 +10,8 @@ public class InventoryEntity {
     private int inventoryId;
     private Timestamp lastUpdate;
 
+    boolean isRented;
+
     private FilmEntity film;
     private StoreEntity store;
 
@@ -23,6 +25,18 @@ public class InventoryEntity {
     public void setInventoryId(int inventoryId) {
         this.inventoryId = inventoryId;
     }
+
+
+    @Basic
+    @Column(name = "isRented")
+    public boolean getIsRented() {
+        return isRented;
+    }
+
+    public void setIsRented(boolean isRented) {
+        this.isRented = isRented;
+    }
+
 
     @Basic
     @Column(name = "last_update")
