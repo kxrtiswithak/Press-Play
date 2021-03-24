@@ -25,12 +25,12 @@ public class RentalService implements RentalInterface {
 
     @Override
     public Iterable<RentalEntity> findOverdueRentalsByCustomerId(int id) {
-        return rentalRepository.findRentalsByCustomerWhereReturnDateIsBefore(id, Timestamp.valueOf(LocalDateTime.now()));
+        return rentalRepository.findMostRecentRentalsForCustomerGroupedByInventoryIdWhereReturnDateIsBefore(id, Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Override
     public Iterable<RentalEntity> findAllOverdueRentals() {
-        return rentalRepository.findRentalsWhereReturnDateIsBefore(Timestamp.valueOf(LocalDateTime.now()));
+        return rentalRepository.findMostRecentRentalsGroupedByInventoryIdWhereReturnDateIsBefore(Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Override

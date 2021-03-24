@@ -12,9 +12,9 @@ public interface RentalRepository extends CrudRepository<RentalEntity, Integer> 
 
     Iterable<RentalEntity> findRentalEntitiesByCustomer_CustomerId(int id);
 
-    @Query("SELECT r FROM RentalEntity r WHERE r.customer.customerId =? 1 AND r.inventory.rented = true AND r.returnDate <= ?2")
-    Iterable<RentalEntity> findRentalsByCustomerWhereReturnDateIsBefore(int id, Timestamp date);
+    @Query(value = "SELECT * FROM rental r JOIN inventory i ON r.iventory_id == i.inventory_id WHERE r.customer.customerId =? 1 AND r.inventory.rented = true AND r.returnDate <= ?2 AND (SELECT count(*) FROM rental r2 WHERE r2.inventory_id = r.inventory_id AND r2_return_date >= r.return_date) <= 1", nativeQuery = true)
+    Iterable<RentalEntity> findMostRecentRentalsForCustomerGroupedByInventoryIdWhereReturnDateIsBefore(int id, Timestamp date);
 
-    @Query("SELECT r FROM RentalEntity r WHERE r.inventory.rented = true AND r.returnDate <= ?1")
-    Iterable<RentalEntity> findRentalsWhereReturnDateIsBefore(Timestamp date);
+    @Query(value = "SELECT * FROM rental r JOIN inventory i ON r.iventory_id == i.inventory_id WHERE i.is_rented = true AND r.return_date <= ?1 AND (SELECT count(*) FROM rental r2 WHERE r2.inventory_id = r.inventory_id AND r2_return_date >= r.return_date) <= 1", nativeQuery = true)
+    Iterable<RentalEntity> findMostRecentRentalsGroupedByInventoryIdWhereReturnDateIsBefore(Timestamp date);
 }
