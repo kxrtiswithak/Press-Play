@@ -3,6 +3,7 @@ package com.sparta.eng80.pressplay.controllers;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.services.FilmService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,14 @@ public class FilmController {
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
+
+    @GetMapping("/")
+    public String getAllFilms(Model model) {
+       Iterable<FilmEntity> filmEntities = filmService.findAll();
+        model.addAttribute("films", filmEntities);
+        return "/index";
+    }
+
 /*
     @GetMapping
     public String findByTitle(String title, ModelMap modelMap){
