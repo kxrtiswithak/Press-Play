@@ -40,8 +40,15 @@
         <div class="container">
             <h1 class="text-center">Categories</h1>
             <ul class="text-center">
-                <a th:href="@{/categories/category.name}" >
-                <li th:each="category : ${categories}" th:text="*{category.name}"></li></a>
+                <table>
+                    <tr th:each="category : ${categories}">
+                        <td><form method="get" th:align="center" action="/category">
+                            <input type="hidden" name="category" th:value="*{category.name}">
+                            <input type="submit" th:value="*{category.name}">
+                        </form></td>
+                    </tr>
+                </table>
+<!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
             </ul>
 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new
