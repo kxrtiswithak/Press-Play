@@ -32,7 +32,7 @@
                             <a class="nav-link" aria-current="page" href="/">ACCOUNT</a>
                         </li>
 
-                        <span sec:authorize="hasAnyAuthority('MEMBER','STAFF')">
+                        <span sec:authorize="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')">
                             <form th:action="@{/logout}" method="post">
                                 <input class="btn" id="primaryBtn" type="submit" value="Logout"/>
                             </form>
