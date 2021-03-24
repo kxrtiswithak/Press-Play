@@ -5,6 +5,8 @@ import com.sparta.eng80.pressplay.repositories.RentalRepository;
 import com.sparta.eng80.pressplay.services.interfaces.RentalInterface;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,16 @@ public class RentalService implements RentalInterface {
     @Override
     public Iterable<RentalEntity> findByCustomerId(int id) {
         return rentalRepository.findRentalEntitiesByCustomer_CustomerId(id);
+    }
+
+    @Override
+    public Iterable<RentalEntity> findOverdueRentalsByCustomerId(int id) {
+        return rentalRepository.findRentalsByCustomerWhereReturnDateIsBefore(id, Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    @Override
+    public Iterable<RentalEntity> findAllOverdueRentals() {
+        return rentalRepository.findRentalsWhereReturnDateIsBefore(Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Override
