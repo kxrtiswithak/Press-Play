@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FilmRepository extends CrudRepository<FilmEntity, Integer> {
+public interface    FilmRepository extends CrudRepository<FilmEntity, Integer> {
 
     @Query(value = "select * from film where title = ?", nativeQuery = true)
     Iterable<FilmEntity> findByTitle(String title);

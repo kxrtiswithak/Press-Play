@@ -6,6 +6,7 @@ import com.sparta.eng80.pressplay.services.interfaces.RentalInterface;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -18,12 +19,7 @@ public class RentalService implements RentalInterface {
     private final InventoryRepository inventoryRepository;
     private final StaffRepository staffRepository;
 
-    public RentalService(
-            RentalRepository rentalRepository,
-            FilmRepository filmRepository,
-            CustomerRepository customerRepository,
-            InventoryRepository inventoryRepository,
-            StaffRepository staffRepository) {
+    public RentalService(RentalRepository rentalRepository, FilmRepository filmRepository, CustomerRepository customerRepository, InventoryRepository inventoryRepository, StaffRepository staffRepository) {
         this.rentalRepository = rentalRepository;
         this.filmRepository = filmRepository;
         this.customerRepository = customerRepository;
@@ -42,12 +38,12 @@ public class RentalService implements RentalInterface {
                 if (rentalEntity.getReturnDate().before(currentTime)) {
                     InventoryEntity inventoryEntity = rentalEntity.getInventory();
                     inventoryEntity.setLastUpdate(currentTime);
-                    inventoryEntity.setIsRented(false);
+                    inventoryEntity.setRented(false);
                     rentalEntity.setInventory(inventoryEntity);
                 } else if (rentalEntity.getReturnDate().after(currentTime)) {
                     InventoryEntity inventoryEntity = rentalEntity.getInventory();
                     inventoryEntity.setLastUpdate(currentTime);
-                    inventoryEntity.setIsRented(true);
+                    inventoryEntity.setRented(true);
                     rentalEntity.setInventory(inventoryEntity);
                 }
             }
@@ -69,7 +65,7 @@ public class RentalService implements RentalInterface {
         for (InventoryEntity inventoryEntity : inventoryEntities) {
             // Inventory TABLE MUST BE UPDATED TO HAVE A BOOLEAN FOR IF A FILM
             // HAS BEEN RETURNED!
-            if (inventoryEntity.getFilm() == filmEntity && !inventoryEntity.getIsRented()) {
+            if (inventoryEntity.getFilm() == filmEntity && !inventoryEntity.isRented()) {
                 RentalEntity rentalEntity = new RentalEntity();
                 rentalEntity.setRentalDate(new java.sql.Date(date.getTime()));
                 rentalEntity.setInventory(inventoryEntity);
@@ -86,6 +82,16 @@ public class RentalService implements RentalInterface {
     @Override
     public Iterable<RentalEntity> findByCustomerId(int id) {
         return rentalRepository.findRentalEntitiesByCustomer_CustomerId(id);
+    }
+
+    @Override
+    public Iterable<RentalEntity> findOverdueRentalsByCustomerId(int id) {
+        return rentalRepository.findMostRecentRentalsForCustomerGroupedByInventoryIdWhereReturnDateIsBefore(id, Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    @Override
+    public Iterable<RentalEntity> findAllOverdueRentals() {
+        return rentalRepository.findMostRecentRentalsGroupedByInventoryIdWhereReturnDateIsBefore(Timestamp.valueOf(LocalDateTime.now()));
     }
 
     @Override
