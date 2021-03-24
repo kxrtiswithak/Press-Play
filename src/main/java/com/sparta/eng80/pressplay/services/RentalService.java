@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,6 +79,18 @@ public class RentalService implements RentalInterface {
             }
         }
         return true;
+    }
+
+    public Iterable<RentalEntity> getCurrentlyRentedFilms(int customerId) {
+        List<RentalEntity> currentRentals = new ArrayList<>();
+        Iterable<RentalEntity> allRentals = rentalRepository.findRentedRentalEntityByCustomerID(customerId);
+        for (RentalEntity rental : allRentals) {
+            RentalEntity latestRental = rentalRepository.findLatestRentalEntityByInventoryID(rental.getInventory().getInventoryId());
+            if (latestRental.getCustomer().getCustomerId() == customerId) {
+                currentRentals.add(rental);
+            }
+        }
+        return currentRentals;
     }
 
     @Override
