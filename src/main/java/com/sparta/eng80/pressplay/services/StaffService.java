@@ -1,11 +1,13 @@
 package com.sparta.eng80.pressplay.services;
 
+import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
 import com.sparta.eng80.pressplay.repositories.StaffRepository;
 import com.sparta.eng80.pressplay.security.PasswordEncryptor;
 import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,16 @@ public class StaffService implements AccountInterface<StaffEntity> {
     @Override
     public boolean isAdmin(Integer id) {
         return findById(id).isPresent();
+    }
+
+    @Override
+    public ArrayList<String> getDetails(StaffEntity staffEntity) {
+        ArrayList<String> staffDetails = new ArrayList<>();
+        staffDetails.add(String.valueOf(staffEntity.getStaffId()));
+        staffDetails.add(staffEntity.getFirstName());
+        staffDetails.add(staffEntity.getLastName());
+        staffDetails.add(staffEntity.getEmail());
+        return staffDetails;
     }
 
     @Override
