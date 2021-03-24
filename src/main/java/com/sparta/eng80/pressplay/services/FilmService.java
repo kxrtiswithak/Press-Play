@@ -100,6 +100,11 @@ public class FilmService implements FilmInterface {
     }
 
     @Override
+    public Iterable<FilmEntity> findTopNMostRentedFilms(int n) {
+        return filmRepository.findTopNMostRentedFilms(n);
+    }
+
+    @Override
     public Optional<FilmEntity> findById(Integer id) {
         return filmRepository.findById(id);
     }
