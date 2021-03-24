@@ -1,0 +1,3 @@
+-- Customer Table
+ALTER TABLE customer ADD COLUMN password varchar(65) DEFAULT 'password' NOT NULL;
+ALTER TABLE customer ADD COLUMN role varchar(10) DEFAULT 'ROLE_USER' NOT NULL;

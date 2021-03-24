@@ -2,11 +2,17 @@ package com.sparta.eng80.pressplay.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PasswordEncryptor {
-    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public static String encode(String password) {
+    public PasswordEncoder getBCryptPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    public String encode(String password) {
         return passwordEncoder.encode(password);
     }
 }
