@@ -1,6 +1,5 @@
 package com.sparta.eng80.pressplay.repositories;
 
-import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -34,6 +33,16 @@ public interface    FilmRepository extends CrudRepository<FilmEntity, Integer> {
             "inner join language l on l.language_id = f.language_id " +
             "where l.name = ?")
     Iterable<FilmEntity> findByLanguage(String language);
-    @Query(nativeQuery = true, value = "select * from category")
-    Iterable<CategoryEntity> findAllCategories();
+
+    @Query(value = "SELECT f.* FROM film f (" +
+            "SELECT i.film_id FROM inventory i " +
+            "JOIN (" +
+            "   SELECT r.inventory_id, COUNT(*) as rentalCount FROM rental r GROUP BY r.inventory_id" +
+            ") AS rentals " +
+            "ON i.inventory_id = rentals.inventory_id " +
+            "GROUP BY i.film_id " +
+            "ORDER BY SUM(rentals.rentalCount) " +
+            "DESC LIMIT ?1) as rentals2 " +
+            "ON f.film_id = rentals2.film_id", nativeQuery = true)
+    Iterable<FilmEntity> findTopNMostRentedFilms(int n);
 }
