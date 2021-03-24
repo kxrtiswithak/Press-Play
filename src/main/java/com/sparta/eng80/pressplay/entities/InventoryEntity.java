@@ -9,8 +9,7 @@ import java.util.Objects;
 public class InventoryEntity {
     private int inventoryId;
     private Timestamp lastUpdate;
-
-    boolean isRented;
+    private boolean isRented;
 
     private FilmEntity film;
     private StoreEntity store;
@@ -26,18 +25,6 @@ public class InventoryEntity {
         this.inventoryId = inventoryId;
     }
 
-
-    @Basic
-    @Column(name = "isRented")
-    public boolean getIsRented() {
-        return isRented;
-    }
-
-    public void setIsRented(boolean isRented) {
-        this.isRented = isRented;
-    }
-
-
     @Basic
     @Column(name = "last_update")
     public Timestamp getLastUpdate() {
@@ -46,6 +33,16 @@ public class InventoryEntity {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Basic
+    @Column(name = "is_rented")
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean isRented) {
+        this.isRented = isRented;
     }
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
