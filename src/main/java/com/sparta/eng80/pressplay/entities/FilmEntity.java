@@ -4,6 +4,7 @@ import com.sparta.eng80.pressplay.entities.datatypes.Rating;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
@@ -20,8 +21,8 @@ public class FilmEntity {
     private int length;
     private BigDecimal replacementCost;
     private Rating rating;
-    private org.hibernate.mapping.Set specialFeatures;
-    private Timestamp lastUpdate;
+    private String specialFeatures;
+    private Date lastUpdate;
 
     private LanguageEntity language;
     private LanguageEntity originalLanguage;
@@ -122,21 +123,21 @@ public class FilmEntity {
 
     @Basic
     @Column(name = "special_features")
-    public org.hibernate.mapping.Set getSpecialFeatures() {
+    public String getSpecialFeatures() {
         return specialFeatures;
     }
 
-    public void setSpecialFeatures(org.hibernate.mapping.Set specialFeatures) {
+    public void setSpecialFeatures(String specialFeatures) {
         this.specialFeatures = specialFeatures;
     }
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

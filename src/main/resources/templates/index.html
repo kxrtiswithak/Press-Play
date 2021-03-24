@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Press-Play</title>
+        <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css}" />
+<!--
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+-->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div th:insert="/fragments/header :: header"></div>
+        <!-- Table for users && members -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+<!--                    <th>Release Year</th>-->
+<!--                    <th>Duration</th>-->
+<!--                    <th>Rating</th>-->
+<!--                    <th>Special Features</th>-->
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="film : ${films}">
+                    <td th:text="${film.title}"></td>
+                    <td th:text="${film.description}"></td>
+                    <td th:text="${film.releaseYear}"></td>
+                    <td th:text="${film.length}"></td>
+                    <td th:text="${film.rating}"></td>
+                    <td th:text="${film.specialFeatures}"></td>
+                </tr>
+            </tbody>
+        </table>
+<!--        <div th:replace="/fragments/results :: results()"></div>-->
+
+        <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
+        <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+                crossorigin="anonymous">
+        </script>
+    </body>
+</html>
