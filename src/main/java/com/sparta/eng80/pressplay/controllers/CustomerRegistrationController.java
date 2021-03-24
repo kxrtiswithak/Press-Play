@@ -28,6 +28,7 @@ public class CustomerRegistrationController {
         this.customerRegistrationValidator = customerRegistrationValidator;
     }
 
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
@@ -48,5 +49,10 @@ public class CustomerRegistrationController {
         customerService.save(customer);
         securityService.autoLogin(customer.getEmail(), customer.getPasswordConfirmation());
         return "redirect:/welcome";
+    }
+
+    @GetMapping("/contact")
+    public String contact(){
+        return "contact";
     }
 }
