@@ -10,6 +10,8 @@ public class InventoryEntity {
     private int inventoryId;
     private Timestamp lastUpdate;
 
+    boolean isRented;
+
     private FilmEntity film;
     private StoreEntity store;
 
@@ -24,6 +26,18 @@ public class InventoryEntity {
         this.inventoryId = inventoryId;
     }
 
+
+    @Basic
+    @Column(name = "isRented")
+    public boolean getIsRented() {
+        return isRented;
+    }
+
+    public void setIsRented(boolean isRented) {
+        this.isRented = isRented;
+    }
+
+
     @Basic
     @Column(name = "last_update")
     public Timestamp getLastUpdate() {
@@ -34,7 +48,7 @@ public class InventoryEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
     public FilmEntity getFilm() {
         return film;
@@ -44,7 +58,7 @@ public class InventoryEntity {
         this.film = film;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     public StoreEntity getStore() {
         return store;

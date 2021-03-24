@@ -58,7 +58,7 @@ public class RentalEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "inventory_id")
     public InventoryEntity getInventory() {
         return inventory;
@@ -68,7 +68,7 @@ public class RentalEntity {
         this.inventory = inventory;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     public CustomerEntity getCustomer() {
         return customer;
@@ -78,7 +78,7 @@ public class RentalEntity {
         this.customer = customer;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "staff_id")
     public StaffEntity getStaff() {
         return staff;
