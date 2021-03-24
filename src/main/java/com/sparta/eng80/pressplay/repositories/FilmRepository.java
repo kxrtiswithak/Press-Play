@@ -1,5 +1,6 @@
 package com.sparta.eng80.pressplay.repositories;
 
+import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,4 +34,6 @@ public interface    FilmRepository extends CrudRepository<FilmEntity, Integer> {
             "inner join language l on l.language_id = f.language_id " +
             "where l.name = ?")
     Iterable<FilmEntity> findByLanguage(String language);
+    @Query(nativeQuery = true, value = "select * from category")
+    Iterable<CategoryEntity> findAllCategories();
 }
