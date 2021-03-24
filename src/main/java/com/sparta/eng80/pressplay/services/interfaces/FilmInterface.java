@@ -13,5 +13,5 @@ public interface FilmInterface extends ServiceInterface<FilmEntity>{
     Optional<FilmEntity> findActorById(int actorID);
     Iterable<FilmEntity> findActorByName(String actor);
     Iterable<FilmEntity> findByLanguage(String language);
-
+    Iterable<FilmEntity> findTopNMostRentedFilms(int n);
 }
