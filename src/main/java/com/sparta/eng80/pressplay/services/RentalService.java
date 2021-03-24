@@ -19,12 +19,7 @@ public class RentalService implements RentalInterface {
     private final InventoryRepository inventoryRepository;
     private final StaffRepository staffRepository;
 
-    public RentalService(
-            RentalRepository rentalRepository,
-            FilmRepository filmRepository,
-            CustomerRepository customerRepository,
-            InventoryRepository inventoryRepository,
-            StaffRepository staffRepository) {
+    public RentalService(RentalRepository rentalRepository, FilmRepository filmRepository, CustomerRepository customerRepository, InventoryRepository inventoryRepository, StaffRepository staffRepository) {
         this.rentalRepository = rentalRepository;
         this.filmRepository = filmRepository;
         this.customerRepository = customerRepository;
@@ -70,7 +65,7 @@ public class RentalService implements RentalInterface {
         for (InventoryEntity inventoryEntity : inventoryEntities) {
             // Inventory TABLE MUST BE UPDATED TO HAVE A BOOLEAN FOR IF A FILM
             // HAS BEEN RETURNED!
-            if (inventoryEntity.getFilm() == filmEntity && !inventoryEntity.getIsRented()) {
+            if (inventoryEntity.getFilm() == filmEntity && !inventoryEntity.isRented()) {
                 RentalEntity rentalEntity = new RentalEntity();
                 rentalEntity.setRentalDate(new java.sql.Date(date.getTime()));
                 rentalEntity.setInventory(inventoryEntity);
