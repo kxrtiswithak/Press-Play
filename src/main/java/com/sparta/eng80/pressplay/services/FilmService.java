@@ -1,10 +1,8 @@
 package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CategoryEntity;
-import com.sparta.eng80.pressplay.entities.FilmCategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.repositories.CategoryRepository;
-import com.sparta.eng80.pressplay.repositories.FilmCategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmRepository;
 import com.sparta.eng80.pressplay.services.interfaces.FilmInterface;
 import org.springframework.stereotype.Service;
@@ -17,12 +15,10 @@ import java.util.List;
 public class FilmService implements FilmInterface {
 
     private final FilmRepository filmRepository;
-    private final FilmCategoryRepository filmCategoryRepository;
     private final CategoryRepository categoryRepository;
 
-    public FilmService(FilmRepository filmRepository, FilmCategoryRepository filmCategoryRepository, CategoryRepository categoryRepository) {
+    public FilmService(FilmRepository filmRepository, CategoryRepository categoryRepository) {
         this.filmRepository = filmRepository;
-        this.filmCategoryRepository = filmCategoryRepository;
         this.categoryRepository = categoryRepository;
     }
 
@@ -43,27 +39,15 @@ public class FilmService implements FilmInterface {
             // genre doesn't exist, return empty list
             return new ArrayList<>();
         }
-        Iterable<FilmCategoryEntity> AllFilmCategorys = filmCategoryRepository.findAll();
-        ArrayList<Integer> allFilmIdsThatBelongToGenre = new ArrayList<>();
-        for (FilmCategoryEntity filmCategoryEntity : AllFilmCategorys) {
+        Iterable<CategoryEntity> AllFilmCategorys = categoryRepository.findAll();
+
+        ArrayList<FilmEntity> allFilmIdsThatBelongToGenre = new ArrayList<>();
+        for (CategoryEntity filmCategoryEntity : AllFilmCategorys) {
             if (filmCategoryEntity.getCategoryId() == categoryID) {
-                allFilmIdsThatBelongToGenre.add(filmCategoryEntity.getFilmId());
+                allFilmIdsThatBelongToGenre.addAll(filmCategoryEntity.getFilms());
             }
         }
-        if (allFilmIdsThatBelongToGenre.isEmpty()) {
-            // if no films were found, no point continuing
-            return new ArrayList<>();
-        }
-        List<FilmEntity> result = new ArrayList<>();
-        Iterable<FilmEntity> AllFilms = findAll();
-        for (int filmId : allFilmIdsThatBelongToGenre) {
-            for (FilmEntity film : AllFilms) {
-                if (film.getFilmId() == filmId) {
-                    result.add(film);
-                }
-            }
-        }
-        return result;
+        return allFilmIdsThatBelongToGenre;
     }
 
     public Iterable<FilmEntity> findByCategory(String genre) {

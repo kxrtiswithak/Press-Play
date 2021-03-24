@@ -34,7 +34,7 @@ public class InventoryEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
     public FilmEntity getFilm() {
         return film;
@@ -44,7 +44,7 @@ public class InventoryEntity {
         this.film = film;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     public StoreEntity getStore() {
         return store;

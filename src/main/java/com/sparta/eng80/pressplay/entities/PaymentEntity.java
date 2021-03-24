@@ -64,7 +64,7 @@ public class PaymentEntity {
         return Objects.hash(paymentId, amount, paymentDate, lastUpdate);
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     public CustomerEntity getCustomer() {
         return customer;
@@ -74,7 +74,7 @@ public class PaymentEntity {
         this.customer = customer;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "staff_id")
     public StaffEntity getStaff() {
         return staff;
@@ -84,7 +84,7 @@ public class PaymentEntity {
         this.staff = staff;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "rental_id")
     public RentalEntity getRental() {
         return rental;

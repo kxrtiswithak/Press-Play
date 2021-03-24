@@ -34,7 +34,7 @@ public class StoreEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_staff_id")
     public StaffEntity getManagerStaff() {
         return manager;
@@ -44,7 +44,7 @@ public class StoreEntity {
         this.manager = manager;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     public AddressEntity getAddress() {
         return address;

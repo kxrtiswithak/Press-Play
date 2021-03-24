@@ -114,7 +114,7 @@ public class StaffEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     public AddressEntity getAddress() {
         return address;
@@ -124,7 +124,7 @@ public class StaffEntity {
         this.address = address;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     public StoreEntity getStore() {
         return store;

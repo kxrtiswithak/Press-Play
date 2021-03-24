@@ -16,7 +16,7 @@ public class FilmController {
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
-
+/*
     @GetMapping
     public String findByTitle(String title, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findByTitle(title);
@@ -51,4 +51,6 @@ public class FilmController {
         modelMap.addAttribute("films", filmEntities);
         return null; //TODO
     }
+
+ */
 }

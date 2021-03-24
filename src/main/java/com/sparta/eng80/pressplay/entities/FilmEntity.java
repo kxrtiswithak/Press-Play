@@ -140,7 +140,7 @@ public class FilmEntity {
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "language_id")
     public LanguageEntity getLanguage() {
         return language;
@@ -150,7 +150,7 @@ public class FilmEntity {
         this.language = language;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "original_language_id")
     public LanguageEntity getOriginalLanguage() {
         return originalLanguage;
@@ -177,7 +177,7 @@ public class FilmEntity {
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "film_categories",
+    @JoinTable(name = "film_category",
             joinColumns = {
                     @JoinColumn(name = "film_id")
             },
