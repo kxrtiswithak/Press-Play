@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RentalRepository extends CrudRepository<RentalEntity, Integer> {
+
+    Iterable<RentalEntity> findRentalEntitiesByCustomer_CustomerId(int id);
 }
