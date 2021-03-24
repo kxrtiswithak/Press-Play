@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,17 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
     @Override
     public boolean isAdmin(Integer id) {
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getDetails(CustomerEntity customerEntity) {
+        ArrayList<String> customerDetails = new ArrayList<>();
+        customerDetails.add(String.valueOf(customerEntity.getCustomerId()));
+        customerDetails.add(customerEntity.getFirstName());
+        customerDetails.add(customerEntity.getLastName());
+        customerDetails.add(customerEntity.getEmail());
+        customerDetails.add(customerEntity.getAddress().getAddress());
+        return customerDetails;
     }
 
     @Override
