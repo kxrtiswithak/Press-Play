@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FilmController {
@@ -28,9 +29,7 @@ public class FilmController {
         model.addAttribute("films", filmEntities);
         return "index";
     }
-}
 
-/*
     @GetMapping("/title")
     public String findByTitle(String title, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findByTitle(title);
@@ -59,5 +58,3 @@ public class FilmController {
         return "index";
     }
 }
-
- */
