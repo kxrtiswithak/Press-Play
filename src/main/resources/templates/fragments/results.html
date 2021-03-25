@@ -5,57 +5,25 @@
         <title>Title</title>
     </head>
     <body>
-
-    <table>
-        <thead th:fragment="fields(theadFields)">
-        <tr th:replace=""></tr>
-        </thead>
-        <tbody th:fragment="tableBody(tableData)">
-        <tr th:each="row: ${tableData}">
-            <td th:text="${}"></td>
-            <td th:text="${}"></td>
-        </tr>
-        </tbody>
-    </table>
-        <!-- Change role if needed -->
-        <div sec:authorize="hasAnyAuthority('STAFF')">
-            <div class="container mt-5 text-center">
-                <h1 class="h1"><u>Films on loan</u></h1>
-                <table class="table-bordered" id="loanTable">
+        <div th:fragment="results">
+            <div class="container">
+                <table class="text-white">
                     <thead>
-                    <tr>
-                        <td>Title</td>
-                        <td>Member</td>
-                        <td>Date from</td>
-                        <td>Due date</td>
-                    </tr>
+                        <tr>
+                            <th>Title</th>
+                            <th>Release Year</th>
+                            <th>Actors: </th>
+                        </tr>
                     </thead>
-                    <tr th:each="">
-                        <td th:text="">Example</td>
-                        <!--                         controller mapping "/account/{username}" then use @PathVariable-->
-                        <td th:text="">User <a id="" type="button" th:href="@{/account/{username}(username=${  INSERT USERNAME HERE  })}">Contact</a></td>
-                        <td th:text="">00-00-0000</td>
-                        <td th:text="">00-00-0000</td>
-                    </tr>
+                    <tbody>
+                        <tr th:each="film : ${films}" class="text-white">
+                            <td th:text="${film.title}"></td>
+                            <td th:text="${film.releaseYear}"></td>
+<!--                            <td th:text="${film.actors[0]},${film.actors[1]}"></td>-->
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-        </div>
-
-        <div th:fragment="results">
-            <table>
-                <thead>
-                    <tr>
-                        <td>Title</td>
-                        <td>Category</td>
-                        <td>Available</td>
-                    </tr>
-                </thead>
-                <tr th:each="">
-                    <td th:text=""></td>
-                    <td th:text=""></td>
-                    <td th:text=""></td>
-                </tr>
-            </table>
         </div>
     </body>
 </html>
