@@ -1,6 +1,5 @@
 package com.sparta.eng80.pressplay.services;
 
-import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
 import com.sparta.eng80.pressplay.repositories.StaffRepository;
 import com.sparta.eng80.pressplay.security.PasswordEncryptor;
@@ -23,7 +22,7 @@ public class StaffService implements AccountInterface<StaffEntity> {
 
     @Override
     public Optional<StaffEntity> findByEmail(String email) {
-        return staffRepository.findByEmail(email);
+        return staffRepository.findStaffEntityByEmailEquals(email);
     }
 
     @Override

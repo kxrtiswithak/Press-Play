@@ -8,6 +8,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "rental", schema = "sakila")
 public class RentalEntity {
+
+    public static final int RETURNED = 0;
+    public static final int CURRENT = 1;
+    public static final int OVERDUE = 2;
+
     private int rentalId;
     private Date rentalDate;
     private Date returnDate;
@@ -16,6 +21,8 @@ public class RentalEntity {
     private InventoryEntity inventory;
     private CustomerEntity customer;
     private StaffEntity staff;
+
+    private transient int status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,6 +93,15 @@ public class RentalEntity {
 
     public void setStaff(StaffEntity staff) {
         this.staff = staff;
+    }
+
+    @Transient
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
