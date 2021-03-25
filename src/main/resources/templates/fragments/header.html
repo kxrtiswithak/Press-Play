@@ -47,13 +47,13 @@
                 </div>
             </nav>
 
-            <form action="#" th:href="@{/search}" method="post">
+            <form th:action="@{/search}" method="get">
                 <div class="collapse" id="navbarToggleExternalContent">
                     <div class="container">
                         <label>
-                            <input type="text" id="searchField" placeholder="Search Film by Title, Category, Actors..." />
+                            <input type="text" id="searchField" name="title" placeholder="Search Film by Title, Category, Actors..." />
                         </label>
-                        <a id="searchBtn" href="/">SEARCH</a>
+                        <button id="searchBtn" type="submit">SEARCH</button>
 
                         <a id="closeBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
