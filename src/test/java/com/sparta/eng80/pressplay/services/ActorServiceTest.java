@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class ActorServiceTest {
@@ -50,5 +51,13 @@ public class ActorServiceTest {
         for (ActorEntity actor:allActors) {
             Assertions.assertNotEquals(actorId, actor.getActorId());
         }
+    }
+
+    @ParameterizedTest
+    @DisplayName("Check that findById returns correct actor")
+    @CsvSource({"2, NICK", "20, LUCILLE", "200, THORA"})
+    void findActorById(int id, String actorName) {
+        ActorEntity actor = actorService.findById(id).get();
+        Assertions.assertEquals(actorName, actor.getFirstName());
     }
 }
