@@ -23,18 +23,18 @@
         <tbody>
         <tr th:each="film : ${films}" class="text-white" data-bs-toggle="modal"
             th:attr="data-bs-target=${'#filmModal' + film.filmId}">
-            <td th:text="${film.title.toLowerCase()}"></td>
+            <td th:text="${film.title}"></td>
             <td>
                                 <span th:each="category,iterStat : ${film.categories}">
                                     <span th:with="isLast=(${iterStat.index} == ${film.categories.size()} - 1 ? '' : ', ')"
-                                          th:text="${category.name.toLowerCase()} + ${isLast}"></span>
+                                          th:text="${category.name} + ${isLast}"></span>
                                 </span>
             </td>
             <td th:text="${film.releaseYear}"></td>
             <td>
                                 <span th:each="actor,iterStat : ${film.actors}" th:if="${iterStat.index}<2">
                                     <span th:with="isLast=(${iterStat.index} == 1 ? '' : ', ')"
-                                          th:text="${actor.firstName.toLowerCase()} + ' ' + ${actor.lastName.toLowerCase()} + ${isLast}"></span>
+                                          th:text="${actor.firstName} + ' ' + ${actor.lastName} + ${isLast}"></span>
                                 </span>
             </td>
         </tr>
@@ -46,7 +46,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title" id="filmModalLabel" th:text="${film.title.toLowerCase()}">Film
+                    <h5 class="modal-title" id="filmModalLabel" th:text="${film.title}">Film
                         Title</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
@@ -57,7 +57,7 @@
                     <h6>Actors</h6>
                     <p><span th:each="actor,iterStat : ${film.actors}">
                                     <span th:with="isLast=(${iterStat.index} == ${film.actors.size()} - 1 ? '' : ', ')"
-                                          th:text="${actor.firstName.toLowerCase()} + ' ' + ${actor.lastName.toLowerCase()} + ${isLast}"></span>
+                                          th:text="${actor.firstName} + ' ' + ${actor.lastName} + ${isLast}"></span>
                                 </span></p>
                     <h6>Duration</h6>
                     <p th:text="${film.length} + ' mins'"></p>
