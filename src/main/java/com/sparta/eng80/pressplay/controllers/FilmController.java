@@ -61,7 +61,7 @@ public class FilmController {
     public String findCategory(@RequestParam("category") String category, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
         modelMap.addAttribute("films", filmEntities);
-        return "index";
+        return "fragments/results";
     }
 
     @GetMapping("/add-film")
