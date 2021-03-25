@@ -37,10 +37,11 @@
                                 <input class="btn" id="primaryBtn" type="submit" value="Logout"/>
                             </form>
                         </span>
-
-
-                        <!-- Insert a login/create account if not logged in -->
-
+                        <div sec:authorize="!isAuthenticated()">
+                            <form th:action="@{/login}" method="post">
+                                <input class="btn" id="primaryBtn" type="submit" value="Login/Create Account"/>
+                            </form>
+                        </div>
                     </ul>
                 </div>
             </div>
