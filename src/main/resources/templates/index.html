@@ -10,32 +10,40 @@
     </head>
     <body>
         <div th:insert="/fragments/header :: header"></div>
-        <div th:insert="/fragments/results :: results"></div>
-<!--        </div>-->
-        <!-- Table for users && members -->
-<!--        <table>-->
-<!--            <thead>-->
-<!--                <tr style="color: white">-->
-<!--                    <th>Title</th>-->
-<!--                    <th>Description</th>-->
-<!--                    <th>Genre</th>-->
-<!--                    <th>Release Year</th>-->
-<!--                    <th>Duration</th>-->
-<!--                    <th>Rating</th>-->
-<!--                </tr>-->
-<!--            </thead>-->
-<!--            <tbody style="color: white">-->
-<!--                <tr th:each="film : ${films}">-->
-<!--                    <td th:text="${film.title}"></td>-->
-<!--                    <td th:text="${film.description}"></td>-->
-<!--                    <td th:text="${film.releaseYear}"></td>-->
-<!--                    <td th:text="${film.length}"></td>-->
-<!--                    <td th:text="${film.rating.ratingCode}"></td>-->
-<!--                    <td th:text="${film.specialFeatures}"></td>-->
-<!--                </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--        <div th:replace="/fragments/results :: results()"></div>-->
+
+<!--        <div th:insert="/fragments/results :: results"></div>-->
+
+        <!-- Home Carousel -->
+        <div class="container">
+            <h1 class="text-white text-center mt-5">Most Popular</h1>
+            <div class="container position-relative" id="topRated">
+            <div id="carouselExampleDark" class="carousel carousel-dark slide position-absolute top-50 start-50 translate-middle" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div th:each="film, iterstat : ${TopFilms}" th:class="${iterstat.first}? 'carousel-item active':'carousel-item'" th:data-bs-interval="5000">
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+                            <img src="" class="img-responsive" th:alt="*{film.title} + ' : ' + *{film.description}"/>
+                            <h5 th:value="*{film.description}"></h5>
+<!--                            <p class="text-black" th:value="*{film.description}"></p>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </button>
+        </div>
+        </div>
+        </div>
 
         <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
         <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>

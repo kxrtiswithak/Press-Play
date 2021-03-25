@@ -2,24 +2,27 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
+import com.sparta.eng80.pressplay.entities.LanguageEntity;
 import com.sparta.eng80.pressplay.repositories.CategoryRepository;
 import com.sparta.eng80.pressplay.repositories.FilmRepository;
+import com.sparta.eng80.pressplay.repositories.LanguageRepository;
 import com.sparta.eng80.pressplay.services.interfaces.FilmInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FilmService implements FilmInterface {
 
     private final FilmRepository filmRepository;
     private final CategoryRepository categoryRepository;
+    private final LanguageRepository languageRepository;
 
-    public FilmService(FilmRepository filmRepository,  CategoryRepository categoryRepository) {
+    public FilmService(FilmRepository filmRepository, CategoryRepository categoryRepository, LanguageRepository languageRepository) {
         this.filmRepository = filmRepository;
         this.categoryRepository = categoryRepository;
+        this.languageRepository = languageRepository;
     }
 
     public Iterable<FilmEntity> findByCategory(int categoryID) {
@@ -114,6 +117,11 @@ public class FilmService implements FilmInterface {
         return filmRepository.findAll();
     }
 
+    public Iterable<LanguageEntity> findAllLanguages(){
+        return languageRepository.findAll();
+    }
+
+
     @Override
     public int save(FilmEntity filmEntity) {
         boolean found = false;
@@ -129,5 +137,6 @@ public class FilmService implements FilmInterface {
         }
         return -1;
     }
+
 
 }
