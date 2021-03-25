@@ -14,24 +14,19 @@
         <h1 class="h3 mb-3 fw-normal" style="color:white">Add Film</h1>
         <input type="text" id="title" name="title" class="form-control" placeholder="Title" required
                autofocus>
-        <input type="textbig" rows="5" id="description" name="description" class="form-control" placeholder="Description" required>
-        <input type="text" id="releaseYear" name="releaseYear" class="form-control" placeholder="Release Year" required>
+        <textarea type="textbig" rows="5" id="description" name="description" class="form-control" placeholder="Description" required></textarea>
+        <input type="number" step="any" id="releaseYear" name="releaseYear" class="form-control" placeholder="Release Year" required>
         <select id="language" name="language" class="form-control" required>
             <option value="" disabled selected>Language</option>
-            <option value="English">English</option>
-            <option value="Italian">Italian</option>
-            <option value="Japanese">Japanese</option>
-            <option value="Mandarin">Mandarin</option>
-            <option value="French">French</option>
-            <option value="German">German</option>
+            <option th:each="language : ${languages}" th:value="*{language.languageId}" th:text="*{language.name}"></option>
         </select>
-        <input type="number" id="rentalDuration" name="rentalDuration" class="form-control" placeholder="Rental Duration"
+        <input type="number" step="any" id="rentalDuration" name="rentalDuration" class="form-control" placeholder="Rental Duration"
                required>
-        <input type="number" id="rentalRate" name="rentalRate" class="form-control" placeholder="Rental Rate"
+        <input type="number" step="any" id="rentalRate" name="rentalRate" class="form-control" placeholder="Rental Rate"
                required>
-        <input type="number" id="length" name="length" class="form-control" placeholder="Length (minutes)"
+        <input type="number" step="any" id="length" name="length" class="form-control" placeholder="Length (minutes)"
                required>
-        <input type="number" id="replacement_cost" name="replacement_cost" class="form-control" placeholder="Replacement Cost"
+        <input type="number" step="any" id="replacementCost" name="replacementCost" class="form-control" placeholder="Replacement Cost"
                required>
         <select id="rating" name="rating" class="form-control" required>
             <option value="" disabled selected>Rating</option>
@@ -41,7 +36,8 @@
             <option value="PG13">PG13</option>
             <option value="NC17">NC17</option>
         </select>
-        <select name="cars" id="cars" multiple  class="form-control" required>
+        <label>Special Features</label>
+        <select name="specialFeatures" id="specialFeatures" multiple class="form-control" required>
             <option value="Trailers">Trailers</option>
             <option value="Commentaries">Commentaries</option>
             <option value="Deleted Scenes">Deleted Scenes</option>
@@ -49,6 +45,16 @@
         </select>
         <label>Last Update</label>
         <input type="date" id="lastUpdate" name="lastUpdate" class="form-control" required>
+        <label>Actors</label>
+        <select multiple class="form-control" required>
+            <option value="Other">Other</option>
+            <option th:each="actor : *{actors}" th:value="${actor}" th:text="${actor.firstName} + ' ' + ${actor.lastName}"></option>
+        </select>
+        <input type="text" id="actors" name="actors" class="form-control" placeholder="Other Actors">
+        <label>Genres</label>
+        <select multiple class="form-control" required>
+            <option th:each="category : *{categories}" th:value="${category}" th:text="${category.name}"></option>
+        </select>
 
         <input type="submit" class="w-100 btn btn-lg btn-primary" value="Submit">
     </form>

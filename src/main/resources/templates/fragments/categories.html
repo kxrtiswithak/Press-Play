@@ -10,32 +10,6 @@
     <body>
         <div th:insert="fragments/header :: header"></div>
 
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="container">
-                <label>
-                    <input type="text" id="searchField" placeholder="Search Film by Title, Category, Actors..."/>
-                </label>
-                <a id="searchBtn" href="/">SEARCH</a>
-                <a id="filterBtn" type="button">FILTER</a>
-                <!--                <label>-->
-                <!--                    <select class="" multiple>-->
-                <!--                        <option selected disabled>FILTER</option>-->
-                <!--                        <option disabled>Category</option>-->
-                <!--                        <option th:each="category ${}" th:text="" th:value=""></option>-->
-                <!--                        <option disabled>Actors</option>-->
-                <!--                        <option th:each="actor ${}" th:text="" th:value=""></option>-->
-                <!--                    </select>-->
-                <!--                </label>-->
-
-                <a id="closeBtn" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
-                   aria-controls="navbarToggleExternalContent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x"
-                         viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
 
         <div class="container">
             <h1 class="text-center">Categories</h1>

@@ -108,16 +108,17 @@ body {
 }
 
 .form-add-film input {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .form-add-film select {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.form-add-film input[type="textbig"]{
+.form-add-film textarea[type="textbig"]{
     height: 100px;
     padding: 5px;
+    margin-bottom:10px
 }
 
 .form-add-film input[type="number"]{

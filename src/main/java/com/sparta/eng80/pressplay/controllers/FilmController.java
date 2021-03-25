@@ -1,7 +1,10 @@
 package com.sparta.eng80.pressplay.controllers;
 
+import com.sparta.eng80.pressplay.entities.ActorEntity;
 import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
+import com.sparta.eng80.pressplay.entities.LanguageEntity;
+import com.sparta.eng80.pressplay.services.ActorService;
 import com.sparta.eng80.pressplay.services.FilmService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FilmController {
 
     private final FilmService filmService;
-
+    private final ActorService actorService;
 
     @Autowired
-    public FilmController(FilmService filmService) {
+    public FilmController(FilmService filmService, ActorService actorService) {
         this.filmService = filmService;
+        this.actorService = actorService;
     }
 
     @RequestMapping("/")
@@ -61,7 +65,13 @@ public class FilmController {
     }
 
     @GetMapping("/add-film")
-    public String addFilm(){
+    public String addFilm(ModelMap modelMap){
+        Iterable<CategoryEntity> categoryEntities = filmService.findAllGenres();
+        modelMap.addAttribute("categories", categoryEntities);
+        Iterable<ActorEntity> actorEntities = actorService.getAllActorsAlphabetically();
+        modelMap.addAttribute("actors", actorEntities);
+        Iterable<LanguageEntity> languageEntities = filmService.findAllLanguages();
+        modelMap.addAttribute("languages", languageEntities);
         return "add-film";
     }
 
