@@ -1,7 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +12,8 @@ public class CustomerEntity {
     private String lastName;
     private String email;
     private byte active;
-    private Timestamp createDate;
-    private Timestamp lastUpdate;
+    private Date createDate;
+    private Date lastUpdate;
     private String Password;
     private StoreEntity store;
     private AddressEntity address;
@@ -73,21 +73,21 @@ public class CustomerEntity {
 
     @Basic
     @Column(name = "create_date")
-    public Timestamp getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
