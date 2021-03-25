@@ -50,9 +50,4 @@ public class CustomerRegistrationController {
         securityService.autoLogin(customer.getEmail(), customer.getPasswordConfirmation());
         return "redirect:/welcome";
     }
-
-    @GetMapping("/contact")
-    public String contact(){
-        return "contact";
-    }
 }
