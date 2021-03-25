@@ -23,12 +23,12 @@
                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
-                <div class="carousel-inner">
-                    <div th:each="iterstat : ${TopFilms}" th:class="${iterstat.index} == 0  ? 'carousel-item':'carousel-item active'" th:data-bs-interval="5000">
+                <div class="text-white carousel-inner">
+                    <div th:each="film, iterstat : ${TopFilms}" th:class="${iterstat.first}? 'carousel-item':'carousel-item active'" th:data-bs-interval="5000">
                         <div class="carousel-caption d-none d-md-block">
-                            <img th:src="" class="img-responsive" />
-                            <h5 th:value="*{iterstat.title}"></h5>
-                            <p class="text-dark" th:value="*{iterstat.description}"></p>
+                            <img src="images/PressPlay_logo.svg" class="img-responsive" />
+                            <h5 th:value="*{film.title}"></h5>
+                            <p class="text-dark"  th:value="*{film.description}"></p>
                         </div>
                     </div>
 <!--                    <div class="carousel-item active" data-bs-interval="5000">-->
