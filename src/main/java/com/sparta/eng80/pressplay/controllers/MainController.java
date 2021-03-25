@@ -5,6 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Controller
 public class MainController {
@@ -16,10 +20,13 @@ public class MainController {
     public String index() { return "index"; }
 
     @PostMapping("/newCategory")
-    public String newCategory(@ModelAttribute("category") CategoryEntity category){
+    public String newCategory(@RequestParam("name") String name){
 //        CategoryEntity categoryEntity = new CategoryEntity();
 //        categoryEntity.setName(category.name);
-        category = new CategoryEntity();
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName(name);
+        Date date = new Date();
+        categoryEntity.setLastUpdate(new Timestamp(date.getTime()));
         return "redirect:/categories";
     }
 }
