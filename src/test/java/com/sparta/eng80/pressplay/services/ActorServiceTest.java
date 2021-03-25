@@ -31,7 +31,7 @@ public class ActorServiceTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Check that find all includes actors ")
+    @DisplayName("Check that find all includes correct actors")
     @CsvSource({"1, PENELOPE", "10, CHRISTIAN", "100, SPENCER"})
     void findAllIncludesActors(int actorId, String actorName) {
         Iterable<ActorEntity> allActors = actorService.findAll();
@@ -39,6 +39,16 @@ public class ActorServiceTest {
             if(actor.getActorId() == actorId) {
                 Assertions.assertEquals(actorName, actor.getFirstName());
             }
+        }
+    }
+
+    @ParameterizedTest
+    @DisplayName("Check that findAll does not return fake actors")
+    @CsvSource({"1000", "201", "333"})
+    void findAllActorsNotFound(int actorId) {
+        Iterable<ActorEntity> allActors = actorService.findAll();
+        for (ActorEntity actor:allActors) {
+            Assertions.assertNotEquals(actorId, actor.getActorId());
         }
     }
 }
