@@ -68,4 +68,23 @@ public class ActorServiceTest {
         Optional<ActorEntity> actor = actorService.findById(id);
         Assertions.assertTrue(actor.isEmpty());
     }
+
+    @Test
+    @DisplayName("Check getAllActorsAlphabetically returns actors in alphabetical order")
+    void getActorsAlphabetically() {
+        Iterable<ActorEntity> actors = actorService.getAllActorsAlphabetically();
+        char previousLastNameFirstLetter = 'A';
+        char previousFirstNameFirstLetter = 'A';
+        for (ActorEntity actor:actors) {
+            char actorFirstNameFirstLetter = actor.getFirstName().toUpperCase().charAt(0);
+            char actorLastNameFirstLetter = actor.getFirstName().toUpperCase().charAt(0);
+            Assertions.assertTrue(previousFirstNameFirstLetter <= actorFirstNameFirstLetter);
+            if (previousFirstNameFirstLetter == actorFirstNameFirstLetter) {
+                Assertions.assertTrue(previousLastNameFirstLetter <= actorLastNameFirstLetter);
+            } else {
+                previousLastNameFirstLetter = 'A';
+            }
+            previousFirstNameFirstLetter = actorFirstNameFirstLetter;
+        }
+    }
 }
