@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class SearchController {
@@ -25,11 +26,23 @@ public class SearchController {
         Iterable<FilmEntity> films = filmService.findAll();
 
         List<FilmEntity> results = new ArrayList<>();
+
+        // Future Improvements
+        // Array of 26 arrays - (1 for each character in alphabet)
+        // When iterating through put the film into the correct array based on the first letter
+        // then do arrays.sort() on the array that was added to
+
         for (FilmEntity film : films) {
-            if (film.getTitle().contains(title.toUpperCase())) {
-                results.add(film);
+            // Add all films that start with the search string first
+            if (film.getTitle().startsWith(title.toUpperCase())) {
+                results.add(0, film);
+            } else {
+                // Add all films which have the search string in the title
+                if (film.getTitle().contains(title.toUpperCase())) {
+                    results.add(film);
+                }
             }
-        }
+         }
 
         model.addAttribute("films", results);
         return "index";
