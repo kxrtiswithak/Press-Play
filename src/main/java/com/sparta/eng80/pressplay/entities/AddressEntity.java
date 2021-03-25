@@ -1,10 +1,9 @@
 package com.sparta.eng80.pressplay.entities;
 
-import org.springframework.data.geo.Point;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.Objects;
+import com.vividsolutions.jts.geom.*;
 
 @Entity
 @Table(name = "address", schema = "sakila")
@@ -16,7 +15,7 @@ public class AddressEntity {
     private String postalCode;
     private String phone;
     private Point location;
-    private Timestamp lastUpdate;
+    private Date lastUpdate;
     private CityEntity city;
 
     @Id
@@ -92,11 +91,11 @@ public class AddressEntity {
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

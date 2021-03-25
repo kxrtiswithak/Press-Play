@@ -1,6 +1,5 @@
 package com.sparta.eng80.pressplay.controllers;
 
-import com.sparta.eng80.pressplay.entities.ActorEntity;
 import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.services.FilmService;
@@ -29,42 +28,36 @@ public class FilmController {
         model.addAttribute("films", filmEntities);
         return "index";
     }
+}
 
 /*
-    @GetMapping
+    @GetMapping("/title")
     public String findByTitle(String title, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findByTitle(title);
         modelMap.addAttribute("films", filmEntities);
-        return null; //TODO
+        return "index";
     }
 
-    @GetMapping
+    @GetMapping("/actor")
     public String findActor(String name, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findActorByName(name);
         modelMap.addAttribute("films", filmEntities);
-        return null; //TODO
+        return "index";
     }
 
-    @GetMapping
-    public String findActor(String firstName, String lastName, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = filmService.findActorByName(firstName, lastName);
-        modelMap.addAttribute("films", filmEntities);
-        return null; //TODO
+    @GetMapping("/categories")
+    public String findCategories(ModelMap modelMap){
+        Iterable<CategoryEntity> categories = filmService.findAllGenres();
+        modelMap.addAttribute("categories", categories);
+        return "fragments/categories";
     }
 
-    @GetMapping
-    public String findByActorId(int id, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = (Iterable<FilmEntity>) filmService.findActorById(id).stream().iterator();
+    @GetMapping("/category")
+    public String findCategory(@RequestParam("category") String category, ModelMap modelMap){
+        Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
         modelMap.addAttribute("films", filmEntities);
-        return null; //TODO
+        return "index";
     }
-
-    @GetMapping
-    public String findByLanguage(String language, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = filmService.findByLanguage(language);
-        modelMap.addAttribute("films", filmEntities);
-        return null; //TODO
-    }
+}
 
  */
-}

@@ -17,7 +17,7 @@ public class FilmService implements FilmInterface {
     private final FilmRepository filmRepository;
     private final CategoryRepository categoryRepository;
 
-    public FilmService(FilmRepository filmRepository, CategoryRepository categoryRepository) {
+    public FilmService(FilmRepository filmRepository,  CategoryRepository categoryRepository) {
         this.filmRepository = filmRepository;
         this.categoryRepository = categoryRepository;
     }
@@ -83,20 +83,25 @@ public class FilmService implements FilmInterface {
 
     @Override
     public Iterable<FilmEntity> findActorByName(String actor) {
+        if(actor.split(" ").length == 2){
+            String[] actorName = actor.split(" ");
+            actorName[0] = "%" + actorName[0] + "%";
+            actorName[1] = "%" + actorName[1] + "%";
+            return filmRepository.findByName(actorName[0], actorName[1]);
+        }
         actor = "%" + actor + "%";
         return filmRepository.findByName(actor);
     }
 
-    @Override
-    public Iterable<FilmEntity> findActorByName(String firstName, String lastName) {
-        firstName = "%" + firstName + "%";
-        lastName = "%" + lastName + "%";
-        return filmRepository.findByName(firstName, lastName);
-    }
 
     @Override
     public Iterable<FilmEntity> findByLanguage(String language) {
         return filmRepository.findByLanguage(language);
+    }
+
+    @Override
+    public Iterable<FilmEntity> findTopNMostRentedFilms(int n) {
+        return filmRepository.findTopNMostRentedFilms(n);
     }
 
     @Override
@@ -124,4 +129,5 @@ public class FilmService implements FilmInterface {
         }
         return -1;
     }
+
 }

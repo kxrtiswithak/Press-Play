@@ -1,7 +1,6 @@
 package com.sparta.eng80.pressplay.controllers;
 
 import com.sparta.eng80.pressplay.entities.FilmEntity;
-import com.sparta.eng80.pressplay.services.Search;
 import com.sparta.eng80.pressplay.services.ActorService;
 import com.sparta.eng80.pressplay.services.FilmService;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller

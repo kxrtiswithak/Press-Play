@@ -28,6 +28,7 @@ public class CustomerRegistrationController {
         this.customerRegistrationValidator = customerRegistrationValidator;
     }
 
+
     @GetMapping("/registration")
     public String registration(Model model) {
         if (securityService.isAuthenticated()) {
