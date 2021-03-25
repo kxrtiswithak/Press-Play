@@ -72,12 +72,12 @@ public class FilmController {
         modelMap.addAttribute("actors", actorEntities);
         Iterable<LanguageEntity> languageEntities = filmService.findAllLanguages();
         modelMap.addAttribute("languages", languageEntities);
-        return "add-film";
+        return "fragments/add-film";
     }
 
     @PostMapping("/add-film")
     public String addFilm(FilmEntity filmEntity){
         filmService.save(filmEntity);
-        return "/add-film";
+        return "fragments/add-film";
     }
 }
