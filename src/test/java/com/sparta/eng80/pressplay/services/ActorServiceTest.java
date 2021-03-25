@@ -1,16 +1,12 @@
 package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.ActorEntity;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -86,5 +82,19 @@ public class ActorServiceTest {
             }
             previousFirstNameFirstLetter = actorFirstNameFirstLetter;
         }
+    }
+
+    @Test
+    @Disabled("disabled until delete method is implemented")
+    @DisplayName("check actor is saved")
+    public void saveWorks(){
+        ActorEntity actor = new ActorEntity();
+        actor.setActorId(201);
+        actor.setFirstName("Will");
+        actor.setLastName("Temple");
+        actor.setFilms(actorService.findById(100).get().getFilms());
+        int createdActorId = actorService.save(actor);
+        Assertions.assertTrue(actorService.findById(createdActorId).isPresent());
+
     }
 }
