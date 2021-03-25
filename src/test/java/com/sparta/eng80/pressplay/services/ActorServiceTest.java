@@ -1,5 +1,6 @@
 package com.sparta.eng80.pressplay.services;
 
+import com.sparta.eng80.pressplay.entities.ActorEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -8,6 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class ActorServiceTest {
@@ -25,5 +28,17 @@ public class ActorServiceTest {
     @DisplayName("Check that find all returns data")
     void findAllActorsNotNull() {
         Assertions.assertNotNull(actorService.findAll());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Check that find all includes actors ")
+    @CsvSource({"1, PENELOPE", "10, CHRISTIAN", "100, SPENCER"})
+    void findAllIncludesActors(int actorId, String actorName) {
+        Iterable<ActorEntity> allActors = actorService.findAll();
+        for (ActorEntity actor:allActors) {
+            if(actor.getActorId() == actorId) {
+                Assertions.assertEquals(actorName, actor.getFirstName());
+            }
+        }
     }
 }
