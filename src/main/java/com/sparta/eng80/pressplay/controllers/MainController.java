@@ -32,14 +32,5 @@ public class MainController {
     @GetMapping("/index")
     public String index() { return "index"; }
 
-    @PostMapping("/newCategory")
-    public String newCategory(@RequestParam("name") String name){
-//        CategoryEntity categoryEntity = new CategoryEntity();
-//        categoryEntity.setName(category.name);
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setName(name);
-        Date date = new Date();
-        categoryEntity.setLastUpdate(new Timestamp(date.getTime()));
-        return "redirect:/categories";
-    }
+
 }

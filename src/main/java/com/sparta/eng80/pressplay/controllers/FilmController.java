@@ -50,19 +50,6 @@ public class FilmController {
         return "index";
     }
 
-    @GetMapping("/categories")
-    public String findCategories(ModelMap modelMap){
-        Iterable<CategoryEntity> categories = filmService.findAllGenres();
-        modelMap.addAttribute("categories", categories);
-        return "fragments/categories";
-    }
-
-    @GetMapping("/category")
-    public String findCategory(@RequestParam("category") String category, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
-        modelMap.addAttribute("films", filmEntities);
-        return "index";
-    }
 
     @GetMapping("/add-film")
     public String addFilm(ModelMap modelMap){

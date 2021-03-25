@@ -27,6 +27,5 @@ public class LoginCredentialsServiceTest {
     })
     public void loadByUsernameTest(String email){
         UserDetails user = loginCredentialService.loadUserByUsername(email);
-        Assertions.assertNotNull(user);
-    }
+        Assertions.assertNotNull(user); }
 }
