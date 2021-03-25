@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Press-Play</title>
+<link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}"/>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div th:insert="/fragments/header :: header"></div>
+<div class="add-record">
+    <form class="form-add-film" th:action="@{/add-film}" method="post">
+
+        <h1 class="h3 mb-3 fw-normal" style="color:white">Add Film</h1>
+        <input type="text" id="title" name="title" class="form-control" placeholder="Title" required
+               autofocus>
+        <input type="textbig" rows="5" id="description" name="description" class="form-control" placeholder="Description" required>
+        <input type="text" id="releaseYear" name="releaseYear" class="form-control" placeholder="Release Year" required>
+        <select id="language" name="language" class="form-control" required>
+            <option value="" disabled selected>Language</option>
+            <option value="English">English</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Mandarin">Mandarin</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+        </select>
+        <input type="number" id="rentalDuration" name="rentalDuration" class="form-control" placeholder="Rental Duration"
+               required>
+        <input type="number" id="rentalRate" name="rentalRate" class="form-control" placeholder="Rental Rate"
+               required>
+        <input type="number" id="length" name="length" class="form-control" placeholder="Length (minutes)"
+               required>
+        <input type="number" id="replacement_cost" name="replacement_cost" class="form-control" placeholder="Replacement Cost"
+               required>
+        <select id="rating" name="rating" class="form-control" required>
+            <option value="" disabled selected>Rating</option>
+            <option value="G">G</option>
+            <option value="PG">PG</option>
+            <option value="R">R</option>
+            <option value="PG13">PG13</option>
+            <option value="NC17">NC17</option>
+        </select>
+        <select name="cars" id="cars" multiple  class="form-control" required>
+            <option value="Trailers">Trailers</option>
+            <option value="Commentaries">Commentaries</option>
+            <option value="Deleted Scenes">Deleted Scenes</option>
+            <option value="Behind the Scenes">Behind the Scenes</option>
+        </select>
+        <label>Last Update</label>
+        <input type="date" id="lastUpdate" name="lastUpdate" class="form-control" required>
+
+        <input type="submit" class="w-100 btn btn-lg btn-primary" value="Submit">
+    </form>
+</div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,5 +58,16 @@ public class FilmController {
         Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
         modelMap.addAttribute("films", filmEntities);
         return "index";
+    }
+
+    @GetMapping("/add-film")
+    public String addFilm(){
+        return "add-film";
+    }
+
+    @PostMapping("/add-film")
+    public String addFilm(FilmEntity filmEntity){
+        filmService.save(filmEntity);
+        return "/add-film";
     }
 }

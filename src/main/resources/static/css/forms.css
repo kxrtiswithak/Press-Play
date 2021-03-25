@@ -4,7 +4,8 @@ body {
     background-color: #191919;
 }
 
-body {
+.body-signin {
+    text-align: center;
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -89,4 +90,41 @@ body {
 .form-register input[type="text"] {
     margin-bottom: -1px;
     border-radius: 0;
+}
+
+.form-add-film {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-add-film .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-add-film input {
+    margin-bottom: 20px;
+}
+
+.form-add-film select {
+    margin-bottom: 20px;
+}
+
+.form-add-film input[type="textbig"]{
+    height: 100px;
+    padding: 5px;
+}
+
+.form-add-film input[type="number"]{
+    margin-bottom: 10px;
+}
+
+.form-add-film label {
+    color: white;
+    margin-bottom: 5px;
 }
