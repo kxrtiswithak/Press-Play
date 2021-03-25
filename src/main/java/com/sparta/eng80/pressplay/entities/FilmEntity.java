@@ -1,6 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
 import com.sparta.eng80.pressplay.entities.datatypes.Rating;
+import com.sparta.eng80.pressplay.util.TitleCase;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -44,7 +45,7 @@ public class FilmEntity {
     @Basic
     @Column(name = "title")
     public String getTitle() {
-        return title;
+        return TitleCase.toTitleCase(title);
     }
 
     public void setTitle(String title) {
