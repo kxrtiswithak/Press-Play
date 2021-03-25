@@ -10,7 +10,5 @@ import java.util.Optional;
 @Repository
 public interface StaffRepository extends CrudRepository<StaffEntity, Integer> {
 
-    @Query("SELECT c FROM StaffEntity c WHERE c.email = ?1")
-    Optional<StaffEntity> findByEmail(String email);
-
+    Optional<StaffEntity> findStaffEntityByEmailEquals(String email);
 }
