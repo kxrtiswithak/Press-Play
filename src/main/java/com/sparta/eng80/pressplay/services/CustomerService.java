@@ -6,7 +6,8 @@ import com.sparta.eng80.pressplay.security.PasswordEncryptor;
 import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
 
     @Override
     public Optional<CustomerEntity> findByEmail(String username) {
-        return customerRepository.findByEmail(username);
+        return customerRepository.findCustomerEntityByEmailEquals(username);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
     @Override
     public int save(CustomerEntity customerEntity) {
         customerEntity.setPassword(passwordEncryptor.encode(customerEntity.getPassword()));
-        customerEntity.setCreateDate(Timestamp.valueOf(LocalDateTime.now()));
+        customerEntity.setCreateDate(Date.valueOf(LocalDate.now()));
         return customerRepository.save(customerEntity).getCustomerId();
     }
 }
