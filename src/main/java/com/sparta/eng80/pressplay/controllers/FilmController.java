@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class FilmController {
 
@@ -53,7 +56,12 @@ public class FilmController {
     @GetMapping("/categories")
     public String findCategories(ModelMap modelMap){
         Iterable<CategoryEntity> categories = filmService.findAllGenres();
+        List<Integer> categorySizes = new ArrayList<>();
+        for (CategoryEntity category : categories) {
+            categorySizes.add((int)filmService.findByCategory(category.getCategoryId()).spliterator().getExactSizeIfKnown());
+        }
         modelMap.addAttribute("categories", categories);
+        modelMap.addAttribute("sizes", categorySizes);
         return "fragments/categories";
     }
 
