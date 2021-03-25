@@ -48,4 +48,19 @@ public class SecurityServiceTest {
             securityService.autoLogin(username, password);
         });
     }
+
+    @ParameterizedTest
+    @DisplayName("check invalid is not authenticated")
+    @CsvSource({"Mike.Hillyer@gmail.com, fake",
+            "MARY.SMITH@gmail.com, invalid"})
+    void invalidLogin(String username, String password) {
+        try {
+            securityService.autoLogin(username, password);
+        } catch (UsernameNotFoundException e) {
+            e.printStackTrace();
+        } catch (BadCredentialsException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertFalse(securityService.isAuthenticated());
+    }
 }
