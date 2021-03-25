@@ -60,4 +60,12 @@ public class ActorServiceTest {
         ActorEntity actor = actorService.findById(id).get();
         Assertions.assertEquals(actorName, actor.getFirstName());
     }
+
+    @ParameterizedTest
+    @DisplayName("Check that findById returns empty for invalid actorId")
+    @CsvSource({"201", "202", "2003"})
+    void findActorByIdNotFound(int id) {
+        Optional<ActorEntity> actor = actorService.findById(id);
+        Assertions.assertTrue(actor.isEmpty());
+    }
 }
