@@ -23,38 +23,35 @@
                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- **************************** CHANGE THE VARIABLE BELOW TO THE APPROPRIATE MAPPING *************************** -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <!-- ************************************************************************************************************* -->
-                <div class="carousel-inner"> <!-- th:each="topfilms : ${topfilms}">-->
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <!--<img src="..." class="d-block w-100" alt="...">-->
+                <div class="carousel-inner">
+                    <div th:each="iterstat : ${TopFilms}" th:class="${iterstat.index} == 0  ? 'carousel-item':'carousel-item active'" th:data-bs-interval="5000">
                         <div class="carousel-caption d-none d-md-block">
-<!--                            <h5 th:text="topfilms.title">First slide label</h5>-->
-                            <p class="text-dark">Some representative placeholder content for the first slide.</p>
+                            <img th:src="" class="img-responsive" />
+                            <h5 th:value="*{iterstat.title}"></h5>
+                            <p class="text-dark" th:value="*{iterstat.description}"></p>
                         </div>
                     </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <!--<img src="..." class="d-block w-100" alt="...">-->
-                        <div class="carousel-caption d-none d-md-block">
-<!--                            <h5 th:text="">Second slide label</h5>-->
-                            <p class="text-dark">Some representative placeholder content for the second slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <!--<img src="..." class="d-block w-100" alt="...">-->
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p class="text-dark">Some representative placeholder content for the third slide.</p>
-                        </div>
-                    </div>
+<!--                    <div class="carousel-item active" data-bs-interval="5000">-->
+<!--                        &lt;!&ndash;<img src="..." class="d-block w-100" alt="...">&ndash;&gt;-->
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+<!--&lt;!&ndash;                            <h5 th:text="topfilms.title">First slide label</h5>&ndash;&gt;-->
+<!--                            <p class="text-dark">Some representative placeholder content for the first slide.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item" data-bs-interval="5000">-->
+<!--                        &lt;!&ndash;<img src="..." class="d-block w-100" alt="...">&ndash;&gt;-->
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+<!--&lt;!&ndash;                            <h5 th:text="">Second slide label</h5>&ndash;&gt;-->
+<!--                            <p class="text-dark">Some representative placeholder content for the second slide.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item" data-bs-interval="5000">-->
+<!--                        &lt;!&ndash;<img src="..." class="d-block w-100" alt="...">&ndash;&gt;-->
+<!--                        <div class="carousel-caption d-none d-md-block">-->
+<!--                            <h5>Third slide label</h5>-->
+<!--                            <p class="text-dark">Some representative placeholder content for the third slide.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -64,7 +61,8 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-            </div>
+            </button>
+        </div>
         </div>
         </div>
 
