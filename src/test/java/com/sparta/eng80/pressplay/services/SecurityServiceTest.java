@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @SpringBootTest
 public class SecurityServiceTest {
@@ -34,6 +35,16 @@ public class SecurityServiceTest {
             "MARY.SMITH@sakilacustomer.org, invalid"})
     void invalidPasswordLogin(String username, String password) {
         Assertions.assertThrows(BadCredentialsException.class, () -> {
+            securityService.autoLogin(username, password);
+        });
+    }
+
+    @ParameterizedTest
+    @DisplayName("check invalid username throws UsernameNotFoundException")
+    @CsvSource({"Mike.Hillyer@gmail.com, password",
+            "MARY.SMITH@gmail.com, password"})
+    void invalidUsernameLogin(String username, String password) {
+        Assertions.assertThrows(UsernameNotFoundException.class, () -> {
             securityService.autoLogin(username, password);
         });
     }
