@@ -69,7 +69,7 @@ public class StaffEntity {
     @Basic
     @Column(name = "email")
     public String getEmail() {
-        return TitleCase.toTitleCase(email);
+        return email;
     }
 
     public void setEmail(String email) {
