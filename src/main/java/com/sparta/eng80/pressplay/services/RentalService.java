@@ -75,9 +75,11 @@ public class RentalService implements RentalInterface {
                 rentalEntity.setReturnDate(new java.sql.Date(returnDate.getTime()));
                 rentalEntity.setStaff(staffEntity);
                 rentalEntity.setLastUpdate(currentTime);
+                rentalRepository.save(rentalEntity);
                 break;
             }
         }
+
         return true;
     }
 
