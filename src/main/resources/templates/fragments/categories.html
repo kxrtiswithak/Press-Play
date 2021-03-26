@@ -11,33 +11,27 @@
 <div th:insert="fragments/header :: header"></div>
 
 
-<div class="container text-center">
+<div class="container d-block">
     <h1 class="text-center">Categories</h1>
-    <ul >
-        <table>
-            <tr th:each="category : ${categories}">
-                <td>
-                    <form method="get" th:align="center" action="/category">
-                        <input type="hidden" name="category" th:value="*{category.name}">
-                        <input type="submit" th:value="*{category.name}">
-                    </form>
-                </td>
-            </tr>
-        </table>
+    <div class="list-group pt-3 pb-5">
+        <a th:each="category,iterStat : ${categories}" th:href="'category?category=' + *{category.name}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start" th:inline="text">
+            [[*{category.name}]]
+            <span class="badge rounded-pill" id="primaryBtn" th:text="${sizes.get(iterStat.index)}">14</span>
+        </a>
+    </div>
         <!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
-    </ul>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new
-        Category
-    </button>
+    <div class="pb-5 mx-auto" style="width: 200px;">
+        <button type="button" class="btn" id="primaryBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new category</button>
+    </div>
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content bg-dark">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Add a new Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!--/*@thymesVar id="category" type="com.sparta.eng80.pressplay.entities.CategoryEntity"*/-->
                 <form action="#" th:action="@{/newCategory}" th:object="${category}" method="post">
@@ -47,8 +41,7 @@
                         </label>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <input class="btn" type="submit" value="CREATE" id="secondaryBtn">
+                        <input class="btn" id="primaryBtn" type="submit" value="Add">
                     </div>
                 </form>
             </div>
