@@ -68,13 +68,12 @@
                             <p th:text="${film.specialFeatures}"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" id="primaryBtn">See more</button>
+                            <a th:href="'/film?id=' + ${film.filmId}" class="btn" id="primaryBtn">See more</a>
                             <form th:action="@{/rent}" method="post">
                                 <button type="rent" class="btn" id="primaryBtn">Rent</button>
                                 <input type="hidden" name="film" th:value="${film.filmId}"/>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
