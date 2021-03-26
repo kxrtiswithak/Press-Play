@@ -68,7 +68,7 @@
                             <p th:text="${film.specialFeatures}"></p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" id="primaryBtn">See more</button>
+                            <a th:href="'/film?id=' + ${film.filmId}" class="btn" id="primaryBtn">See more</a>
                         </div>
                     </div>
                 </div>
