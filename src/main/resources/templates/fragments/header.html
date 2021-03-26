@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div th:fragment="header">
+        <div th:fragment="header(categories)">
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="container">
                     <span class="navbar-brand">
@@ -62,6 +62,7 @@
                             <input type="text" id="searchField" name="title" placeholder="Search Film by Title, Category, Actors..." />
                         </label>
                         <button id="searchBtn" type="submit">SEARCH</button>
+                        <a id="filterBtn" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-controls="filterSection" aria-expanded="false" aria-label="Toggle dropdown">FILTER</a>
 
                         <a id="closeBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -70,7 +71,85 @@
                         </a>
                     </div>
                 </div>
+                <div class="collapse bg-light" id="filterSection">
+                    <div class="container">
+                        <div class="row justify-content-center p-3">
+                            <div class="categoriesdropdown dropdown col-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li th:each="category : ${categories}">
+                                            <a class="dropdown-item" th:name="${category.name}" th:text="${category.name}" onclick="addSelected(this)"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="actordropdown dropdown col-4">
+                                <button class="dropdown-toggle dropdownBtn" type="button" data-bs-toggle="actordropdown" aria-expanded="false">Actor</button>
+                                <div class="container text-center justify-content-center">
+                                    <ul class="dropdown-menu" aria-labelledby="actorDropdownMenu">
+                                        <li th:each="actor : ${actors}">
+                                            <a class="dropdown-item" name="actor" th:text="${actor.firstName} + ' ' + ${actor.lastName}" th:value="${actor.firstName} + ',' + ${actor.lastName}"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                <div class="languagedropdown">-->
+                    <!--                    <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdownMenu" data-bs-toggle="languagedropdown" aria-expanded="false">Language</button>-->
+                    <!--                    <ul class="dropdown-menu" aria-labelledby="languageDropdownMenu">-->
+                    <!--                        <li th:each="language : ${languages}"><a class="dropdown-item" th:text="${language.name}"></a></li>-->
+                    <!--                    </ul>-->
+                    <!--                </div>-->
+
+                    <div>
+                        <ul id="selected_filters">
+
+                        </ul>
+                    </div>
+                </div>
             </form>
+            <script>
+                function addSelected(x) {
+                    let selected_section = document.getElementById("selected_filters").getElementsByTagName("li");
+                    var items = [];
+                    for (let i = 0; i < selected_section.length; i++) {
+                        items.push(selected_section[i].innerText);
+                    }
+
+
+                    if (items.indexOf(x.innerText) < 0) {
+                        let selected = document.createElement("li");
+                        selected.innerText = x.innerText;
+                        selected.classList.add("selected");
+
+                        let closeBtn = document.createElement("button");
+                        closeBtn.type = "button";
+                        closeBtn.classList.add("close");
+                        // closeBtn.innerHTML = "X";
+
+                        selected.appendChild(closeBtn);
+                        document.getElementById("selected_filters").appendChild(selected);
+                    } else {
+                        deleteItem(x);
+                    }
+                }
+
+                function deleteItem(x) {
+                    let selected = document.getElementById("selected_filters").getElementsByTagName("li");
+                    let currentBtn = x.innerText;
+                    console.log(x);
+
+                    for (let i = 0; i < selected.length; i++) {
+                        if (selected[i].innerText === currentBtn) {
+                            // remove child element
+                        }
+                    }
+                }
+            </script>
         </div>
         <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
         <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
