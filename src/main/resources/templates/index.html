@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div th:insert="/fragments/header :: header"></div>
+        <div th:insert="/fragments/header :: header(categories=${categories})"></div>
         <div th:insert="/fragments/results :: results"></div>
 <!--        </div>-->
         <!-- Table for users && members -->
