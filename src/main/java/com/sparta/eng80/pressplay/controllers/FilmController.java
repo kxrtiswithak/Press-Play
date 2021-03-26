@@ -53,25 +53,6 @@ public class FilmController {
         return "index";
     }
 
-    @GetMapping("/categories")
-    public String findCategories(ModelMap modelMap){
-        Iterable<CategoryEntity> categories = filmService.findAllGenres();
-        List<Integer> categorySizes = new ArrayList<>();
-        for (CategoryEntity category : categories) {
-            categorySizes.add((int)filmService.findByCategory(category.getCategoryId()).spliterator().getExactSizeIfKnown());
-        }
-        modelMap.addAttribute("categories", categories);
-        modelMap.addAttribute("sizes", categorySizes);
-        return "fragments/categories";
-    }
-
-    @GetMapping("/category")
-    public String findCategory(@RequestParam("category") String category, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
-        modelMap.addAttribute("films", filmEntities);
-        return "fragments/results";
-    }
-
     @GetMapping("/add-film")
     public String addFilm(ModelMap modelMap){
         Iterable<CategoryEntity> categoryEntities = filmService.findAllGenres();
