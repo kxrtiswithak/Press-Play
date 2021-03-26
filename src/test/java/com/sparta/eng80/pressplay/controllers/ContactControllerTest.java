@@ -2,7 +2,8 @@ package com.sparta.eng80.pressplay.controllers;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -25,8 +26,9 @@ public class ContactControllerTest {
         Assertions.assertNotNull(contactController);
     }
 
-    @Test
-    void checkReturn() {
-        Assertions.assertTrue(this.testTemplate.getForObject("http://localhost:" + port + "/contact", String.class).contains("Get in touch!"));
+    @ParameterizedTest
+    @CsvSource({"Get in touch", "Contact us if you have any issues, details can be found below"})
+    void checkReturn(String returnedText) {
+        Assertions.assertTrue(this.testTemplate.getForObject("http://localhost:" + port + "/contact", String.class).contains(returnedText));
     }
 }
