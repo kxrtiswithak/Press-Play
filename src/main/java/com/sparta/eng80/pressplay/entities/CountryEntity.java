@@ -1,6 +1,9 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.util.TitleCase;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -9,10 +12,10 @@ import java.util.Objects;
 public class CountryEntity {
     private int countryId;
     private String country;
-    private Timestamp lastUpdate;
+    private Date lastUpdate;
 
-    @Id    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "country_id")
     public int getCountryId() {
         return countryId;
@@ -25,7 +28,7 @@ public class CountryEntity {
     @Basic
     @Column(name = "country")
     public String getCountry() {
-        return country;
+        return TitleCase.toTitleCase(country);
     }
 
     public void setCountry(String country) {
@@ -34,11 +37,11 @@ public class CountryEntity {
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

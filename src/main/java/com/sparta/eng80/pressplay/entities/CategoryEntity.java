@@ -1,5 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.util.TitleCase;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -28,7 +30,7 @@ public class CategoryEntity {
     @Basic
     @Column(name = "name")
     public String getName() {
-        return name;
+        return TitleCase.toTitleCase(name);
     }
 
     public void setName(String name) {

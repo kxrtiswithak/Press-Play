@@ -1,87 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="UTF-8">
-        <title>Categories</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-         <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <div th:insert="fragments/header :: header"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="text-white">
+<div th:insert="fragments/header :: header"></div>
 
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="container">
-                <label>
-                    <input type="text" id="searchField" placeholder="Search Film by Title, Category, Actors..."/>
-                </label>
-                <a id="searchBtn" href="/">SEARCH</a>
-                <a id="filterBtn" type="button">FILTER</a>
-                <!--                <label>-->
-                <!--                    <select class="" multiple>-->
-                <!--                        <option selected disabled>FILTER</option>-->
-                <!--                        <option disabled>Category</option>-->
-                <!--                        <option th:each="category ${}" th:text="" th:value=""></option>-->
-                <!--                        <option disabled>Actors</option>-->
-                <!--                        <option th:each="actor ${}" th:text="" th:value=""></option>-->
-                <!--                    </select>-->
-                <!--                </label>-->
 
-                <a id="closeBtn" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
-                   aria-controls="navbarToggleExternalContent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x"
-                         viewBox="0 0 16 16">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
+<div class="container d-block">
+    <h1 class="text-center">Categories</h1>
+    <div class="list-group pt-3 pb-5">
+        <a th:each="category,iterStat : ${categories}" th:href="'category?category=' + *{category.name}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start" th:inline="text">
+            [[*{category.name}]]
+            <span class="badge rounded-pill" id="primaryBtn" th:text="${sizes.get(iterStat.index)}">14</span>
+        </a>
+    </div>
+        <!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
 
-        <div class="container">
-            <h1 class="text-center">Categories</h1>
-            <ul class="text-center">
-                <table>
-                    <tr th:each="category : ${categories}">
-                        <td><form method="get" th:align="center" action="/category">
-                            <input type="hidden" name="category" th:value="*{category.name}">
-                            <input type="submit" th:value="*{category.name}">
-                        </form></td>
-                    </tr>
-                </table>
-<!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
-            </ul>
+    <div class="pb-5 mx-auto" style="width: 200px;">
+        <button type="button" class="btn" id="primaryBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new category</button>
+    </div>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new
-                Category
-            </button>
-
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Add a new Category</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <!--/*@thymesVar id="category" type="com.sparta.eng80.pressplay.entities.CategoryEntity"*/-->
-                        <form action="#" th:action="@{/newCategory}" th:object="${category}" method="post">
-                            <div class="modal-body">
-                                <label>
-                                    <input class="mt-2" type="text" name="name" placeholder="Category name"/>
-                                </label>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                <input class="btn" type="submit" value="CREATE" id="secondaryBtn">
-                            </div>
-                        </form>
-                    </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add a new Category</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!--/*@thymesVar id="category" type="com.sparta.eng80.pressplay.entities.CategoryEntity"*/-->
+                <form action="#" th:action="@{/newCategory}" th:object="${category}" method="post">
+                    <div class="modal-body">
+                        <label>
+                            <input class="mt-2" type="text" name="name" placeholder="Category name"/>
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn" id="primaryBtn" type="submit" value="Add">
+                    </div>
+                </form>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-                crossorigin="anonymous">
-        </script>
-    </body>
+    </div>
+</div>
+<script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
+<script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+</body>
 </html>

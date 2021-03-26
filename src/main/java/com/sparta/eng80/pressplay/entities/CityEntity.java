@@ -1,6 +1,9 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.util.TitleCase;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -9,7 +12,7 @@ import java.util.Objects;
 public class CityEntity {
     private int cityId;
     private String city;
-    private Timestamp lastUpdate;
+    private Date lastUpdate;
 
     private CountryEntity country;
 
@@ -27,7 +30,7 @@ public class CityEntity {
     @Basic
     @Column(name = "city")
     public String getCity() {
-        return city;
+        return TitleCase.toTitleCase(city);
     }
 
     public void setCity(String city) {
@@ -36,11 +39,11 @@ public class CityEntity {
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
