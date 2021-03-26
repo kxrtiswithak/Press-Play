@@ -39,6 +39,6 @@ public class SearchController {
         model.addAttribute("categories", categories);
         model.addAttribute("actors", actors);
         model.addAttribute("films", results);
-        return "index";
+        return "/fragments/results";
     }
 }
