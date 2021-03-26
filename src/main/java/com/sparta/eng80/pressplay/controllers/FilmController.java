@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class FilmController {
 
@@ -49,7 +52,6 @@ public class FilmController {
         modelMap.addAttribute("films", filmEntities);
         return "index";
     }
-
 
     @GetMapping("/add-film")
     public String addFilm(ModelMap modelMap){
