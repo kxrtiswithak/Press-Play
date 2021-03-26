@@ -10,7 +10,7 @@ public class ContactControllerTest {
 
     @Autowired
     private ContactController contactController;
-    
+
     @Test
     void loadContext() {
         Assertions.assertNotNull(contactController);
