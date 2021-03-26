@@ -23,4 +23,8 @@ public class CategoryService implements CategoryInterface {
     public void removeCategory(String category) {
         categoryRepository.removeCategory(category);
     }
+
+    public CategoryEntity findCategory(String category) {
+        return categoryRepository.findCategory(category);
+    }
 }

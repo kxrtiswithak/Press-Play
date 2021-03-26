@@ -14,10 +14,13 @@ public interface CategoryRepository extends CrudRepository<CategoryEntity, Integ
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "insert into category (name, last_update) values (?, CURDATE())")
-    public void addCategory(String name);
+    void addCategory(String name);
 
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "delete from category where name = ?")
-    public void removeCategory(String name);
+    void removeCategory(String name);
+
+    @Query(nativeQuery = true, value = "select * from category where name = ?")
+    CategoryEntity findCategory(String category);
 }
