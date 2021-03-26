@@ -3,14 +3,13 @@ package com.sparta.eng80.pressplay.controllers;
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.RentalEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
-import com.sparta.eng80.pressplay.services.CustomerService;
-import com.sparta.eng80.pressplay.services.RentalService;
-import com.sparta.eng80.pressplay.services.StaffService;
+import com.sparta.eng80.pressplay.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,16 +23,22 @@ public class ProfileController {
     private final CustomerService customerService;
     private final StaffService staffService;
     private final RentalService rentalService;
+    private final ActorService actorService;
+    private final FilmService filmService;
 
     @Autowired
-    public ProfileController(CustomerService customerService, RentalService rentalService, StaffService staffService) {
+    public ProfileController(CustomerService customerService, RentalService rentalService, StaffService staffService, ActorService actorService, FilmService filmService) {
         this.customerService = customerService;
         this.rentalService = rentalService;
         this.staffService = staffService;
+        this.actorService = actorService;
+        this.filmService = filmService;
     }
 
     @GetMapping("/profile")
-    public String mainProfile(Model model) {
+    public String mainProfile(ModelMap model) {
+        model = Filters.getFilters(model, filmService, actorService);
+
         StaffEntity staff = getCurrentStaff();
         if (staff != null) {
             model.addAttribute("user", staff);

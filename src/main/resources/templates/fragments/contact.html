@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/contact.css">
     </head>
     <body class="w-100 h-100 text-white">
-        <div th:insert="fragments/header :: header"></div>
+        <div th:insert="/fragments/header :: header(categories = ${categories})"></div>
 
         <div class="container-fluid d-flex p-3 mx-auto flex-column">
 
@@ -32,15 +32,24 @@
                             <div class="d-md-flex justify-content-center icon py-2">
                                 <span class="icons"><i class="fa fa-envelope"></i></span>
                             </div>
-                            <div th:text="${staff.email.toLowerCase()}" class="contact-info">pressplay@sakilastaff.com</div>
+                            <div th:text="${staff.email}" class="contact-info">pressplay@sakilastaff.com</div>
                         </div>
                     </a>
-                    <a th:href="'https://www.google.com/maps/search/?api=1&query=' + ${staff.store.address.location.y} + ',' + ${staff.store.address.location.x}">
+                    <a th:href="'https://www.google.com/maps/search/?api=1&query=' + ${staff.store.address.location.y} + ',' + ${staff.store.address.location.x}" target="_blank">
                         <div class="d-md-flex flex-md-column contact px-4 pb-2">
                             <div class="d-md-flex justify-content-center icon py-2">
                                 <span class="icons"><i class="fa fa-map-marker"></i></span>
                             </div>
-                            <div class="contact-info text-center" th:text="${staff.store.address.address} + ', ' + ${staff.store.address.district} + ', ' + ${staff.store.address.city.city}">123 Main Street<br>London<br><span th:text="${staff.store.address.postalCode}">XXX XXX UK</span></div>
+                            <div class="contact-info text-center"
+                                 th:with="hasPostCode=${staff.store.address.postalCode.length()} > 0 ? ', ' + ${staff.store.address.postalCode} : ''"
+                                 th:text="${staff.store.address.address} + ', ' +
+                                 ${staff.store.address.district} + ', ' +
+                                 ${staff.store.address.city.city} + ', ' +
+                                 ${staff.store.address.city.country.country} +
+                                 ${hasPostCode}">
+                                123 Main Street, London, XXX XXX, UK
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>

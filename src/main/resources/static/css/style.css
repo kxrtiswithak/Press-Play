@@ -33,7 +33,8 @@ input#searchField {
     padding: 2px;
 }
 
-a#searchBtn {
+button#searchBtn {
+    background-color: inherit;
     margin: 0 15px;
     color: #ffffff;
     border: 1px solid white;
@@ -76,9 +77,9 @@ div#contactText {
     color: white;
 }
 
-.dropdown-toggle::after {
-    display:none;
-}
+/*.dropdown-toggle::after {*/
+/*    display:none;*/
+/*}*/
 
 ul#profileList {
     list-style-type: none;
@@ -93,12 +94,45 @@ div#topRated {
     margin-top: 300px;
 }
 
+
 div#carouselExampleDark {
     height: 50vh;
     width: 60vw;
-    background-color: white;
+    background-color: lightblue;
 }
 
 div.carousel-item {
     z-index: 0;
+}
+
+.align-vert{
+    padding: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: black;
+}
+
+div#filterSection {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.col-4 {
+    width: fit-content !important;
+}
+
+button.dropdownBtn {
+    background-color: inherit;
+    border-right: none;
+    border-left: none;
+    padding: 5px 15px 5px 15px;
+    margin: 5px 50px;
+}
+
+ul#selected-filters {}
+
+ul#selected-filters li {
+    text-decoration: none;
 }
