@@ -72,10 +72,6 @@ table#loanTable {
     width: 100%;
 }
 
-h1 {
-
-}
-
 /* Contact Section */
 div#contactText {
     color: white;
@@ -94,8 +90,28 @@ section#content {
     height: 60vw;
 }
 
+div#topRated {
+    margin-top: 300px;
+}
+
+
 div#carouselExampleDark {
-    height: 20vh;
+    height: 50vh;
+    width: 60vw;
+    background-color: lightblue;
+}
+
+div.carousel-item {
+    z-index: 0;
+}
+
+.align-vert{
+    padding: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: black;
 }
 
 div#filterSection {
