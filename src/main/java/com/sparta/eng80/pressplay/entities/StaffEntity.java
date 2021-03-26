@@ -1,5 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.util.TitleCase;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -37,7 +39,7 @@ public class StaffEntity {
     @Basic
     @Column(name = "first_name")
     public String getFirstName() {
-        return firstName;
+        return TitleCase.toTitleCase(firstName);
     }
 
     public void setFirstName(String firstName) {
@@ -47,7 +49,7 @@ public class StaffEntity {
     @Basic
     @Column(name = "last_name")
     public String getLastName() {
-        return lastName;
+        return TitleCase.toTitleCase(lastName);
     }
 
     public void setLastName(String lastName) {

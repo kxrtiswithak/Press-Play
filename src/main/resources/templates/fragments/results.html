@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  
 <div th:insert="/fragments/header :: header(categories = ${categories})"></div>
 <div class="container">
     <table class="table table-hover table-responsive">
@@ -41,46 +42,39 @@
         </tbody>
     </table>
 
-    <div th:each="film : ${films}" th:attr="id=${'filmModal' + film.filmId}" class="modal fade rounded" tabindex="-1"
-         aria-labelledby="filmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="filmModalLabel" th:text="${film.title.toLowerCase()}">Film
-                        Title</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>Description</h6>
-                    <p th:text="${film.description}">Film Description</p>
-                    <h6>Actors</h6>
-                    <p><span th:each="actor,iterStat : ${film.actors}">
-                                    <span th:with="isLast=(${iterStat.index} == ${film.actors.size()} - 1 ? '' : ', ')"
-                                          th:text="${actor.firstName.toLowerCase()} + ' ' + ${actor.lastName.toLowerCase()} + ${isLast}"></span>
-                                </span></p>
-                    <h6>Duration</h6>
-                    <p th:text="${film.length} + ' mins'"></p>
-                    <h6>Rating</h6>
-                    <p th:text="${film.rating.ratingCode}"></p>
-                    <h6>Special Features</h6>
-                    <p th:text="${film.specialFeatures}"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" id="primaryBtn">See more</button>
+            <div th:each="film : ${films}" th:attr="id=${'filmModal' + film.filmId}" class="modal fade rounded" tabindex="-1"
+                 aria-labelledby="filmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="filmModalLabel" th:text="${film.title}">Film
+                                Title</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Description</h6>
+                            <p th:text="${film.description}">Film Description</p>
+                            <h6>Actors</h6>
+                            <p><span th:each="actor,iterStat : ${film.actors}">
+                                            <span th:with="isLast=(${iterStat.index} == ${film.actors.size()} - 1 ? '' : ', ')"
+                                                  th:text="${actor.firstName} + ' ' + ${actor.lastName} + ${isLast}"></span>
+                                        </span></p>
+                            <h6>Duration</h6>
+                            <p th:text="${film.length} + ' mins'"></p>
+                            <h6>Rating</h6>
+                            <p th:text="${film.rating.ratingCode}"></p>
+                            <h6>Special Features</h6>
+                            <p th:text="${film.specialFeatures}"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" id="primaryBtn">See more</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-</div>
-</body>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
 <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
 </body>
