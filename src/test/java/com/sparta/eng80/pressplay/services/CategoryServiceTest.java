@@ -44,6 +44,6 @@ public class CategoryServiceTest {
         categoryService.removeCategory(category);
         Assertions.assertNull(categoryService.findCategory(category));
     }
-    
+
 
 }
