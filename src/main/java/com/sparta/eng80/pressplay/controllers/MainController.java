@@ -8,6 +8,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Controller
 public class MainController {
@@ -28,11 +32,5 @@ public class MainController {
     @GetMapping("/index")
     public String index() { return "index"; }
 
-    @PostMapping("/newCategory")
-    public String newCategory(@ModelAttribute("category") CategoryEntity category){
-//        CategoryEntity categoryEntity = new CategoryEntity();
-//        categoryEntity.setName(category.name);
-        category = new CategoryEntity();
-        return "redirect:/categories";
-    }
+
 }

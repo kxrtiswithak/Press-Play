@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class FilmController {
 
@@ -46,20 +49,6 @@ public class FilmController {
     @GetMapping("/actor")
     public String findActor(String name, ModelMap modelMap){
         Iterable<FilmEntity> filmEntities = filmService.findActorByName(name);
-        modelMap.addAttribute("films", filmEntities);
-        return "index";
-    }
-
-    @GetMapping("/categories")
-    public String findCategories(ModelMap modelMap){
-        Iterable<CategoryEntity> categories = filmService.findAllGenres();
-        modelMap.addAttribute("categories", categories);
-        return "fragments/categories";
-    }
-
-    @GetMapping("/category")
-    public String findCategory(@RequestParam("category") String category, ModelMap modelMap){
-        Iterable<FilmEntity> filmEntities = filmService.findByCategory(category);
         modelMap.addAttribute("films", filmEntities);
         return "index";
     }
