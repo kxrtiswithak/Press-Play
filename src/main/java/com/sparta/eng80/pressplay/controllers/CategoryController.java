@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CategoryController {
@@ -26,7 +28,12 @@ public class CategoryController {
     @GetMapping("/categories")
     public String findCategories(ModelMap modelMap){
         Iterable<CategoryEntity> categories = filmService.findAllGenres();
+        List<Integer> categorySizes = new ArrayList<>();
+        for (CategoryEntity category : categories) {
+            categorySizes.add((int)filmService.findByCategory(category.getCategoryId()).spliterator().getExactSizeIfKnown());
+        }
         modelMap.addAttribute("categories", categories);
+        modelMap.addAttribute("sizes", categorySizes);
         return "fragments/categories";
     }
 
