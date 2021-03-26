@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div th:insert="/fragments/header :: header(categories = ${categories})"></div>
+<div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
 <div class="add-record">
     <form class="form-add-film" th:action="@{/add-film}" method="post">
 
