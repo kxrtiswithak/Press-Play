@@ -39,11 +39,11 @@ public class ProfileController {
     public String mainProfile(ModelMap model) {
         model = Filters.getFilters(model, filmService, actorService);
 
-        StaffEntity staff = getCurrentStaff();
+        StaffEntity staff = getCurrentStaff(staffService);
         if (staff != null) {
             model.addAttribute("user", staff);
         } else {
-            CustomerEntity customer = getCurrentCustomer();
+            CustomerEntity customer = getCurrentCustomer(customerService);
             model.addAttribute("user", customer);
 
             Iterable<RentalEntity> rentalHistory = rentalService.findByCustomerId(customer.getCustomerId());
@@ -72,7 +72,7 @@ public class ProfileController {
 
      @GetMapping("/profile/edit")
      public String edit(Model model) {
-        model.addAttribute("customer", getCurrentCustomer());
+        model.addAttribute("customer", getCurrentCustomer(customerService));
         return "fragments/edit";
      }
 
@@ -85,13 +85,13 @@ public class ProfileController {
         return "fragments/profile";
      }
 
-     private StaffEntity getCurrentStaff() {
+    public static StaffEntity getCurrentStaff(StaffService staffService) {
          UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
          Optional<StaffEntity> staff = staffService.findByEmail(user.getUsername());
          return staff.orElse(null);
      }
 
-     private CustomerEntity getCurrentCustomer() {
+     public static CustomerEntity getCurrentCustomer(CustomerService customerService) {
          UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
          Optional<CustomerEntity> customer = customerService.findByEmail(user.getUsername());
          return customer.orElse(null);

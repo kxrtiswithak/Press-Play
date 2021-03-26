@@ -69,7 +69,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" id="primaryBtn">See more</button>
+                            <form th:action="@{/rent}" method="post">
+                                <button type="rent" class="btn" id="primaryBtn">Rent</button>
+                                <input type="hidden" name="film" th:value="${film.filmId}"/>
+                            </form>
                         </div>
+
                     </div>
                 </div>
             </div>
