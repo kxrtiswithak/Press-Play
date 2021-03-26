@@ -36,9 +36,14 @@ public class CategoryControllerTest {
 
     @ParameterizedTest
     @CsvSource({"Action", "Drama", "Games"})
-    void checkReturn(String expectedCategory) {
-        System.out.println(expectedCategory);
+    void checkCategoryReturn(String expectedCategory) {
         Assertions.assertTrue(this.testTemplate.getForObject("http://localhost:" + port + "/categories", String.class).contains(expectedCategory));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"Music, music", "Sports, sports", "Travel, travel"})
+    void checkCategoriesReturn(String category, String expectedText) {
+        Assertions.assertTrue(this.testTemplate.getForObject("http://localhost:" + port + "/category?category=" + category, String.class).contains(expectedText));
     }
 
     public List<String> getCategories() {
