@@ -9,37 +9,38 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div th:insert="/fragments/header :: header"></div>
-        <div class="container">
-            <table class="table table-hover table-responsive">
-                <thead class="text-white font-weight-bold">
-                <tr>
-                    <th>Title</th>
-                    <th>Genres</th>
-                    <th>Release Year</th>
-                    <th>Actors</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="film : ${films}" class="text-white" data-bs-toggle="modal"
-                    th:attr="data-bs-target=${'#filmModal' + film.filmId}">
-                    <td th:text="${film.title}"></td>
-                    <td>
-                                        <span th:each="category,iterStat : ${film.categories}">
-                                            <span th:with="isLast=(${iterStat.index} == ${film.categories.size()} - 1 ? '' : ', ')"
-                                                  th:text="${category.name} + ${isLast}"></span>
-                                        </span>
-                    </td>
-                    <td th:text="${film.releaseYear}"></td>
-                    <td>
-                                        <span th:each="actor,iterStat : ${film.actors}" th:if="${iterStat.index}<2">
-                                            <span th:with="isLast=(${iterStat.index} == 1 ? '' : ', ')"
-                                                  th:text="${actor.firstName} + ' ' + ${actor.lastName} + ${isLast}"></span>
-                                        </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+  
+<div th:insert="/fragments/header :: header(categories = ${categories})"></div>
+<div class="container">
+    <table class="table table-hover table-responsive">
+        <thead class="text-white font-weight-bold">
+        <tr>
+            <th>Title</th>
+            <th>Genres</th>
+            <th>Release Year</th>
+            <th>Actors</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="film : ${films}" class="text-white" data-bs-toggle="modal"
+            th:attr="data-bs-target=${'#filmModal' + film.filmId}">
+            <td th:text="${film.title.toLowerCase()}"></td>
+            <td>
+                                <span th:each="category,iterStat : ${film.categories}">
+                                    <span th:with="isLast=(${iterStat.index} == ${film.categories.size()} - 1 ? '' : ', ')"
+                                          th:text="${category.name.toLowerCase()} + ${isLast}"></span>
+                                </span>
+            </td>
+            <td th:text="${film.releaseYear}"></td>
+            <td>
+                                <span th:each="actor,iterStat : ${film.actors}" th:if="${iterStat.index}<2">
+                                    <span th:with="isLast=(${iterStat.index} == 1 ? '' : ', ')"
+                                          th:text="${actor.firstName.toLowerCase()} + ' ' + ${actor.lastName.toLowerCase()} + ${isLast}"></span>
+                                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
             <div th:each="film : ${films}" th:attr="id=${'filmModal' + film.filmId}" class="modal fade rounded" tabindex="-1"
                  aria-labelledby="filmModalLabel" aria-hidden="true">

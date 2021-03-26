@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="css/rental.css">
     </head>
     <body  class="w-100 h-100 text-white">
-        <div th:insert="/fragments/header :: header"></div>
+        <div th:insert="/fragments/header :: header(categories = ${categories})"></div>
         <div sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')">
             <div class="container" th:object="${user}">
                 <div class="text-center mt-5 p-5">
