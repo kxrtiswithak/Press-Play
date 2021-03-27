@@ -7,4 +7,5 @@ public interface UserEntity {
     String getEmail();
     AddressEntity getAddress();
     String getPassword();
+    String getRole();
 }
