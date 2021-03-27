@@ -39,7 +39,7 @@ public class ProfileController {
     public String mainProfile(ModelMap model) {
         model = Filters.getFilters(model, filmService, actorService);
 
-        UserEntity user = getCurrentUser();
+        UserEntity user = securityService.getCurrentUser();
         model.addAttribute("user", user);
 
         if (user instanceof CustomerEntity) {
@@ -70,7 +70,7 @@ public class ProfileController {
 
      @PostMapping("/profile")
      public String edit(@ModelAttribute("user") UserEntity user) {
-        String currentEmail = getCurrentUser().getEmail();
+        String currentEmail = securityService.getCurrentUser().getEmail();
         if (securityService.authToken(currentEmail, user.getPassword()).isAuthenticated())  {
             Optional<CustomerEntity> currentDetailsOptional = customerService.findByEmail(currentEmail);
             if (currentDetailsOptional.isPresent()) {
@@ -137,15 +137,4 @@ public class ProfileController {
         }
         return "redirect:/profile";
      }
-
-     private UserEntity getCurrentUser() {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<StaffEntity> staff = staffService.findByEmail(user.getUsername());
-        if (staff.isPresent()) {
-            return staff.get();
-        } else {
-            Optional<CustomerEntity> customer = customerService.findByEmail(user.getUsername());
-            return customer.orElse(null);
-        }
-    }
 }
