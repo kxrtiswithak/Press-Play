@@ -3,6 +3,8 @@ package com.sparta.eng80.pressplay.entities;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
+
+import com.sparta.eng80.pressplay.util.TitleCase;
 import com.vividsolutions.jts.geom.*;
 
 @Entity
@@ -52,7 +54,7 @@ public class AddressEntity {
     @Basic
     @Column(name = "district")
     public String getDistrict() {
-        return district;
+        return TitleCase.toTitleCase(district);
     }
 
     public void setDistrict(String district) {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,18 +21,24 @@ public class ProfileController {
     private final StaffService staffService;
     private final RentalService rentalService;
     private final SecurityService securityService;
+    private final ActorService actorService;
+    private final FilmService filmService;
 
     @Autowired
-    public ProfileController(CustomerService customerService, AddressService addressService, RentalService rentalService, StaffService staffService, SecurityService securityService) {
+    public ProfileController(CustomerService customerService, AddressService addressService, RentalService rentalService, StaffService staffService, ActorService actorService, FilmService filmService, SecurityService securityService) {
         this.customerService = customerService;
         this.addressService = addressService;
         this.rentalService = rentalService;
         this.staffService = staffService;
+        this.actorService = actorService;
+        this.filmService = filmService;
         this.securityService = securityService;
     }
 
     @GetMapping("/profile")
-    public String mainProfile(Model model) {
+    public String mainProfile(ModelMap model) {
+        model = Filters.getFilters(model, filmService, actorService);
+
         UserEntity user = getCurrentUser();
         model.addAttribute("user", user);
 
@@ -74,7 +80,6 @@ public class ProfileController {
                 if (inputFirstName != null) {
                     currentDetails.setFirstName(inputFirstName);
                 }
-
                 String inputLastName = user.getLastName();
                 if (inputLastName != null) {
                     currentDetails.setLastName(inputLastName);

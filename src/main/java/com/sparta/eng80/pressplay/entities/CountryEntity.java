@@ -1,5 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
+import com.sparta.eng80.pressplay.util.TitleCase;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -26,7 +28,7 @@ public class CountryEntity {
     @Basic
     @Column(name = "country")
     public String getCountry() {
-        return country;
+        return TitleCase.toTitleCase(country);
     }
 
     public void setCountry(String country) {
