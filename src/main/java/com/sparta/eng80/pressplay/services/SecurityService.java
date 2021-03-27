@@ -31,14 +31,20 @@ public class SecurityService {
     }
 
     public void autoLogin(String email, String password) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = authToken(email, password);
+
+        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
+    }
+
+    public UsernamePasswordAuthenticationToken authToken(String email, String password) {
         UserDetails userDetails = loginCredentialService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        }
+        return usernamePasswordAuthenticationToken;
     }
 }
