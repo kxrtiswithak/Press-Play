@@ -125,7 +125,7 @@ public class FilmEntity {
     @Basic
     @Column(name = "special_features")
     public String getSpecialFeatures() {
-        return specialFeatures.replaceAll("[,]", "$0 ");
+        return specialFeatures;
     }
 
     public void setSpecialFeatures(String specialFeatures) {

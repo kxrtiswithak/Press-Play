@@ -65,7 +65,7 @@
                             <h6>Rating</h6>
                             <p th:text="${film.rating.ratingCode}"></p>
                             <h6>Special Features</h6>
-                            <p th:text="${film.specialFeatures}"></p>
+                            <p th:text="${film.specialFeatures.replaceAll('[,]', '$0 ')}"></p>
                         </div>
                         <div class="modal-footer">
                             <a th:href="'/film?id=' + ${film.filmId}" class="btn" id="primaryBtn">See more</a>
