@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,6 +32,7 @@ public class SearchController {
         Iterable<ActorEntity> actors = actorService.getAllActorsAlphabetically();
 
         List<FilmEntity> results = new ArrayList<>();
+        System.out.println(films.toString());
 
         // Future Improvements
         // Array of 26 arrays - (1 for each character in alphabet)
@@ -39,11 +41,11 @@ public class SearchController {
 
         for (FilmEntity film : films) {
             // Add all films that start with the search string first
-            if (film.getTitle().startsWith(title.toUpperCase())) {
+            if (film.getTitle().toUpperCase().startsWith(title.toUpperCase())) {
                 results.add(0, film);
             } else {
                 // Add all films which have the search string in the title
-                if (film.getTitle().contains(title.toUpperCase())) {
+                if (film.getTitle().toUpperCase().contains(title.toUpperCase())) {
                     results.add(film);
                 }
             }

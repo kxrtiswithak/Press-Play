@@ -124,7 +124,6 @@ div#filterSection {
 }
 
 button.dropdownBtn {
-    background-color: inherit;
     border-right: none;
     border-left: none;
     padding: 5px 15px 5px 15px;

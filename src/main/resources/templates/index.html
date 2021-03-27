@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<!--<div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>-->
 <div th:insert="/fragments/header :: header(categories = ${categories})"></div>
 
 <!--        <div th:insert="/fragments/results :: results"></div>-->
@@ -44,7 +45,6 @@
                     data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-            </button>
             </button>
         </div>
     </div>
