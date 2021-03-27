@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "customer", schema = "sakila")
-public class CustomerEntity {
+public class CustomerEntity implements UserEntity{
     private int customerId;
     private String firstName;
     private String lastName;
