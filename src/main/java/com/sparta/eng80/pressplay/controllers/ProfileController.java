@@ -4,13 +4,12 @@ import com.sparta.eng80.pressplay.entities.*;
 import com.sparta.eng80.pressplay.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;g
 
 import java.util.Optional;
 
@@ -34,13 +33,11 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String mainProfile(Model model) {
-        StaffEntity staff = getCurrentStaff();
-        if (staff != null) {
-            model.addAttribute("user", staff);
-        } else {
-            CustomerEntity customer = getCurrentCustomer();
-            model.addAttribute("user", customer);
+        UserEntity user = getCurrentUser();
+        model.addAttribute("user", user);
 
+        if (user instanceof CustomerEntity) {
+            CustomerEntity customer = (CustomerEntity) user;
             Iterable<RentalEntity> rentalHistory = rentalService.findByCustomerId(customer.getCustomerId());
             Iterable<RentalEntity> overdueRentals = rentalService.findOverdueRentalsByCustomerId(customer.getCustomerId());
             Iterable<RentalEntity> currentRentals = rentalService.getCurrentlyRentedFilms(customer.getCustomerId());
@@ -66,29 +63,29 @@ public class ProfileController {
     }
 
      @PostMapping("/profile")
-     public String edit(@ModelAttribute("customer") CustomerEntity customer) {
-        String currentEmail = getCurrentCustomer().getEmail();
-        if (securityService.authToken(currentEmail, customer.getPassword()).isAuthenticated())  {
+     public String edit(@ModelAttribute("user") UserEntity user) {
+        String currentEmail = getCurrentUser().getEmail();
+        if (securityService.authToken(currentEmail, user.getPassword()).isAuthenticated())  {
             Optional<CustomerEntity> currentDetailsOptional = customerService.findByEmail(currentEmail);
             if (currentDetailsOptional.isPresent()) {
                 CustomerEntity currentDetails = currentDetailsOptional.get();
 
-                String inputFirstName = customer.getFirstName();
+                String inputFirstName = user.getFirstName();
                 if (inputFirstName != null) {
                     currentDetails.setFirstName(inputFirstName);
                 }
 
-                String inputLastName = customer.getLastName();
+                String inputLastName = user.getLastName();
                 if (inputLastName != null) {
                     currentDetails.setLastName(inputLastName);
                 }
 
-                String inputEmail = customer.getEmail();
+                String inputEmail = user.getEmail();
                 if (inputEmail != null) {
                     currentDetails.setEmail(inputEmail);
                 }
 
-                AddressEntity inputAddress = customer.getAddress();
+                AddressEntity inputAddress = user.getAddress();
                 if (inputAddress != null) {
                     Optional<AddressEntity> currentAddressOptional = addressService.findFullAddressByCustomerId(currentDetails.getCustomerId());
                     AddressEntity currentAddress;
@@ -127,7 +124,7 @@ public class ProfileController {
                         currentDetails.setAddress(currentAddress);
                     }
                 }
-                String inputPassword = customer.getPassword();
+                String inputPassword = user.getPassword();
                 currentDetails.setPassword(inputPassword);
                 customerService.save(currentDetails);
                 SecurityContextHolder.getContext().setAuthentication(securityService.authToken(inputEmail, inputPassword));
@@ -136,15 +133,14 @@ public class ProfileController {
         return "redirect:/profile";
      }
 
-     private StaffEntity getCurrentStaff() {
-         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-         Optional<StaffEntity> staff = staffService.findByEmail(user.getUsername());
-         return staff.orElse(null);
-     }
-
-     private CustomerEntity getCurrentCustomer() {
-         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-         Optional<CustomerEntity> customer = customerService.findByEmail(user.getUsername());
-         return customer.orElse(null);
-     }
+     private UserEntity getCurrentUser() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<StaffEntity> staff = staffService.findByEmail(user.getUsername());
+        if (staff.isPresent()) {
+            return staff.get();
+        } else {
+            Optional<CustomerEntity> customer = customerService.findByEmail(user.getUsername());
+            return customer.orElse(null);
+        }
+    }
 }
