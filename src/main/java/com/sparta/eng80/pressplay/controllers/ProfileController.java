@@ -1,20 +1,16 @@
 package com.sparta.eng80.pressplay.controllers;
 
-import com.sparta.eng80.pressplay.entities.CustomerEntity;
-import com.sparta.eng80.pressplay.entities.RentalEntity;
-import com.sparta.eng80.pressplay.entities.StaffEntity;
-import com.sparta.eng80.pressplay.services.CustomerService;
-import com.sparta.eng80.pressplay.services.RentalService;
-import com.sparta.eng80.pressplay.services.StaffService;
+import com.sparta.eng80.pressplay.entities.*;
+import com.sparta.eng80.pressplay.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -22,14 +18,18 @@ import java.util.Optional;
 public class ProfileController {
 
     private final CustomerService customerService;
+    private final AddressService addressService;
     private final StaffService staffService;
     private final RentalService rentalService;
+    private final SecurityService securityService;
 
     @Autowired
-    public ProfileController(CustomerService customerService, RentalService rentalService, StaffService staffService) {
+    public ProfileController(CustomerService customerService, AddressService addressService, RentalService rentalService, StaffService staffService, SecurityService securityService) {
         this.customerService = customerService;
+        this.addressService = addressService;
         this.rentalService = rentalService;
         this.staffService = staffService;
+        this.securityService = securityService;
     }
 
     @GetMapping("/profile")
@@ -65,19 +65,75 @@ public class ProfileController {
         return "fragments/profile";
     }
 
-     @GetMapping("/profile/edit")
-     public String edit(Model model) {
-        model.addAttribute("customer", getCurrentCustomer());
-        return "fragments/edit";
-     }
+     @PostMapping("/profile")
+     public String edit(@ModelAttribute("customer") CustomerEntity customer) {
+        String currentEmail = getCurrentCustomer().getEmail();
+        if (securityService.authToken(currentEmail, customer.getPassword()).isAuthenticated())  {
+            Optional<CustomerEntity> currentDetailsOptional = customerService.findByEmail(currentEmail);
+            if (currentDetailsOptional.isPresent()) {
+                CustomerEntity currentDetails = currentDetailsOptional.get();
 
-     @PutMapping("profile/edit")
-     public String edit(@ModelAttribute("customer") CustomerEntity customer, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "fragments/edit";
+                String inputFirstName = customer.getFirstName();
+                if (inputFirstName != null) {
+                    currentDetails.setFirstName(inputFirstName);
+                }
+
+                String inputLastName = customer.getLastName();
+                if (inputLastName != null) {
+                    currentDetails.setLastName(inputLastName);
+                }
+
+                String inputEmail = customer.getEmail();
+                if (inputEmail != null) {
+                    currentDetails.setEmail(inputEmail);
+                }
+
+                AddressEntity inputAddress = customer.getAddress();
+                if (inputAddress != null) {
+                    Optional<AddressEntity> currentAddressOptional = addressService.findFullAddressByCustomerId(currentDetails.getCustomerId());
+                    AddressEntity currentAddress;
+                    if (currentAddressOptional.isPresent()) {
+                        currentAddress = currentAddressOptional.get();
+
+                        CityEntity inputCity = inputAddress.getCity();
+                        CountryEntity inputCountry = inputCity.getCountry();
+
+                        Optional<CityEntity> cityOptional = addressService.findCityByCityAndCountry(inputCity.getCity(), inputCountry.getCountry());
+                        CityEntity city;
+                        if (cityOptional.isPresent()) {
+                            city = cityOptional.get();
+                        } else {
+                            city = new CityEntity();
+                            city.setCity(inputCity.getCity());
+                            Optional<CountryEntity> countryOptional = addressService.findCountryByName(inputCountry.getCountry());
+                            CountryEntity country;
+                            if (countryOptional.isPresent()) {
+                                country = countryOptional.get();
+                            } else {
+                                country = new CountryEntity();
+                                country.setCountry(inputCountry.getCountry());
+                                addressService.saveCountry(country);
+                            }
+                            city.setCountry(country);
+                            addressService.saveCity(city);
+                        }
+
+                        currentAddress.setAddress(inputAddress.getAddress());
+                        currentAddress.setDistrict(inputAddress.getDistrict());
+                        currentAddress.setPostalCode(inputAddress.getPostalCode());
+                        currentAddress.setPhone(inputAddress.getPhone());
+                        currentAddress.setCity(city);
+                        addressService.saveAddress(currentAddress);
+                        currentDetails.setAddress(currentAddress);
+                    }
+                }
+                String inputPassword = customer.getPassword();
+                currentDetails.setPassword(inputPassword);
+                customerService.save(currentDetails);
+                SecurityContextHolder.getContext().setAuthentication(securityService.authToken(inputEmail, inputPassword));
+            }
         }
-        customerService.save(customer);
-        return "fragments/profile";
+        return "redirect:/profile";
      }
 
      private StaffEntity getCurrentStaff() {
