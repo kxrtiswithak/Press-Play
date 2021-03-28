@@ -56,7 +56,7 @@ public class CustomerEntity implements UserEntity{
     @Basic
     @Column(name = "email")
     public String getEmail() {
-        return email.toLowerCase();
+        return email;
     }
 
     public void setEmail(String email) {
