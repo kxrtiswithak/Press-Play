@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/filmdetails.css">
 </head>
 <body class="text-white">
-<div th:insert="/fragments/header :: header(categories = ${categories})"></div>
+<div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
 
 <div class="container-sm film-detail px-5 mx-auto">
     <h1 class="font-weight-bold" th:text="${film.title} + ' (' + ${film.rating} + ')'">Film Title</h1>

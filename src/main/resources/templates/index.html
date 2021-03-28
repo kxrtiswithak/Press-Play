@@ -32,8 +32,10 @@
             <div class="carousel-inner">
                 <div th:each="film, iterstat : ${TopFilms}"
                      th:class="${iterstat.first}? 'carousel-item active':'carousel-item'" th:data-bs-interval="5000">
-
-                    <div class="text-center align-vert" th:text="*{film.title} + ' : ' + *{film.description}"></div>
+                    <div class="container">
+                        <div class="position-absolute top-0 start-50 translate-middle align-vert mt-5" th:text="*{film.title}"></div>
+                        <div class="text-center align-vert mt-5" th:text="*{film.description}"></div>
+                    </div>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
