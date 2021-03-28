@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div th:insert="/fragments/header :: header(categories = ${categories})"></div>
+    <div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
     <div class="container">
         <table class="table table-hover table-responsive" id="resultsTable">
             <thead class="text-white font-weight-bold">
