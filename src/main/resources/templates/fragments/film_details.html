@@ -23,9 +23,10 @@
             <h5 class="lead text-white-50">SYNOPSIS</h5>
             <p th:text="${film.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel eros non lacus gravida accumsan. Aenean ipsum nisi, pulvinar laoreet dapibus sit amet, mollis at leo.</p>
             <div class="py-5 mx-auto" style="width: 200px;">
+                <p th:text="${stock} + ' copies in stock'">STOCK</p>
                 <form th:action="@{/rent}" method="post">
                     <input type="hidden" name="film" th:value="${film.filmId}"/>
-                    <button type="submit" class="btn" id="primaryBtn">Rent</button>
+                    <button th:disabled="${stock} <= 0" type="submit" class="btn" id="primaryBtn">Rent</button>
                 </form>
             </div>
         </div>

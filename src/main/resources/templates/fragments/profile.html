@@ -141,7 +141,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="text-white" th:id="'status-' + ${order.status}" th:each="order : ${rentalHistory}"
+                        <tr th:id="'status-' + ${order.status}" th:each="order : ${rentalHistory}"
                             data-bs-toggle="modal" th:attr="data-bs-target=${'#rentalModal' + order.rentalId}">
                             <td th:text="${order.rentalId}"></td>
                             <td th:text="${order.inventory.film.title}"></td>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="modal-footer bg-dark text-white">
                                     <button type="button" class="btn btn-secondary" th:unless="${order.status} == ${order.RETURNED}">Return</button>
-                                    <button type="button" class="btn btn-secondary">Order Again</button>
+                                    <a th:href="'/film?id=' + ${order.inventory.film.filmId}" class="btn btn-secondary" id="primaryBtn">Order Again</a>
                                 </div>
                             </div>
                         </div>
