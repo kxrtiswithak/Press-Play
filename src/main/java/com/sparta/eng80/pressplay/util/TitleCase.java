@@ -2,6 +2,9 @@ package com.sparta.eng80.pressplay.util;
 
 public class TitleCase {
     public static String toTitleCase(String string) {
+        if(string == null){
+            return "";
+        }
         String[] words = string.split(" ");
         StringBuilder titleCase = new StringBuilder();
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="'Film Details | ' + ${film.title}">Film Details</title>
@@ -26,7 +26,9 @@
                 <p th:text="${stock} + ' copies in stock'">STOCK</p>
                 <form th:action="@{/rent}" method="post">
                     <input type="hidden" name="film" th:value="${film.filmId}"/>
+                    <span sec:authorize="hasAnyAuthority('ROLE_USER')">
                     <button th:disabled="${stock} <= 0" type="submit" class="btn" id="primaryBtn">Rent</button>
+                    </span>
                 </form>
             </div>
         </div>
