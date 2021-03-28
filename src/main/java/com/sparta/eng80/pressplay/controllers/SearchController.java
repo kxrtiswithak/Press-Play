@@ -34,24 +34,26 @@ public class SearchController {
         String[] selectedActors = actor.split(",");
         System.out.println(Arrays.toString(selectedActors));
 
-
         // Future Improvements
         // Array of 26 arrays - (1 for each character in alphabet)
         // When iterating through put the film into the correct array based on the first letter
         // then do arrays.sort() on the array that was added to
 
-        // If title was not entered and filtering by category or actor
+        // All films by actor
+        if ((title.isEmpty() && category.equals("NONE")) && !actor.equals("NONE")) {
+            for (String actorName : selectedActors) {
+                results.addAll((Collection<? extends FilmEntity>) filmService.findActorByName(actorName));
+            }
+        }
+
+        // If title was not entered and filtering by category
         if (title.isEmpty() && (!category.equals("NONE") && selectedCategories.length != 0)) {
             // Searching by category only
             for (String categoryName : selectedCategories) {
                 results.addAll((Collection<? extends FilmEntity>) filmService.findByCategory(categoryName));
             }
-
-            // Searching by category and actor
-//            for (String actorName : selectedActors) {
-//
-//            }
         } else {
+            // Title is present
             for (FilmEntity film : films) {
                 // Add all films that start with the search string first
                 if (film.getTitle().toUpperCase().startsWith(title.toUpperCase())) {
@@ -64,35 +66,13 @@ public class SearchController {
                 }
             }
 
-            Iterator<FilmEntity> it = results.iterator();
             if (!category.equals("NONE") && selectedCategories.length != 0) {
-                while (it.hasNext()) {
-                    FilmEntity film = it.next();
-                    List<String> filmCategories = new ArrayList<>();
-                    for (CategoryEntity categoryEntity : film.getCategories()) {
-                        filmCategories.add(categoryEntity.getName());
-                    }
-
-                    boolean match = false;
-                    for (String categoryName : selectedCategories) {
-                        match = filmCategories.contains(categoryName);
-                        if (match) {
-                            break;
-                        }
-                    }
-                    if (!match) {
-                        it.remove();
-                    }
-                }
+                results = matchByCategories(results, selectedCategories);
             }
+        }
 
-//            if (!actor.equals("NONE")) {
-//                it = results.iterator();
-//                while (it.hasNext()) {
-//
-//                }
-//            }
-
+        if (!actor.equals("NONE")) {
+            results = matchByActors(results, selectedActors);
         }
 
         model.addAttribute("categories", categories);
@@ -100,4 +80,53 @@ public class SearchController {
         model.addAttribute("films", results);
         return "/fragments/results";
     }
+
+    public HashSet<FilmEntity> matchByActors(HashSet<FilmEntity> films, String[] selectedActors) {
+        Iterator<FilmEntity> it = films.iterator();
+        while (it.hasNext()) {
+            FilmEntity film = it.next();
+            List<String> filmActors = new ArrayList<>();
+            for (ActorEntity actorEntity : film.getActors()) {
+                filmActors.add(actorEntity.getFirstName() + " " + actorEntity.getLastName());
+            }
+
+            boolean match = false;
+            for (String actorName : selectedActors) {
+                match = filmActors.contains(actorName);
+                if (match) {
+                    break;
+                }
+            }
+            if (!match) {
+                it.remove();
+            }
+
+        }
+        return films;
+    }
+
+    public HashSet<FilmEntity> matchByCategories(HashSet<FilmEntity> films, String[] selectedCategories) {
+        Iterator<FilmEntity> it = films.iterator();
+        while (it.hasNext()) {
+            FilmEntity film = it.next();
+            List<String> filmCategories = new ArrayList<>();
+            for (CategoryEntity categoryEntity : film.getCategories()) {
+                filmCategories.add(categoryEntity.getName());
+            }
+
+            boolean match = false;
+            for (String categoryName : selectedCategories) {
+                match = filmCategories.contains(categoryName);
+                if (match) {
+                    break;
+                }
+            }
+            if (!match) {
+                it.remove();
+            }
+        }
+        return films;
+    }
+
+
 }

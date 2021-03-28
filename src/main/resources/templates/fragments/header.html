@@ -96,7 +96,7 @@
 
                             <div class="actordropdown dropdown col-4">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle dropdownBtn btn btn-primary dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actor</button>
+<!--                                    <button class="dropdown-toggle dropdownBtn btn btn-primary dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actor</button>-->
                                     <ul class="dropdown-menu dropdownContent" id="actorDropdown">
                                         <li>
                                             <label>
@@ -143,12 +143,10 @@
                     filterText = input.value.toUpperCase();
                     dropdown = document.getElementById(dropdown);
                     listItem = dropdown.getElementsByClassName("dropdownItem");
-                    // console.log(listItem);
                     for (let i = 0; i < listItem.length; i++) {
-                        txtValue = listItem[i].getElementsByTagName("input");
-                        console.log(txtValue);
-                        if (txtValue.defaultValue.toUpperCase().indexOf(filterText) > -1) {
-                            // listItem[i].style.display = "";
+                        txtValue = listItem[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(filterText) > -1) {
+                            listItem[i].style.display = "";
                         } else {
                             listItem[i].style.display = "none";
                         }
