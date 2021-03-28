@@ -1,6 +1,7 @@
 package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
+import com.sparta.eng80.pressplay.repositories.AddressRepository;
 import com.sparta.eng80.pressplay.repositories.CustomerRepository;
 import com.sparta.eng80.pressplay.security.PasswordEncryptor;
 import com.sparta.eng80.pressplay.services.interfaces.AccountInterface;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -16,10 +16,12 @@ import java.util.Optional;
 public class CustomerService implements AccountInterface<CustomerEntity> {
 
     private final CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
     private final PasswordEncryptor passwordEncryptor;
 
-    public CustomerService(CustomerRepository customerRepository, PasswordEncryptor passwordEncryptor) {
+    public CustomerService(CustomerRepository customerRepository, AddressRepository addressRepository, PasswordEncryptor passwordEncryptor) {
         this.customerRepository = customerRepository;
+        this.addressRepository = addressRepository;
         this.passwordEncryptor = passwordEncryptor;
     }
 
@@ -57,7 +59,9 @@ public class CustomerService implements AccountInterface<CustomerEntity> {
     @Override
     public int save(CustomerEntity customerEntity) {
         customerEntity.setPassword(passwordEncryptor.encode(customerEntity.getPassword()));
-        customerEntity.setCreateDate(Date.valueOf(LocalDate.now()));
+        Date now = Date.valueOf(LocalDate.now());
+        customerEntity.setCreateDate(now);
+        customerEntity.setLastUpdate(now);
         return customerRepository.save(customerEntity).getCustomerId();
     }
 }

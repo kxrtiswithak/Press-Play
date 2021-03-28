@@ -2,6 +2,7 @@ package com.sparta.eng80.pressplay.services;
 
 import com.sparta.eng80.pressplay.entities.CustomerEntity;
 import com.sparta.eng80.pressplay.entities.StaffEntity;
+import com.sparta.eng80.pressplay.entities.UserEntity;
 import com.sparta.eng80.pressplay.repositories.CustomerRepository;
 import com.sparta.eng80.pressplay.repositories.StaffRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,23 +29,25 @@ public class LoginCredentialService implements UserDetailsService {
         this.staffRepository = staffRepository;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String email) {
-        Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
-
+    public UserEntity getCurrentUser(String email) {
+        UserEntity user;
         Optional<CustomerEntity> customerOptional = customerRepository.findCustomerEntityByEmailEquals(email);
         if (customerOptional.isEmpty()) {
             Optional<StaffEntity> staffOptional = staffRepository.findStaffEntityByEmailEquals(email);
             if (staffOptional.isEmpty()) {
                 throw new UsernameNotFoundException(email);
             }
-            StaffEntity staff = staffOptional.get();
-            grantedAuthoritySet.add(new SimpleGrantedAuthority(staff.getRole()));
-            return new User(staff.getEmail(), staff.getPassword(), grantedAuthoritySet);
+            return staffOptional.get();
         }
-        CustomerEntity customer = customerOptional.get();
-        grantedAuthoritySet.add(new SimpleGrantedAuthority(customer.getRole()));
-        return new User(customer.getEmail(), customer.getPassword(), grantedAuthoritySet);
+        return customerOptional.get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String email) {
+        Set<GrantedAuthority> grantedAuthoritySet = new HashSet<>();
+        UserEntity user = getCurrentUser(email);
+        grantedAuthoritySet.add(new SimpleGrantedAuthority(user.getRole()));
+        return new User(user.getEmail(), user.getPassword(), grantedAuthoritySet);
     }
 }

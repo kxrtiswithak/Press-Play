@@ -1,5 +1,8 @@
 package com.sparta.eng80.pressplay.services;
 
+import com.sparta.eng80.pressplay.entities.CustomerEntity;
+import com.sparta.eng80.pressplay.entities.StaffEntity;
+import com.sparta.eng80.pressplay.entities.UserEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -31,14 +36,25 @@ public class SecurityService {
     }
 
     public void autoLogin(String email, String password) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = authToken(email, password);
+
+        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
+    }
+
+    public UsernamePasswordAuthenticationToken authToken(String email, String password) {
         UserDetails userDetails = loginCredentialService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        return usernamePasswordAuthenticationToken;
+    }
 
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        }
+    public UserEntity getCurrentUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loginCredentialService.getCurrentUser(userDetails.getUsername());
     }
 }
