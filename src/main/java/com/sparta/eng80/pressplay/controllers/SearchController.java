@@ -5,29 +5,31 @@ import com.sparta.eng80.pressplay.entities.CategoryEntity;
 import com.sparta.eng80.pressplay.entities.FilmEntity;
 import com.sparta.eng80.pressplay.services.ActorService;
 import com.sparta.eng80.pressplay.services.FilmService;
+import com.sparta.eng80.pressplay.services.InventoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class SearchController {
     private FilmService filmService;
     private ActorService actorService;
+    private InventoryService inventoryService;
 
-    public SearchController(FilmService filmService, ActorService actorService) {
+    public SearchController(FilmService filmService, ActorService actorService, InventoryService inventoryService) {
         this.filmService = filmService;
         this.actorService = actorService;
+        this.inventoryService = inventoryService;
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model, @RequestParam("title") String title) {
 //        @RequestParam("category") String category, @RequestParam("actor") String actor
         Iterable<FilmEntity> films = filmService.findAll();
+
         Iterable<CategoryEntity> categories = filmService.findAllGenres();
         Iterable<ActorEntity> actors = actorService.getAllActorsAlphabetically();
 
@@ -50,7 +52,7 @@ public class SearchController {
                 }
             }
          }
-
+        model.addAttribute("stock", inventoryService);
         model.addAttribute("categories", categories);
         model.addAttribute("actors", actors);
         model.addAttribute("films", results);
