@@ -6,9 +6,10 @@ import com.sparta.eng80.pressplay.services.interfaces.RentalInterface;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,75 +30,33 @@ public class RentalService implements RentalInterface {
         this.staffRepository = staffRepository;
     }
 
-    private void refreshInventoryStatus() {
-        Iterable<RentalEntity> rentalBacklog = rentalRepository.findAll();
-
-        Date date = new Date();
-        Timestamp currentTime = new Timestamp(date.getTime());
-
-        for (RentalEntity rentalEntity : rentalBacklog) {
-            if (rentalEntity.getInventory().getLastUpdate().before(rentalEntity.getLastUpdate())) {
-                if (rentalEntity.getReturnDate().before(currentTime)) {
-                    InventoryEntity inventoryEntity = rentalEntity.getInventory();
-                    inventoryEntity.setLastUpdate(currentTime);
-                    inventoryEntity.setRented(false);
-                    rentalEntity.setInventory(inventoryEntity);
-                } else if (rentalEntity.getReturnDate().after(currentTime)) {
-                    InventoryEntity inventoryEntity = rentalEntity.getInventory();
-                    inventoryEntity.setLastUpdate(currentTime);
-                    inventoryEntity.setRented(true);
-                    rentalEntity.setInventory(inventoryEntity);
-                }
-            }
+    public boolean rentFilm(FilmEntity film, CustomerEntity customer, StaffEntity staff) {
+        Optional<InventoryEntity> inventoryOptional = inventoryRepository.getSingleInventoryWithFilmIdThatIsCurrentlyNotRented(film.getFilmId());
+        if (inventoryOptional.isPresent()) {
+            LocalDate now = LocalDate.now();
+            InventoryEntity inventoryEntity = inventoryOptional.get();
+            inventoryEntity.setLastUpdate(Date.valueOf(now));
+            inventoryEntity.setRented(true);
+            RentalEntity rentalEntity = new RentalEntity();
+            rentalEntity.setInventory(inventoryEntity);
+            rentalEntity.setCustomer(customer);
+            rentalEntity.setStaff(staff);
+            rentalEntity.setRentalDate(Date.valueOf(now));
+            rentalEntity.setReturnDate(Date.valueOf(now.plusDays(film.getRentalDuration())));
+            inventoryRepository.save(inventoryEntity);
+            save(rentalEntity);
+            return true;
         }
+        return false;
     }
 
-    public boolean rentAFilm(FilmEntity filmEntity, CustomerEntity customerEntity, java.util.Date returnDate, StaffEntity staffEntity) {
-        refreshInventoryStatus();
-
-        Date date = new Date();
-        Timestamp currentTime = new Timestamp(date.getTime());
-
-        if (returnDate.before(currentTime)) {
-            return false;
-        }
-
-        //will return true, if film is in stock, and rentable.
-        Iterable<InventoryEntity> inventoryEntities = inventoryRepository.findAll();
-        for (InventoryEntity inventoryEntity : inventoryEntities) {
-            // Inventory TABLE MUST BE UPDATED TO HAVE A BOOLEAN FOR IF A FILM
-            // HAS BEEN RETURNED!
-            if (inventoryEntity.getFilm() == filmEntity && !inventoryEntity.isRented()) {
-                RentalEntity rentalEntity = new RentalEntity();
-                rentalEntity.setRentalDate(new java.sql.Date(date.getTime()));
-                rentalEntity.setInventory(inventoryEntity);
-                rentalEntity.setCustomer(customerEntity);
-                rentalEntity.setReturnDate(new java.sql.Date(returnDate.getTime()));
-                rentalEntity.setStaff(staffEntity);
-                rentalEntity.setLastUpdate(currentTime);
-                rentalRepository.save(rentalEntity);
-                break;
-            }
-        }
-
-        return true;
-    }
-
-    public Iterable<RentalEntity> getCurrentlyRentedFilms(int customerId) {
-        List<RentalEntity> currentRentals = new ArrayList<>();
-        Iterable<RentalEntity> allRentals = rentalRepository.findRentedRentalEntityByCustomerID(customerId);
-        for (RentalEntity rental : allRentals) {
-            RentalEntity latestRental = rentalRepository.findLatestRentalEntityByInventoryID(rental.getInventory().getInventoryId());
-            if (latestRental.getCustomer().getCustomerId() == customerId) {
-                currentRentals.add(rental);
-            }
-        }
-        return currentRentals;
+    public Iterable<RentalEntity> getCurrentRentals(int customerId) {
+        return rentalRepository.findCurrentRentalsCustomerID(customerId);
     }
 
     @Override
     public Iterable<RentalEntity> findByCustomerId(int id) {
-        return rentalRepository.findRentalEntitiesByCustomer_CustomerId(id);
+        return rentalRepository.findRentalEntitiesByCustomer_CustomerIdEqualsOrderByRentalDateDesc(id);
     }
 
     @Override
@@ -122,6 +81,7 @@ public class RentalService implements RentalInterface {
 
     @Override
     public int save(RentalEntity rentalEntity) {
+        rentalEntity.setLastUpdate(Date.valueOf(LocalDate.now()));
         return rentalRepository.save(rentalEntity).getRentalId();
     }
 }
