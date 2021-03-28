@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "staff", schema = "sakila")
-public class StaffEntity {
+public class StaffEntity implements UserEntity {
     private int staffId;
     private String firstName;
     private String lastName;

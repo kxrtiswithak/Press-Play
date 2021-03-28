@@ -12,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.util.Optional;
 
@@ -29,8 +28,8 @@ public class RentalServiceTest {
     //Rent a film
     @Test
     @Disabled("Until rents can be deleted")
-    public void rentAFilmTest(FilmEntity filmEntity, CustomerEntity customerEntity, java.util.Date returnDate, StaffEntity staffEntity){
-        Assertions.assertTrue(rentalService.rentAFilm(filmEntity, customerEntity, returnDate, staffEntity));
+    public void rentAFilmTest(FilmEntity filmEntity, CustomerEntity customerEntity, StaffEntity staffEntity){
+        Assertions.assertTrue(rentalService.rentFilm(filmEntity, customerEntity, staffEntity));
     }
 
     //Get currently rented films
@@ -39,7 +38,7 @@ public class RentalServiceTest {
             "1", "431", "282", "368", "119"
     })
     public void getCurrentlyRentedFilmsTest(int id){
-        Iterable<RentalEntity> test = rentalService.getCurrentlyRentedFilms(id);
+        Iterable<RentalEntity> test = rentalService.getCurrentRentals(id);
         Assertions.assertTrue(test.iterator().hasNext());
     }
 
