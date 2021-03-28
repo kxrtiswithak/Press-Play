@@ -50,7 +50,7 @@ public class RentalController {
         UserEntity user = securityService.getCurrentUser();
         if (user instanceof CustomerEntity) {
             CustomerEntity customer = (CustomerEntity) user;
-            rentalService.rentAFilm(film, customer, returnDate.getTime(), staffService.findById(1).orElse(null));
+            rentalService.rentFilm(film, customer, staffService.findById(1).orElse(null));
         }
         return "/fragments/rent";
     }

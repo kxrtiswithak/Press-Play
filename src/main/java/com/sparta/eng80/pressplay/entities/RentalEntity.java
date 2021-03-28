@@ -16,7 +16,7 @@ public class RentalEntity {
     private int rentalId;
     private Date rentalDate;
     private Date returnDate;
-    private Timestamp lastUpdate;
+    private Date lastUpdate;
 
     private InventoryEntity inventory;
     private CustomerEntity customer;
@@ -57,11 +57,11 @@ public class RentalEntity {
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
