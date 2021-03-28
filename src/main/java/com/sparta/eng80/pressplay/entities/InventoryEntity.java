@@ -1,6 +1,7 @@
 package com.sparta.eng80.pressplay.entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
 @Table(name = "inventory", schema = "sakila")
 public class InventoryEntity {
     private int inventoryId;
-    private Timestamp lastUpdate;
+    private Date lastUpdate;
     private boolean isRented;
 
     private FilmEntity film;
@@ -27,11 +28,11 @@ public class InventoryEntity {
 
     @Basic
     @Column(name = "last_update")
-    public Timestamp getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
