@@ -49,23 +49,15 @@ public class MainController {
 
     @GetMapping("/")
     public String welcome(Model model){
-        Iterable<FilmEntity> films = filmService.findAll();
         Iterable<CategoryEntity> categories = filmService.findAllGenres();
         Iterable<ActorEntity> actors = actorService.getAllActorsAlphabetically();
 
-        List<FilmEntity> results = new ArrayList<>();
-//        for (FilmEntity film : films) {
-//            if (film.getTitle().contains(title.toUpperCase())) {
-//                results.add(film);
-//            }
-//        }
 
         Iterable<FilmEntity> topFilms = filmService.findTopNMostRentedFilms(3);
         model.addAttribute("TopFilms", topFilms);
 
         model.addAttribute("categories", categories);
         model.addAttribute("actors", actors);
-        model.addAttribute("films", results);
         return "index";
     }
 

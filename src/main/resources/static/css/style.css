@@ -54,11 +54,17 @@ a#filterBtn {
     text-decoration: none;
 }
 
-a#closeBtn, a#searchListItem {
+a#searchListItem {
     background-color: #191919;
     border: none;
-    color: #ffffff;
     text-decoration: none;
+}
+
+a#closeBtn {
+    background-color: #191919;
+    border: none;
+    text-decoration: none;
+    color: white;
 }
 
 a#searchListItem {
@@ -134,4 +140,22 @@ ul#selected-filters {}
 
 ul#selected-filters li {
     text-decoration: none;
+}
+
+.dropdownContent {
+    height: 200px;
+    width: 215px;
+    overflow-y: auto;
+}
+
+.dropdownContent li {
+    padding-left: 10px;
+}
+
+.dropdownBtn {
+    width: 215px;
+}
+
+.dropdownItem {
+    margin: 5px 5px;
 }
