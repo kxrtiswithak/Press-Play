@@ -20,11 +20,11 @@
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                     </svg>
                 </div>
-                <div class="w-50 border pt-5 pb-5 pe-4 ms-auto me-auto text-wrap">
+                <div class="w-50 border pt-5 pb-5 pe-4 ms-auto me-auto text-wrap mb-5">
                     <ul id="profileList">
                         <h5>Name</h5>
-                        <li th:text="'First: ' + ${user.firstName.toLowerCase()}">First name</li>
-                        <li th:text="'Last: ' + ${user.lastName.toLowerCase()}">Last name</li>
+                        <li th:text="'First: ' + ${user.firstName}">First name</li>
+                        <li th:text="'Last: ' + ${user.lastName}">Last name</li>
                         <br/>
                         <h5>Contact Details</h5>
                         <li th:text="'Email: ' + ${user.email}">Email</li>
@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="modal-body bg-dark text-white">
                                     <h6>Film Title</h6>
-                                    <p th:text="${order.inventory.film.title.toLowerCase()}">Film Title</p>
+                                    <p th:text="${order.inventory.film.title}">Film Title</p>
                                 </span></p>
                                     <h6>Daily Cost</h6>
                                     <p th:text="'£' + ${order.inventory.film.rentalRate}"></p>
