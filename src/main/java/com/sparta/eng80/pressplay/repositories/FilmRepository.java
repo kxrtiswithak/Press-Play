@@ -24,9 +24,9 @@ public interface    FilmRepository extends CrudRepository<FilmEntity, Integer> {
     Iterable<FilmEntity> findByName(String name);
 
     @Query(nativeQuery = true, value = "select * from film f" +
-            "inner join film_actor fa on fa.film_id = f.film_id" +
-            "inner join actor a on fa.actor_id = a.actor_id" +
-            "where a.first_name like ?1 and a.last_name like ?2")
+            " inner join film_actor fa on fa.film_id = f.film_id" +
+            " inner join actor a on fa.actor_id = a.actor_id" +
+            " where a.first_name like ?1 and a.last_name like ?2")
     Iterable<FilmEntity> findByName(String firstName, String lastName);
 
     @Query(nativeQuery = true, value = "select * from film f " +
