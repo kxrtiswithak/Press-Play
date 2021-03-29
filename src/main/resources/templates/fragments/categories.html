@@ -22,7 +22,9 @@
         <!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
 
     <div class="pb-5 mx-auto" style="width: 200px;">
+        <span sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
         <button type="button" class="btn" id="primaryBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new category</button>
+        </span>
     </div>
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -30,10 +32,12 @@
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
+
                     <h5 class="modal-title" id="staticBackdropLabel">Add a new Category</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!--/*@thymesVar id="category" type="com.sparta.eng80.pressplay.entities.CategoryEntity"*/-->
+
                 <form action="#" th:action="@{/newCategory}" th:object="${category}" method="post">
                     <div class="modal-body">
                         <label>
