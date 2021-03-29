@@ -168,7 +168,7 @@ public class FilmEntity {
             @JoinColumn(name = "film_id")
         },
         inverseJoinColumns = {
-                @JoinColumn(name = "actor_id")
+            @JoinColumn(name = "actor_id")
         })
     public Set<ActorEntity> getActors() {
         return actors;

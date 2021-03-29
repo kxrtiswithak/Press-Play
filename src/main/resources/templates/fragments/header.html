@@ -25,7 +25,7 @@
                                 <a class="nav-link" aria-current="page" th:href="@{/categories}">CATEGORIES</a>
                             </li>
                             <li class="nav-item">
-                                <a id="searchListItem" class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">SEARCH</a>
+                                <a id="searchListItem" class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" onclick="closeDropdown()">SEARCH</a>
                             </li>
                             <li class="nav-item">
                                 <!-- href to contact page - controller mapping -->
@@ -65,7 +65,7 @@
                         <button id="searchBtn" type="submit">SEARCH</button>
                         <a id="filterBtn" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-controls="filterSection" aria-expanded="false" aria-label="Toggle dropdown">FILTER</a>
 
-                        <a id="closeBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent">
+                        <a id="closeBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" onclick="closeDropdown()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                             </svg>
@@ -96,7 +96,7 @@
 
                             <div class="actordropdown dropdown col-4">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle dropdownBtn btn btn-primary dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actor</button>
+<!--                                    <button class="dropdown-toggle dropdownBtn btn btn-primary dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actor</button>-->
                                     <ul class="dropdown-menu dropdownContent" id="actorDropdown">
                                         <li>
                                             <label>
@@ -143,15 +143,22 @@
                     filterText = input.value.toUpperCase();
                     dropdown = document.getElementById(dropdown);
                     listItem = dropdown.getElementsByClassName("dropdownItem");
-                    // console.log(listItem);
                     for (let i = 0; i < listItem.length; i++) {
-                        txtValue = listItem[i].getElementsByTagName("input");
-                        console.log(txtValue);
-                        if (txtValue.defaultValue.toUpperCase().indexOf(filterText) > -1) {
-                            // listItem[i].style.display = "";
+                        txtValue = listItem[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(filterText) > -1) {
+                            listItem[i].style.display = "";
                         } else {
                             listItem[i].style.display = "none";
                         }
+                    }
+                }
+
+                function closeDropdown() {
+                    var filterSection = document.getElementById("filterSection");
+                    var searchDropdown = document.getElementById("navbarToggleExternalContent");
+
+                    if (searchDropdown.classList.contains("show") === false && filterSection.classList.contains("show") === true) {
+                        filterSection.classList.remove("show");
                     }
                 }
 

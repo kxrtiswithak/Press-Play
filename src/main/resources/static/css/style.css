@@ -98,13 +98,14 @@ section#content {
 
 div#topRated {
     margin-top: 300px;
+    width: 60vw;
 }
 
 
 div#carouselExampleDark {
     height: 50vh;
     width: 60vw;
-    background-color: #ffe78a;
+    background-color: #ffde59;
 }
 
 div.carousel-item {

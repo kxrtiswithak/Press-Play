@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div th:insert="/fragments/header :: header(categories = ${categories})"></div>
+<div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
 <div class="alert alert-success">
     The film has been successfully rented.
 </div>
