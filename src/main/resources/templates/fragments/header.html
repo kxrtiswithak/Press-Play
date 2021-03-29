@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div th:fragment="header(categories,actors)">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <span class="navbar-brand">
+                        <a th:href="@{/}"><img src="images/PressPlay_logo.svg" height="60" alt="Press-Play"/></a>
+                    </span>
+
+                    <div class="justify-content-end" id="navbarNavDropdown">
+                        <ul class="navbar-nav container-fluid">
+                            <li class="nav-item">
+                                <!-- href to main/index page - controller mapping -->
+                                <a class="nav-link" aria-current="page" href="/">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <!-- href to categories page - controller mapping -->
+                                <a class="nav-link" aria-current="page" th:href="@{/categories}">CATEGORIES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="searchListItem" class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" onclick="closeDropdown()">SEARCH</a>
+                            </li>
+                            <li class="nav-item">
+                                <!-- href to contact page - controller mapping -->
+                                <a class="nav-link" aria-current="page" th:href="@{/contact}">CONTACT</a>
+                            </li>
+                            <li class="nav-item">
+                                <!-- href to account page - controller mapping -->
+                                <a class="nav-link" aria-current="page" href="/profile">ACCOUNT</a>
+                            </li>
+                            <span sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <!-- href to account page - controller mapping -->
+                                <a class="nav-link" aria-current="page" th:href="@{/add-film}">ADD FILM</a>
+                            </li>
+                            </span>
+                            <span sec:authorize="hasAnyAuthority('ROLE_USER','ROLE_ADMIN')">
+                                <form th:action="@{/logout}" method="post">
+                                    <input class="btn" id="primaryBtn" type="submit" value="Logout"/>
+                                </form>
+                            </span>
+                            <div sec:authorize="!isAuthenticated()">
+                                <form th:action="@{/login}" method="GET">
+                                    <input class="btn" id="primaryBtn" type="submit" value="Login/Create Account"/>
+                                </form>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <form th:action="@{/search}" method="post">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="container">
+                        <label>
+                            <input type="text" id="searchField" name="title" onkeyup="liveUpdate()" placeholder="Search Film by Title, Category, Actors..." />
+                        </label>
+                        <button id="searchBtn" type="submit">SEARCH</button>
+                        <a id="filterBtn" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection" aria-controls="filterSection" aria-expanded="false" aria-label="Toggle dropdown">FILTER</a>
+
+                        <a id="closeBtn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" onclick="closeDropdown()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="collapse" style="background-color: #191919" id="filterSection">
+                    <div class="container">
+                        <div class="row justify-content-center p-3">
+                            <div class="categoriesdropdown dropdown col-4">
+                                <div class="dropdown">
+                                    <button id="primaryBtn" class="btn dropdown-toggle dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
+                                    <ul class="dropdown-menu dropdownContent" id="categoryDropdown">
+                                        <li>
+                                            <label>
+                                                <input type="text" id="filterCategories" placeholder="Search..." onkeyup="filterListItems(1)"/>
+                                            </label>
+                                        </li>
+                                        <li th:each="category : ${categories}" class="dropdownItem">
+                                            <label>
+                                                <input class="form-check-input" type="checkbox" name="category" th:value="${category.name}"/>
+                                                <label class="form-check-label" th:text="${category.name}"></label>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="actordropdown dropdown col-4">
+                                <div class="dropdown">
+                                    <button id="primaryBtn" class="dropdown-toggle dropdownBtn btn dropdownBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actor</button>
+                                    <ul class="dropdown-menu dropdownContent" id="actorDropdown">
+                                        <li>
+                                            <label>
+                                                <input type="text" id="filterActors" placeholder="Search..." onkeyup="filterListItems(2)"/>
+                                            </label>
+                                        </li>
+                                        <li th:each="actor : ${actors}" class="dropdownItem">
+                                            <label>
+                                                <input class="form-check-input" type="checkbox" name="actor" th:value="${actor.firstName} + ' ' + ${actor.lastName}" />
+                                                <label class="form-check-label" th:text="${actor.firstName} + ' ' + ${actor.lastName}"></label>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                <div class="languagedropdown">-->
+                    <!--                    <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdownMenu" data-bs-toggle="languagedropdown" aria-expanded="false">Language</button>-->
+                    <!--                    <ul class="dropdown-menu" aria-labelledby="languageDropdownMenu">-->
+                    <!--                        <li th:each="language : ${languages}"><a class="dropdown-item" th:text="${language.name}"></a></li>-->
+                    <!--                    </ul>-->
+                    <!--                </div>-->
+
+                    <div>
+                        <ul id="selected_filters">
+
+                        </ul>
+                    </div>
+                </div>
+            </form>
+            <script>
+                function filterListItems(list) {
+                    var input, filterText, listItem, dropdown, txtValue;
+                    if (list === 1) {
+                        input = document.getElementById("filterCategories");
+                        dropdown = "categoryDropdown";
+                    } else {
+                        input = document.getElementById("filterActors");
+                        dropdown = "actorDropdown";
+                    }
+
+                    filterText = input.value.toUpperCase();
+                    dropdown = document.getElementById(dropdown);
+                    listItem = dropdown.getElementsByClassName("dropdownItem");
+                    for (let i = 0; i < listItem.length; i++) {
+                        txtValue = listItem[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(filterText) > -1) {
+                            listItem[i].style.display = "";
+                        } else {
+                            listItem[i].style.display = "none";
+                        }
+                    }
+                }
+
+                function closeDropdown() {
+                    var filterSection = document.getElementById("filterSection");
+                    var searchDropdown = document.getElementById("navbarToggleExternalContent");
+
+                    if (searchDropdown.classList.contains("show") === false && filterSection.classList.contains("show") === true) {
+                        filterSection.classList.remove("show");
+                    }
+                }
+
+                // function addSelected(x) {
+                //     let selected_section = document.getElementById("selected_filters").getElementsByTagName("li");
+                //     var items = [];
+                //     for (let i = 0; i < selected_section.length; i++) {
+                //         items.push(selected_section[i].innerText);
+                //     }
+                //
+                //     console.log(x);
+                //
+                //     if (items.indexOf(x.innerText) < 0) {
+                //         let selected = document.createElement("li");
+                //         selected.innerText = x.innerText;
+                //         selected.classList.add("selected");
+                //
+                //         let closeBtn = document.createElement("button");
+                //         closeBtn.type = "button";
+                //         closeBtn.classList.add("close");
+                //         // closeBtn.innerHTML = "X";
+                //
+                //         selected.appendChild(closeBtn);
+                //         document.getElementById("selected_filters").appendChild(selected);
+                //     }
+                // }
+                //
+                // var closebtns = document.getElementsByClassName("close");
+                //
+                // for (let i = 0; i < closebtns.length; i++) {
+                //     closebtns[i].addEventListener("click", function() {
+                //         this.parentElement.style.display = 'none';
+                //     });
+                // }
+            </script>
+        </div>
+        <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
+        <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+    </body>
+</html>

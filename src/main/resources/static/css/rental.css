@@ -1,0 +1,17 @@
+#status-1 {
+    background-color: #ffde59;
+    color: black;
+}
+
+#status-2 {
+    background-color: #fd4b4b;
+    color: black;
+}
+
+.text-red {
+    color: #fd4b4b;
+}
+
+.text-green {
+    color: #87ff87;
+}

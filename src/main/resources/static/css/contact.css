@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box
+}
+
+html {
+    height: 100%;
+}
+
+body > div {
+    flex: 1;
+}
+
+.fa {
+    font-weight: bold;
+    font-size: 30px
+}
+
+.icons {
+    width: 50px;
+    font-size: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.contact {
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12),.3s background-color;
+}
+
+.contact:hover {
+    background-color: #EAEBEB;
+    color: black;
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative
+}
+
+a, a:visited, a:hover {
+    text-decoration: none;
+    color: inherit;
+}

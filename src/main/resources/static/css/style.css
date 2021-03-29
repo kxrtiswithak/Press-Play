@@ -1,0 +1,162 @@
+body {
+    background-color: #191919 !important;
+}
+
+#primaryBtn {
+    background-color: #ffde59;
+    color: #191919;
+}
+
+.navbar {
+    background-color: #191919;
+    top: 0;
+}
+
+.nav-item {
+    margin-left: 25px !important;
+    margin-right: 25px;
+    /*padding-left: 50px !important;*/
+}
+
+#navbarToggleExternalContent {
+    background-color: #191919;
+    border-bottom: 1px solid white;
+}
+
+#searchDropDownContent {
+    padding: 10px 0;
+}
+
+input#searchField {
+    width: 50vw;
+    margin: 10px 0 10px 60px;
+    padding: 2px;
+}
+
+button#searchBtn {
+    background-color: inherit;
+    margin: 0 15px;
+    color: #ffffff;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 5px 15px;
+    text-decoration: none;
+    /*font-family: ;*/
+}
+
+a#filterBtn {
+    background-color: inherit;
+    /*margin-right: 15px;*/
+    color: #ffffff;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 4px 15px;
+    text-decoration: none;
+}
+
+a#searchListItem {
+    background-color: #191919;
+    border: none;
+    text-decoration: none;
+}
+
+a#closeBtn {
+    background-color: #191919;
+    border: none;
+    text-decoration: none;
+    color: white;
+}
+
+a#searchListItem {
+    background-color: #191919;
+    border: none;
+    text-decoration: none;
+}
+
+table#loanTable {
+    /*color: white;*/
+    width: 100%;
+}
+
+/* Contact Section */
+div#contactText {
+    color: white;
+}
+
+/*.dropdown-toggle::after {*/
+/*    display:none;*/
+/*}*/
+
+ul#profileList {
+    list-style-type: none;
+}
+
+section#content {
+    width: 100vw;
+    height: 60vw;
+}
+
+div#topRated {
+    margin-top: 300px;
+    width: 60vw;
+}
+
+
+div#carouselExampleDark {
+    height: 50vh;
+    width: 60vw;
+    background-color: #ffde59;
+}
+
+div.carousel-item {
+    z-index: 0;
+}
+
+.align-vert{
+    padding: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: black;
+}
+
+div#filterSection {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.col-4 {
+    width: fit-content !important;
+}
+
+button.dropdownBtn {
+    border-right: none;
+    border-left: none;
+    padding: 5px 15px 5px 15px;
+    margin: 5px 50px;
+}
+
+ul#selected-filters {}
+
+ul#selected-filters li {
+    text-decoration: none;
+}
+
+.dropdownContent {
+    height: 200px;
+    width: 215px;
+    overflow-y: auto;
+}
+
+.dropdownContent li {
+    padding-left: 10px;
+}
+
+.dropdownBtn {
+    width: 215px;
+}
+
+.dropdownItem {
+    margin: 5px 5px;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}"/>
+</head>
+<body class="body-signin">
+<main class="form-signin">
+<div>
+
+    <form method="POST" th:action="@{/login}">
+        <a th:href="@{/}"><img src="images/PressPlay_logo.svg" alt="" width="300" height="90"></a>
+        <br/>
+        <div>
+            <input type="email" id="username" name="username" class="form-control" placeholder="Email" required autofocus>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+            </div>
+            <div th:if="${param.logout}">
+                <div class="alert alert-info">
+                    You have been logged out.
+                </div>
+            </div>
+            <input type="submit" class="w-100 btn btn-lg btn-outline-warning" value="Login">
+        </div>
+    </form>
+    <br/>
+    <form method="GET" th:action="@{/registration}">
+        <input type="submit" class="w-50 btn btn-sm btn-outline-success" value="Create an account"/>
+    </form>
+</div>
+</main>
+</body>
+</html>

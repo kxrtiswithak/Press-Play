@@ -1,0 +1,2 @@
+-- Customer Table
+ALTER TABLE customer ADD COLUMN password varchar(65) DEFAULT 'password' NOT NULL;

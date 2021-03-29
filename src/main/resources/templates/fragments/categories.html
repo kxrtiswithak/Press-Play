@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="text-white">
+<div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
+
+
+<div class="container d-block">
+    <h1 class="text-center">Categories</h1>
+    <div class="list-group pt-3 pb-5">
+        <a th:each="category,iterStat : ${categories}" th:href="'category?category=' + *{category.name}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start" th:inline="text">
+            [[*{category.name}]]
+            <span class="badge rounded-pill" id="primaryBtn" th:text="${sizes.get(iterStat.index)}">14</span>
+        </a>
+    </div>
+        <!--                <a th:href="@{/categories/*{category.name}}"><li th:each="category : ${categories}" th:text="*{category.name}"></li></a>-->
+
+    <div class="pb-5 mx-auto" style="width: 200px;">
+        <span sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+        <button type="button" class="btn" id="primaryBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add new category</button>
+        </span>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="staticBackdropLabel">Add a new Category</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!--/*@thymesVar id="category" type="com.sparta.eng80.pressplay.entities.CategoryEntity"*/-->
+
+                <form action="#" th:action="@{/newCategory}" th:object="${category}" method="post">
+                    <div class="modal-body">
+                        <label>
+                            <input class="mt-2" type="text" name="name" placeholder="Category name"/>
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn" id="primaryBtn" type="submit" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
+<script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+</body>
+</html>

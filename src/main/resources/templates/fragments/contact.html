@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Contact Us</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/contact.css">
+    </head>
+    <body class="w-100 h-100 text-white">
+        <div th:insert="/fragments/header :: header(categories = ${categories}, actors = ${actors})"></div>
+
+        <div class="container-fluid d-flex p-3 mx-auto flex-column mt-5">
+            <main class="px-3 mt-xl-5 mb-5">
+                <h1 class="text-center">Get in touch!</h1>
+                <p class="lead text-center">Contact us if you have any issues. Our details can be found below.</p>
+                <p class="lead">
+                </p>
+                <div class="d-md-flex flex-md-row justify-content-center py-4">
+                    <div class="d-flex flex-column contact px-4 pb-2">
+                        <div class="d-md-flex justify-content-center icon py-2">
+                            <span class="icons"><i class="fa fa-user-circle"></i></span>
+                        </div>
+                        <div class="contact-info"><span th:text="${staff.firstName}">John</span> <span th:text="${staff.lastName}">Smith</span></div>
+                    </div>
+                    <a th:href="'mailto:' + ${staff.email}">
+                        <div class="d-flex flex-column contact px-4 pb-2">
+                            <div class="d-md-flex justify-content-center icon py-2">
+                                <span class="icons"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <div th:text="${staff.email}" class="contact-info">pressplay@sakilastaff.com</div>
+                        </div>
+                    </a>
+                    <a th:href="'https://www.google.com/maps/search/?api=1&query=' + ${staff.store.address.location.y} + ',' + ${staff.store.address.location.x}" target="_blank">
+                        <div class="d-md-flex flex-md-column contact px-4 pb-2">
+                            <div class="d-md-flex justify-content-center icon py-2">
+                                <span class="icons"><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="contact-info text-center"
+                                 th:with="hasPostCode=${staff.store.address.postalCode.length()} > 0 ? ', ' + ${staff.store.address.postalCode} : ''"
+                                 th:text="${staff.store.address.address} + ', ' +
+                                 ${staff.store.address.district} + ', ' +
+                                 ${staff.store.address.city.city} + ', ' +
+                                 ${staff.store.address.city.country.country} +
+                                 ${hasPostCode}">
+                                123 Main Street, London, XXX XXX, UK
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </main>
+
+        </div>
+
+        <script th:src="@{webjars/popper.js/2.5.4/umd/popper.min.js}"></script>
+        <script th:src="@{webjars/bootstrap/5.0.0-beta2/js/bootstrap.min.js}"></script>
+    </body>
+</html>

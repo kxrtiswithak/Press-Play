@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.0.0-beta2/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}"/>
+</head>
+<body class="body-signin">
+<main class="form-register">
+    <div>
+        <a th:href="@{/login}"><img src="images/PressPlay_logo.svg"alt="logo" width="300" height="100"></a>
+        <form method="POST" th:object="${customerForm}" th:action="@{/registration}">
+            <h4 style="color:white">CREATE ACCOUNT</h4>
+            <br/>
+            <div>
+                <input type="emailRegister" th:field="*{email}" class="form-control"  placeholder="Email" autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+            <div>
+                <input type="text" th:field="*{firstName}" class="form-control"  placeholder="First Name" autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </div>
+            <div>
+                <input type="text" th:field="*{lastName}" class="form-control"  placeholder="Last Name"
+                       autofocus="autofocus">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+
+            <div>
+                <input type="password" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" th:field="*{password}" class="form-control"  placeholder="Password">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{passwordConfirmation}" class="form-control" placeholder="Confirm your password">
+                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></span>
+            </div>
+            <br/>
+            <input type="submit" class="w-100 btn btn-lg btn-outline-warning" value="Register">
+        </form>
+        <br/>
+
+    </div>
+</main>
+</body>
+</html>
