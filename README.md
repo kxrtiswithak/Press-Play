@@ -1,4 +1,4 @@
-<img src="src/main/resources/static/images/PressPlay_logo.svg" align="right" />
+<img src="src/main/resources/static/images/press-play-favicon.png" width=150 align="right" />
 
 # Press-Play ![sparta_badge][sparta_badge]
 > Online video store
